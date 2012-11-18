@@ -1,18 +1,22 @@
 $(function() {
-	//$('#home').css({'height': window.innerHeight});
-	//$('#content').css({'height': window.innerHeight});
-	//$('#grid').css({'height': window.innerHeight-$('header').css('height').substr(0, $('header').css('height').length-2)+'px'});
+	/*----------------------------------------------------
+				  1- INTERFACE ADAPTATION
+	----------------------------------------------------*/
 
 	$('#travel').on('click', function(){
 		$('#home').animate({'margin-top': -window.innerHeight+'px'}, 500);
 	});
+	$('#grid').css({'height' : window.innerHeight-50+'px'});
 
-	$('#main-articles').children().css({'margin-top': window.innerHeight+'px'});
+	$('#article-details').css({'margin-top': -window.innerHeight+'px'});
 
+	$('#content').on('click', function(){
+		$('#article-details').addClass('flip');
+		$('#content').addClass('flip');
+	});
 
-	var i = 0;
-	$('.grid').on('click', function(){
-		$($('#main-articles').children()[i]).animate({'margin-top': '10px'}, 500);
-		++i;
+	$('#article-details').on('click', function(){
+		$('#article-details').removeClass('flip');
+		$('#content').removeClass('flip');
 	});
 });

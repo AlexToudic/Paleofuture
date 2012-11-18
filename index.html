@@ -15,6 +15,9 @@
         <link rel="stylesheet" href="css/vendor/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="js/vendor/underscore-min.js"></script>
+        <script src="js/vendor/backbone-min.js"></script>
+        <script src="js/vendor/handlebars-1.0.rc.1.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -55,11 +58,15 @@
                     <h1 class="logo">PALEOFUTURE</h1>
                     <div id="account">Thomas De Cicco</div>
                 </header>
-                <div class="grid">
+                <div id="grid">
                     <div id="main-articles">
                         <div class="block1">
                             <h1>Ici un gros titre</h1>
                             <img src="http://lorempixel.com/960/300"></img>
+                        </div>
+                        <div class="block3">
+                            <h1>Ici un petit titre</h1>
+                            <img src="http://lorempixel.com/960/900"></img>
                         </div>
                         <div class="minigrid">
                             <div class="tweet">
@@ -77,46 +84,94 @@
                                 <img src="http://lorempixel.com/960/300"></img>
                             </div>
                         </div>
+                        <div class="minigrid">
+                            <div class="block2">
+                                <h1>Ici un titre moyen</h1>
+                                <img src="http://lorempixel.com/960/300"></img>
+                            </div>
+                            <div class="tweet">
+                                <p>Matt Novak @paleofuture<br/>
+                                me IRL <a href="gimmebar-assets.s3.amazonaws.com/50491cb503934">gimmebar-assets.s3.amazonaws.com/50491cb503934</a>....<br/>
+                                Ouvrir</p>
+                            </div>
+                            <div class="tweet">
+                                <p>Matt Novak @paleofuture<br/>
+                                me IRL <a href="gimmebar-assets.s3.amazonaws.com/50491cb503934">gimmebar-assets.s3.amazonaws.com/50491cb503934</a>....<br/>
+                                Ouvrir</p>
+                            </div>
+                        </div>
                         <div class="block3">
                             <h1>Ici un petit titre</h1>
                             <img src="http://lorempixel.com/960/900"></img>
                         </div>
                     </div>
-                        <!--<div class="col3 last">
-                            <div class="col3 last">
-                                <p>I've never thought of my allergies as a big deal. Sure, my peanut allergy has caused an emergency room visit here and there, and my dad used to pick me up from sleepovers because of my emphysema-like wheezing around cats. No big thing, right? But a few years back it seemed about time I went to see an allergy specialist and get a comprehensive list of the things my body hates...</p>
-                            </div>
-                            <div class="col3 last">
-                                <p>I've never thought of my allergies as a big deal. Sure, my peanut allergy has caused an emergency room visit here and there, and my dad used to pick me up from sleepovers because of my emphysema-like wheezing around cats. No big thing, right? But a few years back it seemed about time I went to see an allergy specialist and get a comprehensive list of the things my body hates...</p>
+                </div>
+            </div>
+            <div id="article-details">
+                <div id="text">
+                    <div id="menu-bar">
+                        <div id="bar-buttons">
+                            <button name="favorite">Add to favorite</button>
+                            <div id="share">
+                                <ul class="social-buttons">
+                                    <li><a href="#" target="_blank" class="sb facebook">Facebook</a></li>
+                                    <li><a href="#" target="_blank" class="sb twitter">Twitter</a></li>
+                                    <li><a href="#" target="_blank" class="sb pinterest">Pinterest</a></li>
+                                    <li><a href="#" target="_blank" class="sb google">Google+</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="clear"></div>
-                    <div class="onerow">
-                        <div class="col6">
-                            <div class="onerow">
-                                <div class="col6">
-                                    <p>Matt Novak @paleofuture<br/>
-                                    me IRL <a href="gimmebar-assets.s3.amazonaws.com/50491cb503934">gimmebar-assets.s3.amazonaws.com/50491cb503934</a>....<br/>
-                                    Ouvrir</p>
-                                </div>
-                            </div>
-                            <div class="clear"></div>
-                            <div class="onerow">
-                                <div class="col6 last">
-                                    <p>Matt Novak @paleofuture<br/>
-                                    me IRL <a href="gimmebar-assets.s3.amazonaws.com/50491cb503934">gimmebar-assets.s3.amazonaws.com/50491cb503934</a>....<br/>
-                                    Ouvrir</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col3">
-                            <img src="http://lorempixel.com/500/500" alt="">
-                        </div>
-                        <div class="col3 last">
-                            <p>I've never thought of my allergies as a big deal. Sure, my peanut allergy has caused an emergency room visit here and there, and my dad used to pick me up from sleepovers because of my emphysema-like wheezing around cats. No big thing, right? But a few years back it seemed about time I went to see an allergy specialist and get a comprehensive list of the things my body hates...</p>
-                        </div>
-                    </div>-->
+                    <h1 class="article-title">The Push-Button School of Tomorrow (1958)</h1>
+                    <div id="date">
+                        SUNDAY
+                        MAY 2, 2010
+                        AT 7:00PM
+                        1890s
+                    </div>
+                    <div id="text-content">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus, tortor quis cursus pretium, lorem eros accumsan nisl, sed mollis felis quam et quam. Pellentesque eu viverra eros. Pellentesque convallis consectetur gravida. Maecenas dapibus, felis nec tempor tincidunt, odio lectus adipiscing arcu, ut aliquam purus elit ac urna. In ultricies convallis odio, et tempor ligula congue a. Donec lectus sapien, varius ac pulvinar eu, euismod bibendum erat. Phasellus congue, urna pulvinar porta accumsan, ipsum est hendrerit magna, in condimentum purus lectus non risus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque vitae dolor quis mi ornare malesuada. Donec vel vestibulum dolor. Duis ante mi, mattis nec eleifend lobortis, volutpat eu risus. Phasellus dapibus ligula ut purus ultricies sit amet accumsan ante venenatis. Vestibulum pharetra justo id enim porta at mollis lacus luctus. Morbi tortor ante, commodo ut vehicula lobortis, luctus et nisl. Pellentesque condimentum condimentum dolor, et tempor lectus fringilla at. Nulla elementum porttitor nisi in pulvinar.
+
+                        Nunc elementum felis et mi dapibus nec condimentum justo pulvinar. Curabitur laoreet euismod porttitor. Fusce tempus velit quis ligula euismod molestie. Proin commodo libero eget risus pulvinar ultrices sed ut felis. Nulla facilisi. Sed et arcu ut leo convallis imperdiet. Donec luctus lacinia sollicitudin. Fusce eu justo felis, vel tempus massa. Etiam a turpis sit amet est sodales consectetur. Morbi eros nibh, vehicula non rhoncus id, adipiscing sit amet dolor. Donec ut risus purus, quis dignissim lorem.
+
+                        Vivamus lorem magna, laoreet a luctus non, congue sed lectus. Donec nisl augue, consectetur in blandit mattis, semper sed enim. Duis justo nibh, scelerisque sit amet ultrices quis, porta nec risus. Sed et sapien justo. Donec quis pharetra ligula. Aenean ut lobortis ligula. Nullam vel leo ut lacus consequat consequat. In sit amet ligula eu justo suscipit porta. Duis metus erat, rhoncus non accumsan id, vehicula eget lectus.
+
+                        Proin tincidunt nisl nec metus sodales blandit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In hac habitasse platea dictumst. Nunc viverra luctus ornare. Curabitur laoreet porttitor elementum. Phasellus fringilla lorem ut arcu ultrices eget aliquam ligula varius. Praesent eget augue nulla, eget elementum purus.
+
+                        Sed sagittis, arcu at porttitor tempor, turpis neque viverra purus, sit amet hendrerit odio eros at nulla. Sed tincidunt lorem a justo adipiscing in malesuada enim pellentesque. Sed consequat nisl quis massa molestie pharetra viverra diam imperdiet. Aliquam urna augue, tincidunt id congue et, consequat vitae enim. Mauris sagittis tristique quam ut pretium. Integer hendrerit, magna at pulvinar dignissim, metus purus facilisis sem, at ullamcorper arcu nulla nec tellus. Quisque aliquet leo sit amet magna commodo sed varius nibh iaculis. Donec sit amet turpis dolor, a mollis ipsum. Nunc in sollicitudin enim. Vestibulum odio diam, tempus vel blandit eget, posuere et magna. Curabitur vitae aliquet magna.
+
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus, tortor quis cursus pretium, lorem eros accumsan nisl, sed mollis felis quam et quam. Pellentesque eu viverra eros. Pellentesque convallis consectetur gravida. Maecenas dapibus, felis nec tempor tincidunt, odio lectus adipiscing arcu, ut aliquam purus elit ac urna. In ultricies convallis odio, et tempor ligula congue a. Donec lectus sapien, varius ac pulvinar eu, euismod bibendum erat. Phasellus congue, urna pulvinar porta accumsan, ipsum est hendrerit magna, in condimentum purus lectus non risus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque vitae dolor quis mi ornare malesuada. Donec vel vestibulum dolor. Duis ante mi, mattis nec eleifend lobortis, volutpat eu risus. Phasellus dapibus ligula ut purus ultricies sit amet accumsan ante venenatis. Vestibulum pharetra justo id enim porta at mollis lacus luctus. Morbi tortor ante, commodo ut vehicula lobortis, luctus et nisl. Pellentesque condimentum condimentum dolor, et tempor lectus fringilla at. Nulla elementum porttitor nisi in pulvinar.
+
+                        Nunc elementum felis et mi dapibus nec condimentum justo pulvinar. Curabitur laoreet euismod porttitor. Fusce tempus velit quis ligula euismod molestie. Proin commodo libero eget risus pulvinar ultrices sed ut felis. Nulla facilisi. Sed et arcu ut leo convallis imperdiet. Donec luctus lacinia sollicitudin. Fusce eu justo felis, vel tempus massa. Etiam a turpis sit amet est sodales consectetur. Morbi eros nibh, vehicula non rhoncus id, adipiscing sit amet dolor. Donec ut risus purus, quis dignissim lorem.
+
+                        Vivamus lorem magna, laoreet a luctus non, congue sed lectus. Donec nisl augue, consectetur in blandit mattis, semper sed enim. Duis justo nibh, scelerisque sit amet ultrices quis, porta nec risus. Sed et sapien justo. Donec quis pharetra ligula. Aenean ut lobortis ligula. Nullam vel leo ut lacus consequat consequat. In sit amet ligula eu justo suscipit porta. Duis metus erat, rhoncus non accumsan id, vehicula eget lectus.
+
+                        Proin tincidunt nisl nec metus sodales blandit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In hac habitasse platea dictumst. Nunc viverra luctus ornare. Curabitur laoreet porttitor elementum. Phasellus fringilla lorem ut arcu ultrices eget aliquam ligula varius. Praesent eget augue nulla, eget elementum purus.
+
+                        Sed sagittis, arcu at porttitor tempor, turpis neque viverra purus, sit amet hendrerit odio eros at nulla. Sed tincidunt lorem a justo adipiscing in malesuada enim pellentesque. Sed consequat nisl quis massa molestie pharetra viverra diam imperdiet. Aliquam urna augue, tincidunt id congue et, consequat vitae enim. Mauris sagittis tristique quam ut pretium. Integer hendrerit, magna at pulvinar dignissim, metus purus facilisis sem, at ullamcorper arcu nulla nec tellus. Quisque aliquet leo sit amet magna commodo sed varius nibh iaculis. Donec sit amet turpis dolor, a mollis ipsum. Nunc in sollicitudin enim. Vestibulum odio diam, tempus vel blandit eget, posuere et magna. Curabitur vitae aliquet magna.
+
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus, tortor quis cursus pretium, lorem eros accumsan nisl, sed mollis felis quam et quam. Pellentesque eu viverra eros. Pellentesque convallis consectetur gravida. Maecenas dapibus, felis nec tempor tincidunt, odio lectus adipiscing arcu, ut aliquam purus elit ac urna. In ultricies convallis odio, et tempor ligula congue a. Donec lectus sapien, varius ac pulvinar eu, euismod bibendum erat. Phasellus congue, urna pulvinar porta accumsan, ipsum est hendrerit magna, in condimentum purus lectus non risus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque vitae dolor quis mi ornare malesuada. Donec vel vestibulum dolor. Duis ante mi, mattis nec eleifend lobortis, volutpat eu risus. Phasellus dapibus ligula ut purus ultricies sit amet accumsan ante venenatis. Vestibulum pharetra justo id enim porta at mollis lacus luctus. Morbi tortor ante, commodo ut vehicula lobortis, luctus et nisl. Pellentesque condimentum condimentum dolor, et tempor lectus fringilla at. Nulla elementum porttitor nisi in pulvinar.
+
+                        Nunc elementum felis et mi dapibus nec condimentum justo pulvinar. Curabitur laoreet euismod porttitor. Fusce tempus velit quis ligula euismod molestie. Proin commodo libero eget risus pulvinar ultrices sed ut felis. Nulla facilisi. Sed et arcu ut leo convallis imperdiet. Donec luctus lacinia sollicitudin. Fusce eu justo felis, vel tempus massa. Etiam a turpis sit amet est sodales consectetur. Morbi eros nibh, vehicula non rhoncus id, adipiscing sit amet dolor. Donec ut risus purus, quis dignissim lorem.
+
+                        Vivamus lorem magna, laoreet a luctus non, congue sed lectus. Donec nisl augue, consectetur in blandit mattis, semper sed enim. Duis justo nibh, scelerisque sit amet ultrices quis, porta nec risus. Sed et sapien justo. Donec quis pharetra ligula. Aenean ut lobortis ligula. Nullam vel leo ut lacus consequat consequat. In sit amet ligula eu justo suscipit porta. Duis metus erat, rhoncus non accumsan id, vehicula eget lectus.
+
+                        Proin tincidunt nisl nec metus sodales blandit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In hac habitasse platea dictumst. Nunc viverra luctus ornare. Curabitur laoreet porttitor elementum. Phasellus fringilla lorem ut arcu ultrices eget aliquam ligula varius. Praesent eget augue nulla, eget elementum purus.
+
+                        Sed sagittis, arcu at porttitor tempor, turpis neque viverra purus, sit amet hendrerit odio eros at nulla. Sed tincidunt lorem a justo adipiscing in malesuada enim pellentesque. Sed consequat nisl quis massa molestie pharetra viverra diam imperdiet. Aliquam urna augue, tincidunt id congue et, consequat vitae enim. Mauris sagittis tristique quam ut pretium. Integer hendrerit, magna at pulvinar dignissim, metus purus facilisis sem, at ullamcorper arcu nulla nec tellus. Quisque aliquet leo sit amet magna commodo sed varius nibh iaculis. Donec sit amet turpis dolor, a mollis ipsum. Nunc in sollicitudin enim. Vestibulum odio diam, tempus vel blandit eget, posuere et magna. Curabitur vitae aliquet magna.
+
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus, tortor quis cursus pretium, lorem eros accumsan nisl, sed mollis felis quam et quam. Pellentesque eu viverra eros. Pellentesque convallis consectetur gravida. Maecenas dapibus, felis nec tempor tincidunt, odio lectus adipiscing arcu, ut aliquam purus elit ac urna. In ultricies convallis odio, et tempor ligula congue a. Donec lectus sapien, varius ac pulvinar eu, euismod bibendum erat. Phasellus congue, urna pulvinar porta accumsan, ipsum est hendrerit magna, in condimentum purus lectus non risus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque vitae dolor quis mi ornare malesuada. Donec vel vestibulum dolor. Duis ante mi, mattis nec eleifend lobortis, volutpat eu risus. Phasellus dapibus ligula ut purus ultricies sit amet accumsan ante venenatis. Vestibulum pharetra justo id enim porta at mollis lacus luctus. Morbi tortor ante, commodo ut vehicula lobortis, luctus et nisl. Pellentesque condimentum condimentum dolor, et tempor lectus fringilla at. Nulla elementum porttitor nisi in pulvinar.
+
+                        Nunc elementum felis et mi dapibus nec condimentum justo pulvinar. Curabitur laoreet euismod porttitor. Fusce tempus velit quis ligula euismod molestie. Proin commodo libero eget risus pulvinar ultrices sed ut felis. Nulla facilisi. Sed et arcu ut leo convallis imperdiet. Donec luctus lacinia sollicitudin. Fusce eu justo felis, vel tempus massa. Etiam a turpis sit amet est sodales consectetur. Morbi eros nibh, vehicula non rhoncus id, adipiscing sit amet dolor. Donec ut risus purus, quis dignissim lorem.
+
+                        Vivamus lorem magna, laoreet a luctus non, congue sed lectus. Donec nisl augue, consectetur in blandit mattis, semper sed enim. Duis justo nibh, scelerisque sit amet ultrices quis, porta nec risus. Sed et sapien justo. Donec quis pharetra ligula. Aenean ut lobortis ligula. Nullam vel leo ut lacus consequat consequat. In sit amet ligula eu justo suscipit porta. Duis metus erat, rhoncus non accumsan id, vehicula eget lectus.
+
+                        Proin tincidunt nisl nec metus sodales blandit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In hac habitasse platea dictumst. Nunc viverra luctus ornare. Curabitur laoreet porttitor elementum. Phasellus fringilla lorem ut arcu ultrices eget aliquam ligula varius. Praesent eget augue nulla, eget elementum purus.
+
+                        Sed sagittis, arcu at porttitor tempor, turpis neque viverra purus, sit amet hendrerit odio eros at nulla. Sed tincidunt lorem a justo adipiscing in malesuada enim pellentesque. Sed consequat nisl quis massa molestie pharetra viverra diam imperdiet. Aliquam urna augue, tincidunt id congue et, consequat vitae enim. Mauris sagittis tristique quam ut pretium. Integer hendrerit, magna at pulvinar dignissim, metus purus facilisis sem, at ullamcorper arcu nulla nec tellus. Quisque aliquet leo sit amet magna commodo sed varius nibh iaculis. Donec sit amet turpis dolor, a mollis ipsum. Nunc in sollicitudin enim. Vestibulum odio diam, tempus vel blandit eget, posuere et magna. Curabitur vitae aliquet magna.
+                    </div>
+                </div>
+                <div id="interactive">    
                 </div>
             </div>
         </div>

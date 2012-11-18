@@ -160,7 +160,7 @@ ul.social-buttons>li {
 a.sb,
 .sb a {
     width: 25px;
-    height: 24px;
+    height: 25px;
     background-repeat: no-repeat;
     background-position: center center;
     text-indent: -900em;
@@ -203,6 +203,14 @@ a.sb.tumblr {
     background: url(../img/tumblr-button.png) no-repeat;
 }
 
+a.sb.pinterest {
+    background: url(../img/pinterest-button.png) no-repeat;
+}
+
+a.sb.google {
+    background: url(../img/google-button.png) no-repeat;
+}
+
 form#connect-panel {
     position: absolute;
     width: 200px;
@@ -221,10 +229,9 @@ form#connect-panel {
     position: absolute;
 }
 
-.grid {
+#grid {
     width: 100%;
-    height: 100%;
-    padding: 10px;
+    overflow-y: scroll;
 }
 
 #main-articles {
@@ -239,6 +246,16 @@ form#connect-panel {
     width: 100%;
     height: 100%;
     margin: 0 0;
+    -webkit-transform-style : preserve-3d;
+    -webkit-transition-property : webkit-transform;
+    -webkit-transition-duration : .75s;
+    -webkit-timing-function : ease-in-out;
+    -webkit-transform-origin : 50% 0;
+    -webkit-backface-visibility: hidden;
+}
+
+#content.flip {
+    -webkit-transform : rotateY(180deg);
 }
 
 header {
@@ -356,6 +373,82 @@ header .logo {
 
 #account {
     right: 20px;
+}
+
+#article-details {
+    width: 100%;
+    height: 100%;
+    -webkit-transform : rotateY(180deg);
+    -webkit-transform-style : preserve-3d;
+    -webkit-transition-property : webkit-transform;
+    -webkit-transition-duration : .75s;
+    -webkit-timing-function : ease-in-out;
+    -webkit-transform-origin : 50% 0;
+    -webkit-backface-visibility: hidden;
+}
+
+#article-details.flip {
+    -webkit-transform : rotateY(0deg);
+}
+
+#text, #interactive {
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+
+#text {
+    background: blue;
+    position: relative;
+}
+
+#text::-webkit-scrollbar { 
+    display: none; 
+}
+
+#menu-bar {
+    width: 100%;
+    height: 50px;
+    background: green;
+    position: fixed;
+}
+
+#bar-buttons {
+    width: 50%;
+    height: 100%;
+    position: relative;
+}
+
+.article-title {
+    margin: 50px 20px;
+    font-size: 18pt;
+}
+
+button[name='favorite'] {
+    padding: 0;
+    border: 0;
+    min-width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 20px;
+    margin: -10px 0 0 0;
+    position: absolute;
+}
+
+#share {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    margin-top: -12px;
+}
+
+#share>ul.social-buttons {
+    margin: 0;
+}
+
+#interactive {
+    background: red;
+    position: relative;
 }
 
 /* ==========================================================================
