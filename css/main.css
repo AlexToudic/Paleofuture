@@ -221,11 +221,17 @@ form#connect-panel {
     position: absolute;
 }
 
-#grid {
+.grid {
     width: 100%;
     height: 100%;
     padding: 10px;
-    overflow-y: scroll;
+}
+
+#main-articles {
+    width: 960px;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
 }
 
 #content {
@@ -269,7 +275,7 @@ header .logo {
     background-color: navy;
 }
 
-.block1, .block2, .block3, .tweet {
+.block1, .block2, .block3, .tweet, .minigrid {
     float: left;
     margin: 10px;
     overflow: hidden;
@@ -285,8 +291,24 @@ header .logo {
     color: white;
 }
 
+.minigrid {
+    width: 635px;
+}
+
+.minigrid>* {
+    margin: 10px 0 10px 0;
+}
+
+.minigrid>*:first-child {
+    margin: 0 0 10px 0;
+}
+
+.minigrid>*:last-child {
+    margin: 10px 0 0 0;
+}
+
 .block1 {
-    width: 900px;
+    width: 940px;
     height: 300px;
 }
 
@@ -295,8 +317,8 @@ header .logo {
 }
 
 .block2 {
-    width: 600px;
-    height: 200px;
+    width: 635px;
+    height: 240px;
 }
 
 .block2>h1 {
@@ -304,16 +326,28 @@ header .logo {
 }
 
 .block3 {
-    width: 280px;
-    height: 600px;
+    width: 285px;
+    height: 410px;
 }
 
 .block3>h1 {
     font-size: 14pt;
 }
 
-.tweet {
+.block3.right {
+    float: none;
+    padding: 10px 0 0 10px;
+}
 
+.tweet {
+    width: 635px;
+    height: 65px;
+    background: gray;
+}
+
+.tweet p {
+    margin: 0;
+    padding: 0;
 }
 
 .column {
