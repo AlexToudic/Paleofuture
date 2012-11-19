@@ -211,13 +211,17 @@ a.sb.google {
     background: url(../img/google-button.png) no-repeat;
 }
 
-form#connect-panel {
+form#sign-up, form#sign-twitter, form#sign-facebook {
     position: absolute;
     width: 200px;
     height: 200px;
     top: 50%;
     left: 50%;
     margin-left: -100px;
+}
+
+form#sign-twitter, form#sign-facebook {
+    display: none;
 }
 
 #travel {
@@ -231,14 +235,22 @@ form#connect-panel {
 
 #grid {
     width: 100%;
+    height: -webkit-calc(100% - 50px);
     overflow-y: scroll;
 }
 
+#grid:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
 #main-articles {
-    width: 960px;
+    width: 80%;
     height: 100%;
     margin: 0 auto;
     position: relative;
+    float: left;
 }
 
 #content {
@@ -367,6 +379,12 @@ header .logo {
     padding: 0;
 }
 
+#right-column, #left-column {
+    width: 10%;
+    height: 100%;
+    float: left;
+}
+
 .column {
 
 }
@@ -419,11 +437,6 @@ header .logo {
     position: relative;
 }
 
-.article-title {
-    margin: 50px 20px;
-    font-size: 18pt;
-}
-
 button[name='favorite'] {
     padding: 0;
     border: 0;
@@ -444,6 +457,37 @@ button[name='favorite'] {
 
 #share>ul.social-buttons {
     margin: 0;
+}
+
+#article-title {
+    margin: 50px 0;
+    height: 30px;
+    position: relative;
+}
+
+#article-title>h1 {
+    top: 5px;
+    left: 20px;
+    display: inline;
+    position: absolute;
+    font-size: 18pt;
+}
+
+#date {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+}
+
+#date>p {
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    font-size: 8pt;
+}
+
+#text-content>p {
+    padding: 20px;
 }
 
 #interactive {

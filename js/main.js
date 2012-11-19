@@ -6,7 +6,8 @@ $(function() {
 	$('#travel').on('click', function(){
 		$('#home').animate({'margin-top': -window.innerHeight+'px'}, 500);
 	});
-	$('#grid').css({'height' : window.innerHeight-50+'px'});
+	
+	//$('#grid').css({'height' : window.innerHeight-50+'px'});
 
 	$('#article-details').css({'margin-top': -window.innerHeight+'px'});
 
@@ -19,4 +20,13 @@ $(function() {
 		$('#article-details').removeClass('flip');
 		$('#content').removeClass('flip');
 	});
+
+
+	var Article = Backbone.Model.extend();
+
+	var Articles = Backbone.Collection.extend({
+		model: Article
+	});
+
+
 });
