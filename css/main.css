@@ -246,7 +246,7 @@ form#sign-twitter, form#sign-facebook {
 }
 
 #grid {
-    -webkit-filter: custom(url(shaders/slice.vs), 20 20)
+    -webkit-filter : custom(url(shaders/detached_tiles.vs) mix(url(shaders/detached_tiles.fs) normal source-atop), 400 1 border-box detached, amount 75.0, t 10.0);
 }
 
 #main-articles {
