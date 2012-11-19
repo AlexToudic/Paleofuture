@@ -245,6 +245,10 @@ form#sign-twitter, form#sign-facebook {
     display: block;
 }
 
+#grid {
+    -webkit-filter: custom(url(shaders/slice.vs), 20 20)
+}
+
 #main-articles {
     width: 80%;
     height: 100%;

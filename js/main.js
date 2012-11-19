@@ -6,8 +6,6 @@ $(function() {
 	$('#travel').on('click', function(){
 		$('#home').animate({'margin-top': -window.innerHeight+'px'}, 500);
 	});
-	
-	//$('#grid').css({'height' : window.innerHeight-50+'px'});
 
 	$('#article-details').css({'margin-top': -window.innerHeight+'px'});
 
