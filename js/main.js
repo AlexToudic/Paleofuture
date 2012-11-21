@@ -7,7 +7,7 @@ $(function() {
 		$('#home').animate({'margin-top': -window.innerHeight+'px'}, 500);
 	});
 
-	$('#article-details').css({'margin-top': -window.innerHeight+'px'});
+	$('#layer2').css({'margin-top': -window.innerHeight+50+'px'});
 
 	$('#content').on('click', function(){
 		$('#article-details').addClass('flip');
@@ -58,20 +58,24 @@ $(function() {
 	});
 
 	var amount = 75;
-	var tempDelta = 0;
-	var scroll = 0;
-	$('#space').mousewheel(function(event, delta, deltaX, deltaY) {
-		++scroll;
-		if(scroll%5===0)
-		{
-			if(tempDelta < delta)
-				tempDelta += 1;
-			if(tempDelta > delta)
-				tempDelta -= 1;
+	$('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+amount+', t 10.0)'});
+	//$('#grid').css({'-webkit-transform': 'scale(1)'});
 
-			amount += tempDelta;
-		    $('#grid').css({'-webkit-filter': 'custom(url(css/shaders/detached_tiles.vs) mix(url(css/shaders/detached_tiles.fs) normal source-atop), 400 1 border-box detached, amount '+parseInt(amount, 10)+', t 10.0)'});
-		}
+	$('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+(amount+2893)+', t 10.0)'});
+
+
+	var scroll = Math.pow(200*amount, (1/3));
+	$('#space').mousewheel(function(event, delta, deltaX, deltaY) {
+		if(delta < 0)
+			scroll += 1.0;
+		if(delta > 0)
+			scroll -= 1.0;
+
+		dAmount = parseInt((scroll*scroll*scroll)/200, 10);
+		console.log(dAmount);
+	    $('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+dAmount+', t 10.0)'});
+	    $('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+(dAmount+2893)+', t 10.0)'});
+		//$('#grid').css({'-webkit-transform': 'scale('+0.2*dAmount+')'});
 	});
 
     Backbone.history.start();
