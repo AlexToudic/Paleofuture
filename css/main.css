@@ -272,6 +272,11 @@ form#sign-twitter, form#sign-facebook {
     -webkit-transform : rotateY(180deg);
 }
 
+#particules {
+    width: 100%;
+    height: 100%;
+}
+
 header {
     position: relative;
     width: 100%;
