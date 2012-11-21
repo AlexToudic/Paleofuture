@@ -64,17 +64,26 @@ $(function() {
 	$('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+(amount+2893)+', t 10.0)'});
 
 
-	var scroll = Math.pow(200*amount, (1/3));
-	$('#space').mousewheel(function(event, delta, deltaX, deltaY) {
-		if(delta < 0)
-			scroll += 1.0;
-		if(delta > 0)
-			scroll -= 1.0;
+	var scroll1 = Math.pow(200*amount, (1/3));
+	var scroll2 = Math.pow(200*(amount+2893), (1/3));
 
-		dAmount = parseInt((scroll*scroll*scroll)/200, 10);
-		console.log(dAmount);
-	    $('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+dAmount+', t 10.0)'});
-	    $('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+(dAmount+2893)+', t 10.0)'});
+	$('#space').mousewheel(function(event, delta, deltaX, deltaY) {
+		if(delta > 0)
+		{
+			scroll1 += 1.0;
+			scroll2 += 1.0;	
+		}
+		if(delta < 0)
+		{
+			scroll1 -= 1.0;
+			scroll2 -= 1.0;
+		}
+
+		d1Amount = parseInt((scroll1*scroll1*scroll1)/200, 10);
+	    $('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d1Amount+', t 10.0)'});
+
+	    d2Amount = parseInt((scroll2*scroll2*scroll2)/200, 10);
+	    $('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d2Amount+', t 10.0)'});
 		//$('#grid').css({'-webkit-transform': 'scale('+0.2*dAmount+')'});
 	});
 

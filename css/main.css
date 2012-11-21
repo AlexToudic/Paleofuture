@@ -233,14 +233,15 @@ form#sign-twitter, form#sign-facebook {
     position: absolute;
 }
 
-#layer1, #layer2 {
+#space, #layer1, #layer2 {
     width: 100%;
     height: -webkit-calc(100% - 50px);
     overflow-y: scroll;
     -webkit-transform-origin: 50% 50%;
+    overflow: hidden;
 }
 
-#layer1:after, #layer2:after {
+#space:after {
     content: "";
     clear: both;
     display: block;
