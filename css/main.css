@@ -233,12 +233,16 @@ form#sign-twitter, form#sign-facebook {
     position: absolute;
 }
 
-#space, #layer1, #layer2 {
+#space {
     width: 100%;
-    height: -webkit-calc(100% - 50px);
+    height: -webkit-calc(100% - 100px);
     overflow-y: scroll;
-    -webkit-transform-origin: 50% 50%;
     overflow: hidden;
+}
+
+#layer1, #layer2 {
+    width: 100%;
+    height: 100%;
 }
 
 #space:after {
@@ -250,7 +254,7 @@ form#sign-twitter, form#sign-facebook {
 #main-articles {
     width: 80%;
     height: 100%;
-    margin: 0 auto;
+    margin: -100px auto;
     position: relative;
     float: left;
 }
@@ -275,6 +279,31 @@ form#sign-twitter, form#sign-facebook {
 #particules {
     width: 100%;
     height: 100%;
+}
+
+#timeline {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    background: navy;
+}
+
+.timemarker {
+    width: 3px;
+    height: 50px;
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 200px;
+}
+
+#cursor {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background: black;
 }
 
 header {
