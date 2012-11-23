@@ -173,6 +173,9 @@ $(function() {
 		var scroll1 = Math.pow(200*amount, (1/3));
 		var scroll2 = Math.pow(200*(amount+2893), (1/3));
 
+		var displayed1 = true;
+		var displayed2 = true;
+
 		$('#space').mousewheel(function(event, delta, deltaX, deltaY) {
 			if(delta > 0)
 			{
@@ -185,6 +188,15 @@ $(function() {
 				scroll2 -= 1.0;
 			}
 
+			if(!displayed1)
+			{
+				$('#layer1').animate({'opacity': 1}, 200);
+			}
+			if(!displayed2)
+			{
+				$('#layer2').animate({'opacity': 1}, 200);
+			}
+
 			d1Amount = Math.round((scroll1*scroll1*scroll1)/200);
 		    $('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d1Amount+', t 10.0)'});
 
@@ -192,9 +204,13 @@ $(function() {
 		    $('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d2Amount+', t 10.0)'});
 
 		    if(d1Amount <= amount-2893){
+		    	displayed1 = false;
+		    	$('#layer1').animate({'opacity': 0}, 200);
 		    	scroll1 = Math.pow(200*amount, (1/3));
 		    }
 		   	else if(d2Amount <= amount-2893){
+		   		displayed2 = false;
+		   		$('#layer2').animate({'opacity': 0}, 200);
 		    	scroll2 = Math.pow(200*(amount+2893), (1/3));
 		    }
 		});
