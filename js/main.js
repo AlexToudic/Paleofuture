@@ -3,18 +3,17 @@ $(function() {
 				  1- BACKBONE DECLARATIONS
 	----------------------------------------------------*/
 
-	var Article = Backbone.Model.extend();
+	var Article = Backbone.Model.extend({
+		defaults: {
+			'display': true
+		}
+	});
 
 	var Articles = Backbone.Collection.extend({
-		model: Article
-	});
-
-	var ArticlesBlock = Backbone.Model.extend({
-		articles: new Articles
-	});
-
-	var ArticlesBlocks = Backbone.Collection.extend({
-		model: ArticlesBlock
+		model: Article,
+		comparator: function(item){
+			return item.get('pub_year')||item.get('decade');
+		}
 	});
 
 	var ParticuleModel = Backbone.Model.extend({
@@ -69,92 +68,13 @@ $(function() {
 
     var AppRouter = Backbone.Router.extend({
         routes: {
-            "*actions": "defaultRoute" // matches http://example.com/#anything-here
+            "*actions": "defaultRoute"
         }
     });
-    // Initiate the router
-    var app_router = new AppRouter;
-
-    app_router.on('route:defaultRoute', function(actions) {
-    })
 
 	/*----------------------------------------------------
-				  2- INTERFACE ADAPTATION
+				  		3- FUNCTIONS
 	----------------------------------------------------*/
-
-	$('#travel').on('click', function(){
-		$('#home').animate({'margin-top': -window.innerHeight+'px'}, 500);
-	});
-
-	$('#layer2').css({'margin-top': -window.innerHeight+50+'px'});
-	$('#interactive').css({'margin-top': -window.innerHeight+'px'});
-
-	$('#content').on('click', function(){
-		$('#article-details').addClass('flip');
-		$('#content').addClass('flip');
-	});
-
-	$('#article-details').on('click', function(){
-		$('#article-details').removeClass('flip');
-		$('#content').removeClass('flip');
-	});
-
-	$('#cursor').draggable({axis: 'x', containment:'#timeline', stop: function(event, ui){
-		var nearestMarker = $($('#timeline .timemarker').get(0));
-		var handleCenter = $('#cursor').width()/2;
-
-		$('#timeline .timemarker').each(function(index, timemarker){
-			var offset = nearestMarker.offset().left ; 
-            var dist = Math.abs(offset - ($('#cursor').offset().left + handleCenter));
-
-            var markerOffset = $(timemarker).offset().left;
-            var markerDist = Math.abs(markerOffset - ($('#cursor').offset().left + handleCenter)); 
-
-
-     		if(markerDist < dist){
-     			nearestMarker = $(timemarker);
-     		}
-		});
-
-		$('#cursor').animate({'left': nearestMarker.offset().left - handleCenter}, 200)
-	}});
-
-	/*----------------------------------------------------
-				  		3- APPLICATION
-	----------------------------------------------------*/
-	allArticles = new ArticlesBlock();
-
-	allArticles.fetch({ url: "init.json" }).complete(function() {
-    	console.log(allArticles);
-	});
-
-	var amount = 75;
-	$('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+amount+', t 10.0)'});
-	$('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+(amount+2893)+', t 10.0)'});
-
-
-	var scroll1 = Math.pow(200*amount, (1/3));
-	var scroll2 = Math.pow(200*(amount+2893), (1/3));
-
-	$('#space').mousewheel(function(event, delta, deltaX, deltaY) {
-		console.log(delta);
-		if(delta > 0)
-		{
-			scroll1 += 1.0;
-			scroll2 += 1.0;	
-		}
-		if(delta < 0)
-		{
-			scroll1 -= 1.0;
-			scroll2 -= 1.0;
-		}
-
-		d1Amount = parseInt((scroll1*scroll1*scroll1)/200, 10);
-	    $('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d1Amount+', t 10.0)'});
-
-	    d2Amount = parseInt((scroll2*scroll2*scroll2)/200, 10);
-	    $('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d2Amount+', t 10.0)'});
-	});
 
 	var particulesInteraction = function(){
 		var canvas = document.getElementById('particules');
@@ -163,7 +83,6 @@ $(function() {
 		var particules = new Particules();
 
 		for (var i = 0; i < 1000; ++i) {
-
 			do {
 				var x = 1 + Math.random()*(canvas.width-1);
 				var y = 1 + Math.random()*(canvas.height-1);
@@ -183,7 +102,6 @@ $(function() {
 		view.render();
 
 		$('canvas').mousemove(function(e){
-			console.log(e);
 			force.set({'x': e.clientX*1/scaleX, 'y': e.clientY*1/scaleY});
 		});
 
@@ -193,6 +111,110 @@ $(function() {
 		}, 10);
 	};
 
+	/*----------------------------------------------------
+				  4- INTERFACE ADAPTATION
+	----------------------------------------------------*/
+
+	$('#layer2').css({'margin-top': -window.innerHeight+50+'px'});
+	$('#interactive').css({'margin-top': -window.innerHeight+'px'});
+
+	/*----------------------------------------------------
+				  		5- BEHAVIOURS
+	----------------------------------------------------*/
+
+	$('#travel').on('click', function(){
+		$('#home').animate({'margin-top': -window.innerHeight+'px'}, 500);
+		$('#layer1').css({'display': 'block'});
+		$('#layer2').css({'display': 'block'});
+	});
+
+	$('#content').on('click', function(){
+		$('#article-details').addClass('flip');
+		$('#content').addClass('flip');
+		$('#layer1').css({'display': 'none'});
+		$('#layer2').css({'display': 'none'});
+	});
+
+	$('#article-details').on('click', function(){
+		$('#article-details').removeClass('flip');
+		$('#content').removeClass('flip');
+		$('#layer1').css({'display': 'block'});
+		$('#layer2').css({'display': 'block'});
+	});
+
+	$('#cursor').draggable({axis: 'x', containment:'#timeline',
+		stop: function(event, ui){
+			var nearestMarker = $($('#timeline .timemarker').get(0));
+			var handleCenter = $('#cursor').width()/2;
+
+			$('#timeline .timemarker').each(function(index, timemarker){
+				var offset = nearestMarker.offset().left ; 
+	            var dist = Math.abs(offset - ($('#cursor').offset().left + handleCenter));
+   
+	            var markerOffset = $(timemarker).offset().left;
+	            var markerDist = Math.abs(markerOffset - ($('#cursor').offset().left + handleCenter));
+
+	     		if(markerDist < dist){
+	     			nearestMarker = $(timemarker);
+	     		}
+			});
+
+			$('#cursor').animate({'left': nearestMarker.offset().left - handleCenter}, 200)
+		}
+	});
+
+	var navigation = function(articlesList){
+		var index = 0;
+		var amount = 75;
+		$('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+amount+', t 10.0)'});
+		$('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+(amount+2893)+', t 10.0)'});
+
+
+		var scroll1 = Math.pow(200*amount, (1/3));
+		var scroll2 = Math.pow(200*(amount+2893), (1/3));
+
+		$('#space').mousewheel(function(event, delta, deltaX, deltaY) {
+			if(delta > 0)
+			{
+				scroll1 += 1.0;
+				scroll2 += 1.0;	
+			}
+			if(delta < 0)
+			{
+				scroll1 -= 1.0;
+				scroll2 -= 1.0;
+			}
+
+			d1Amount = Math.round((scroll1*scroll1*scroll1)/200);
+		    $('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d1Amount+', t 10.0)'});
+
+		    d2Amount = Math.round((scroll2*scroll2*scroll2)/200);
+		    $('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d2Amount+', t 10.0)'});
+
+		    if(d1Amount <= amount-2893){
+		    	scroll1 = Math.pow(200*amount, (1/3));
+		    }
+		   	else if(d2Amount <= amount-2893){
+		    	scroll2 = Math.pow(200*(amount+2893), (1/3));
+		    }
+		});
+	};
+
+	/*----------------------------------------------------
+				  		3- APPLICATION
+	----------------------------------------------------*/
+	allArticles = new Articles();
+
+	allArticles.fetch({url: "init.json"}).complete(function() {
+    	allArticles.sort();
+    	console.log(allArticles);
+	});
+
+    var app_router = new AppRouter;
+
+    app_router.on('route:defaultRoute', function(actions) {
+    	navigation(allArticles);
+    });
+
     Backbone.history.start();
-    particulesInteraction();
 });
