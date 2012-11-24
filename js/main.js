@@ -66,7 +66,9 @@ $(function() {
 
     var AppRouter = Backbone.Router.extend({
         routes: {
-            "*actions": "defaultRoute"
+        	"": "home",
+        	"travel/:decade": "travel",
+        	"travel/:decade/:year": "travel"
         }
     });
 
@@ -120,13 +122,7 @@ $(function() {
 				  		5- BEHAVIOURS
 	----------------------------------------------------*/
 
-	$('#travel').on('click', function(){
-		$('#home').animate({'margin-top': -window.innerHeight+'px'}, 500);
-		$('#layer1').css({'display': 'block'});
-		$('#layer2').css({'display': 'block'});
-	});
-
-	$('#content').on('click', function(){
+/*	$('#content').on('click', function(){
 		$('#article-details').addClass('flip');
 		$('#content').addClass('flip');
 		$('#layer1').css({'display': 'none'});
@@ -138,9 +134,9 @@ $(function() {
 		$('#content').removeClass('flip');
 		$('#layer1').css({'display': 'block'});
 		$('#layer2').css({'display': 'block'});
-	});
-
-	$('#cursor').draggable({axis: 'x', containment:'#timeline',
+	});*/
+	
+	$('#cursor').draggable({axis: 'x', containment:'#timeline', handle: '#timeline, .timemarker',
 		stop: function(event, ui){
 			var nearestMarker = $($('#timeline .timemarker').get(0));
 			var handleCenter = $('#cursor').width()/2;
@@ -157,9 +153,14 @@ $(function() {
 	     		}
 			});
 
-			$('#cursor').animate({'left': nearestMarker.offset().left - handleCenter}, 200)
+			$('#cursor').animate({'left': nearestMarker.offset().left - handleCenter}, 200);
+			$(location).attr('href',"#/travel/1870/1871");
 		}
 	});
+
+/*	$('#timeline, .timemarker').on('click', function(event){
+		$('#cursor').draggable( "option", "cursorAt", { left: event.offsetX -  $('#cursor').width()/2} );
+	});*/
 
 	var navigation = function(articlesList){
 		var index = 0;
@@ -212,8 +213,22 @@ $(function() {
 
     var app_router = new AppRouter;
 
-    app_router.on('route:defaultRoute', function(actions) {
+    app_router.on('route:home', function() {
+    	if($('#home').css('margin-top') === -window.innerHeight+'px')
+    		$('#home').animate({'margin-top': '0px'}, 200);
+    	if($('#layer1').css('display') !== 'none')
+    	{
+	    	$('#layer1').css({'display': 'none'});
+			$('#layer2').css({'display': 'none'});
+    	}
+    });
+
+    app_router.on('route:travel', function(decade, year){
     	navigation(allArticles);
+    	$('#home').animate({'margin-top': -window.innerHeight+'px'}, 200);
+    	
+    	$('#layer1').css({'display': 'block'});
+		$('#layer2').css({'display': 'block'});
     });
 
     Backbone.history.start();
