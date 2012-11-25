@@ -379,7 +379,7 @@ button.read-it-later {
     height: 59px;
     border: 0;
     background: url(../img/clock.png) 50% no-repeat;
-    -webkit-box-shadow: 0 0 1px 0 #B82E18, 0 0 2px 0 #F86E58;
+    box-shadow: -1px 0 0 0 #B82E18, -2px 0 0 0 #F86E58;
     position: absolute;
     right: 0;
     top: 0;
