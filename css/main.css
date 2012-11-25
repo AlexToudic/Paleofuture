@@ -433,6 +433,7 @@ button.read-it-later:hover {
 }
 
 .tweet p>img {
+    box-shadow: 1px 0 0 0 #F86E58, 2px 0 0 0 #B82E18;
     position: absolute;
     top: 0;
     left: 0;
