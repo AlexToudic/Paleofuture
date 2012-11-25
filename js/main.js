@@ -6,15 +6,15 @@ $(function() {
 	var id = 0;
 	var Article = Backbone.Model.extend({
 		initialize: function(){
-			this.id = id;
-			++id;
+			this.attributes.year = parseInt(this.attributes.year, 10);
+			this.attributes.decade = parseInt(this.attributes.decade, 10);
 		}
 	});
 
 	var Articles = Backbone.Collection.extend({
 		model: Article,
 		comparator: function(item){
-			return item.get('pub_year')||item.get('decade');
+			return item.get('year')||item.get('decade');
 		}
 	});
 
