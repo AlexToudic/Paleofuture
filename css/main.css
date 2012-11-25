@@ -107,7 +107,7 @@ html, body, #wrapper {
 }
 
 body {
-    background: url(http://lorempixel.com/1920/1080);
+    background: black;
 }
 
 a {
@@ -247,6 +247,7 @@ form#sign-twitter, form#sign-facebook {
 #layer1, #layer2 {
     width: 100%;
     height: 100%;
+    position: relative;
     display: none;
 }
 
@@ -297,9 +298,12 @@ form#sign-twitter, form#sign-facebook {
     width: 3px;
     height: 50px;
     background: white;
-    position: absolute;
-    top: 0;
-    left: 200px;
+    float: left;
+    margin: 0 0 0 8%;
+}
+
+.timemarker:first {
+    margin: 0 0 0 10%;
 }
 
 #cursor {
@@ -345,89 +349,81 @@ header .logo {
     background-color: navy;
 }
 
-.block1, .block2, .block3, .tweet, .minigrid {
-    float: left;
-    margin: 10px;
+.article {
+    width: 550px;
+    height: 414px;
+    position: absolute;
+    top: 200px;
+    left: 200px;
     overflow: hidden;
 }
 
-.block1>h1, .block2>h1, .block3>h1 {
-    width: 100%;
-    background: #FFCC9C;
-    margin: 0;
-    padding: 10px 0;
-    text-indent: 20px;
-    text-transform: uppercase;
-    color: white;
+.article-head {
+    position: relative;
+    height: 59px;
+    background: #f63e20;
+    border-bottom: 1px solid #b82e18;
 }
 
-.minigrid {
-    width: 635px;
-}
-
-.minigrid>* {
-    margin: 10px 0 10px 0;
-}
-
-.minigrid>*:first-child {
-    margin: 0 0 10px 0;
-}
-
-.minigrid>*:last-child {
-    margin: 10px 0 0 0;
-}
-
-.block1 {
-    width: 940px;
-    height: 300px;
-}
-
-.block1>h1 {
+.article-head>h1 {
+    padding: 13px 0;
+    text-indent: 15px;
     font-size: 18pt;
+    color: white;
+    text-shadow: 0px 2px #ED0000;
 }
 
-.block2 {
-    width: 635px;
-    height: 240px;
-}
-
-.block2>h1 {
-    font-size: 16pt;
-}
-
-.block3 {
-    width: 285px;
-    height: 410px;
-}
-
-.block3>h1 {
-    font-size: 14pt;
-}
-
-.block3.right {
-    float: none;
-    padding: 10px 0 0 10px;
+button.read-it-later {
+    width: 68px;
+    height: 59px;
+    border: 0;
+    background: url(../img/clock.png) 50% no-repeat;
+    -webkit-box-shadow: 0 0 1px 0 #B82E18, 0 0 2px 0 #F86E58;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .tweet {
-    width: 635px;
-    height: 65px;
-    background: gray;
+    width: 600px;
+    height: 79px;
+    background: #f63e20;
+    position: absolute;
+    top: 200px;
+    right: 200px;
 }
 
 .tweet p {
     margin: 0;
-    padding: 0;
+    padding: 8px 0 0 90px;
+    position: relative;
+    color: white;
+    font-size: 10pt;
 }
 
-#right-column, #left-column {
-    width: 10%;
-    height: 100%;
-    float: left;
+.tweet p>img {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
-.column {
+.tweet a {
+    color: #0649c3;
+}
 
+.author-s-name {
+    font-size: 14pt;
+    color: white;
+    text-shadow: 0px 2px #ED0000;
+}
+
+.author-s-mention {
+    font-size: 10pt;
+    color: #8f200e;
+}
+
+.expand {
+    color: #8f200e;
 }
 
 #account {

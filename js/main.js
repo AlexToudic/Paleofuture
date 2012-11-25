@@ -3,8 +3,12 @@ $(function() {
 				  1- BACKBONE DECLARATIONS
 	----------------------------------------------------*/
 
+	var id = 0;
 	var Article = Backbone.Model.extend({
-
+		initialize: function(){
+			this.id = id;
+			++id;
+		}
 	});
 
 	var Articles = Backbone.Collection.extend({
@@ -111,12 +115,24 @@ $(function() {
 		}, 10);
 	};
 
+	var generateTimeline = function(decade){
+
+		$('a.timemarker:nth-child(1)').attr({'href': '#/travel/'+decade});
+
+		for(var i = 1; i < 10; ++i)
+		{
+			$('a.timemarker:nth-child('+(i+1)+')').attr({'href': '#/travel/'+decade+'/'+(parseInt(decade,10)+i)});
+		}
+	};
+
 	/*----------------------------------------------------
 				  4- INTERFACE ADAPTATION
 	----------------------------------------------------*/
 
-	$('#layer2').css({'margin-top': -window.innerHeight+50+'px'});
-	$('#interactive').css({'margin-top': -window.innerHeight+'px'});
+	var adaptInterface = function() {
+		$('#layer2').css({'margin-top': -window.innerHeight+50+'px'});
+		$('#interactive').css({'margin-top': -window.innerHeight+'px'});
+	}
 
 	/*----------------------------------------------------
 				  		5- BEHAVIOURS
@@ -134,6 +150,11 @@ $(function() {
 		$('#content').removeClass('flip');
 		$('#layer1').css({'display': 'block'});
 		$('#layer2').css({'display': 'block'});
+	});*/
+
+/*	$(window).resize(function(){
+		console.log('resize');
+		adaptInterface();
 	});*/
 	
 	$('#cursor').draggable({axis: 'x', containment:'#timeline', handle: '#timeline, .timemarker',
@@ -154,7 +175,7 @@ $(function() {
 			});
 
 			$('#cursor').animate({'left': nearestMarker.offset().left - handleCenter}, 200);
-			$(location).attr('href',"#/travel/1870/1871");
+			$(location).attr('href', nearestMarker.attr('href'));
 		}
 	});
 
@@ -165,6 +186,10 @@ $(function() {
 	var navigation = function(articlesList){
 		var index = 0;
 		var amount = 75;
+
+		var frontLayer = $('#layer1');
+		var backLayer = $('#layer2');
+
 		$('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+amount+', t 10.0)'});
 		$('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+(amount+2893)+', t 10.0)'});
 
@@ -190,13 +215,31 @@ $(function() {
 		    d2Amount = Math.round((scroll2*scroll2*scroll2)/200);
 		    $('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d2Amount+', t 10.0)'});
 
+		    if(Math.abs(d1Amount) < Math.abs(d2Amount) && frontLayer !== $('#layer1'))
+		    {
+		    	frontLayer = $('#layer1');
+		    	backLayer = $('#layer2');
+
+		    	frontLayer.css({'z-index': 100});
+		    	backLayer.css({'z-index': 50});
+		    }
+
+		  	else if(Math.abs(d1Amount) > Math.abs(d2Amount) && frontLayer !== $('#layer2'))
+		    {
+		    	frontLayer = $('#layer2');
+		    	backLayer = $('#layer1');
+
+		    	frontLayer.css({'z-index': 100});
+		    	backLayer.css({'z-index': 50});
+		    }
+
 		    if(d1Amount <= amount-2893){
-		    	displayed1 = false;
-		    	scroll1 = Math.pow(200*amount, (1/3));
+		    	d1Amount = -d1Amount;
+		    	scroll1 = -scroll1;
 		    }
 		   	else if(d2Amount <= amount-2893){
-		   		displayed2 = false;
-		    	scroll2 = Math.pow(200*(amount+2893), (1/3));
+		   		d2Amount = -d2Amount;
+		    	scroll2 = -scroll2;
 		    }
 		});
 	};
@@ -223,13 +266,33 @@ $(function() {
     	}
     });
 
+    var previousDecade = 0;
+    var previousYear = 0;
+
     app_router.on('route:travel', function(decade, year){
-    	navigation(allArticles);
+    	if(year === undefined)
+    		year = decade;
+
+    	if(decade !== previousDecade)
+    	{
+    		previousDecade = decade;
+    		generateTimeline(decade);
+    		navigation(allArticles);
+    	}
+
+    	if(year !== previousYear)
+    	{
+    		previousYear = year;
+    		var position = $($('a.timemarker').get(year-decade)).offset().left-$('#cursor').width()/2;
+    		$('#cursor').animate({'left': position+'px'}, 200);
+    	}
+
     	$('#home').animate({'margin-top': -window.innerHeight+'px'}, 200);
     	
     	$('#layer1').css({'display': 'block'});
 		$('#layer2').css({'display': 'block'});
     });
 
+	adaptInterface();
     Backbone.history.start();
 });
