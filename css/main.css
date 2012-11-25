@@ -108,6 +108,7 @@ html, body, #wrapper {
 
 body {
     background: black;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
@@ -388,7 +389,7 @@ button.read-it-later:hover {
     background: url(../img/clock-hover.png) 50% no-repeat;
 }
 
-.article:hover>.read-more {
+.article a:hover>.read-more {
     display: block;
 }
 
@@ -405,7 +406,7 @@ button.read-it-later:hover {
     background: rgba(0, 0, 0, 0.75);
 }
 
-.read-more a {
+.read-more p {
     position: absolute;
     top: 50%;
     left: 50%;
