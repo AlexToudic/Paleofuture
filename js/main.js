@@ -1,4 +1,7 @@
 $(function() {
+    var currentDecade = 0;
+    var currentYear = 0;
+
 	/*----------------------------------------------------
 				  1- BACKBONE DECLARATIONS
 	----------------------------------------------------*/
@@ -157,12 +160,12 @@ $(function() {
 		adaptInterface();
 	});*/
 	
-	$('#cursor').draggable({axis: 'x', containment:'#timeline', handle: '#timeline, .timemarker',
+	$('#cursor').draggable({axis: 'x', containment:'#time-rule', handle: '.timemarker',
 		stop: function(event, ui){
-			var nearestMarker = $($('#timeline .timemarker').get(0));
+			var nearestMarker = $($('#time-rule .timemarker').get(0));
 			var handleCenter = $('#cursor').width()/2;
 
-			$('#timeline .timemarker').each(function(index, timemarker){
+			$('#time-rule .timemarker').each(function(index, timemarker){
 				var offset = nearestMarker.offset().left ; 
 	            var dist = Math.abs(offset - ($('#cursor').offset().left + handleCenter));
    
@@ -179,6 +182,13 @@ $(function() {
 		}
 	});
 
+	$('#quick-decade button[name="decade-up"]').on('click', function(){
+		window.location = "#/travel/"+(currentDecade+10);
+	});
+	$('#quick-decade button[name="decade-down"]').on('click', function(){
+		window.location = "#/travel/"+(currentDecade-10);
+	});
+
 /*	$('#timeline, .timemarker').on('click', function(event){
 		$('#cursor').draggable( "option", "cursorAt", { left: event.offsetX -  $('#cursor').width()/2} );
 	});*/
@@ -191,11 +201,11 @@ $(function() {
 		var backLayer = $('#layer2');
 
 		$('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+amount+', t 10.0)'});
-		$('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+(amount+2893)+', t 10.0)'});
+		$('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+(amount+2999)+', t 10.0)'});
 
 
 		var scroll1 = Math.pow(200*amount, (1/3));
-		var scroll2 = Math.pow(200*(amount+2893), (1/3));
+		var scroll2 = Math.pow(200*(amount+2000), (1/3));
 
 		$('#space').mousewheel(function(event, delta, deltaX, deltaY) {
 			if(delta > 0)
@@ -233,13 +243,18 @@ $(function() {
 		    	backLayer.css({'z-index': 50});
 		    }
 
-		    if(d1Amount <= amount-2893){
+		    console.log(d1Amount, d2Amount);
+
+		    if(d1Amount <= amount-3000 || d1Amount >= -(amount-3000)){
 		    	d1Amount = -d1Amount;
 		    	scroll1 = -scroll1;
+		    	// window.location = "#/travel/"+currentDecade+"/"+(currentYear+1);
 		    }
-		   	else if(d2Amount <= amount-2893){
+		   	
+		   	if(d2Amount <= amount-3000 || d2Amount >= -(amount-3000)){
 		   		d2Amount = -d2Amount;
 		    	scroll2 = -scroll2;
+		    	// window.location = "#/travel/"+currentDecade+"/"+(currentYear+1);
 		    }
 		});
 	};
@@ -266,23 +281,21 @@ $(function() {
     	}
     });
 
-    var previousDecade = 0;
-    var previousYear = 0;
-
     app_router.on('route:travel', function(decade, year){
     	if(year === undefined)
     		year = decade;
 
-    	if(decade !== previousDecade)
+    	if(decade !== currentDecade)
     	{
-    		previousDecade = decade;
+    		currentDecade = parseInt(decade, 10);
+    		$('#decade-content p').html(decade);
     		generateTimeline(decade);
     		navigation(allArticles);
     	}
 
-    	if(year !== previousYear)
+    	if(year !== currentYear)
     	{
-    		previousYear = year;
+    		currentYear = parseInt(year, 10);
     		var position = $($('a.timemarker').get(year-decade)).offset().left-$('#cursor').width()/2;
     		$('#cursor').animate({'left': position+'px'}, 200);
     	}

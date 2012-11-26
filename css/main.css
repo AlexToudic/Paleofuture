@@ -93,11 +93,6 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-.clear {
-    width: 100%;
-    height: 20px;
-}
-
 html, body, #wrapper {
     width: 100%;
     height: 100%;
@@ -107,8 +102,14 @@ html, body, #wrapper {
 }
 
 body {
-    background: black;
-    font-family: Arial, Helvetica, sans-serif;
+    /*background: -moz-linear-gradient(-45deg, #0e0813 0%, #341f29 92%, #3c2235 98%);
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#0e0813), color-stop(92%,#341f29), color-stop(98%,#3c2235));
+    background: -webkit-linear-gradient(-45deg, #0e0813 0%,#341f29 92%,#3c2235 98%);
+    background: -o-linear-gradient(-45deg, #0e0813 0%,#341f29 92%,#3c2235 98%);
+    background: -ms-linear-gradient(-45deg, #0e0813 0%,#341f29 92%,#3c2235 98%);
+    background: linear-gradient(135deg, #0e0813 0%,#341f29 92%,#3c2235 98%);*/
+    background: url(../img/background.png) 0 80px no-repeat;
+    font-family: Helvetica, Arial,  sans-serif;
 }
 
 a {
@@ -288,16 +289,150 @@ form#sign-twitter, form#sign-facebook {
     height: 100%;
 }
 
+#search-bar {
+    width: 254px;
+    height: 44px;
+    top: 0;
+    left: 0;
+    box-shadow: 1px 0px 0px 0px #2e2e2e, 2px 0 0 0 #000000; 
+}
+
+#search-bar>form>input[type="text"] {
+    width: 199px;
+    height: 25px;
+    margin: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px 0px #313131, 0 0px 14px -4px #000000 inset;
+    background-image: linear-gradient(bottom, #262626 0%, #0f0f0f 100%);
+    background-image: -o-linear-gradient(bottom, #262626 0%, #0f0f0f 100%);
+    background-image: -moz-linear-gradient(bottom, #262626 0%, #0f0f0f 100%);
+    background-image: -webkit-linear-gradient(bottom, #262626 0%, #0f0f0f 100%);
+    background-image: -ms-linear-gradient(bottom, #262626 0%, #0f0f0f 100%);
+    outline: none;
+    color: white;
+    font-size: 11pt;
+    font-weight: lighter;
+    text-indent: 10px;
+    position: relative;
+}
+
+input::-webkit-input-placeholder {
+    color: #3b3b3b;
+}
+
+input[name="find"] {
+    width: 21px;
+    height: 21px;
+    margin: 10px;
+    padding: 0;
+    border: 0;
+    background: url(../img/glass.png);
+    position: absolute;
+    top: 2px;
+    left: 209px;
+}
+
+input[name="find"]:hover {
+    background: url(../img/glass-hover.png);
+}
+
 #timeline {
     position: relative;
     width: 100%;
-    height: 50px;
-    background: navy;
+    height: 34px;
+    background: #c03221;
+    border-top: 1px solid black;
+    border-bottom: 1px solid #810000;
+}
+
+#filters, #decade {
+    width: 78px;
+    height: 34px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 1px 0 0 #f63e20, 2px 0 0 #810000;
+}
+
+#decade {
+    width: 77px;
+    left: 80px;
+}
+ 
+#filters-content, #decade-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    margin: 0;
+}
+
+#filters-content p, #decade-content p {
+    margin: 0;
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    font-size: 11pt;
+    color: white;
+    text-shadow: 0px 1px 1px #000000;
+}
+
+#decade-content p {
+    left: 16px;
+}
+
+#filters-content button, #decade-content button {
+    width: 27px;
+    height: 34px;
+    background: url(../img/classic-dropdown.png);
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+#quick-decade {
+    width: 32px;
+    height: 34px;
+    position: absolute;
+    top: 0;
+    left: 159px;
+    box-shadow: 1px 0 0 #f63e20, 2px 0 0 #810000;
+}
+
+#quick-decade button {
+    width: 32px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    position: absolute;
+}
+
+#quick-decade button[name="decade-up"] {
+    background: url(../img/decade-up.png);
+    box-shadow: 0px 1px 0px #f63e20, 0px 2px 0px #810000;
+}
+
+#quick-decade button[name="decade-down"] {
+    top: 18px;
+    background: url(../img/decade-down.png);
+}
+
+#time-rule {
+    height: 34px;
+    width: -webkit-calc(100% - 193px);
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .timemarker {
-    width: 3px;
-    height: 50px;
+    width: 1px;
+    height: 34px;
     background: white;
     float: left;
     margin: 0 0 0 8%;
@@ -308,19 +443,22 @@ form#sign-twitter, form#sign-facebook {
 }
 
 #cursor {
+    width: 16px;
+    height: 41px;
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
-    height: 30px;
-    width: 30px;
-    background: black;
+    background: url(../img/cursor.png);
+    cursor: move;
+    z-index: 200;
 }
 
 header {
     position: relative;
     width: 100%;
-    height: 50px;
-    background: #787878;
+    height: 44px;
+    background: #232323;
+    border-bottom: 1px solid #2e2e2e;
 }
 
 header > div {
@@ -333,21 +471,19 @@ header .logo {
     top: 50%;
     left: 50%;
     margin: -22px -117.5px;
+    color: #171717;
+    text-shadow: 0 1px 2px #363636;
 }
 
-#options {
-    top: 50%;
-    left: 20px;
-    margin-top: -11px;
-}
-
-#counter {
-    position: absolute;
-    width: 77px;
-    height: 25px;
-    top: 0;
-    left: 84px;
-    background-color: navy;
+header .logo h1 {
+    font-size: 72px;
+    background-image: linear-gradient(bottom, #222222 0%, #0f0f0f 100%);
+    background-image: -o-linear-gradient(bottom, #222222 0%, #0f0f0f 100%);
+    background-image: -moz-linear-gradient(bottom, #222222 0%, #0f0f0f 100%);
+    background-image: -webkit-linear-gradient(bottom, #222222 0%, #0f0f0f 100%);
+    background-image: -ms-linear-gradient(bottom, #222222 0%, #0f0f0f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .article {
@@ -459,7 +595,32 @@ button.read-it-later:hover {
 }
 
 #account {
-    right: 20px;
+    top: 0;
+    right: 0;
+    box-shadow: 0px -1px 0px 1px #000000, 0 -2px 0 2px #2e2e2e;
+}
+
+#account p {
+    margin: 0;
+    padding: 0;
+    float: left;
+    color: #ffffff;
+    font-size: 10pt;
+}
+
+#account .user-name {
+    margin: 0 10px;
+    text-shadow: 0 1px 1px #000000;
+}
+
+#account button {
+    width: 27px;
+    height: 44px;
+    float: left;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: url(../img/user-menu.png);
 }
 
 #article-details {

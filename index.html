@@ -7,6 +7,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title></title>
+        <!-- DEVELOPPEMENT -->
+            <meta http-equiv="pragma" content="no-cache"> 
+            <meta http-equiv="cache-control" content="no-cache"> 
+            <meta http-equiv="expires" content="0">
+        <!-- FIN DEVELOPPEMENT -->
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
@@ -64,21 +69,45 @@
             </div>
             <div id="content">
                <header>
-                    <div id="options">You are in : <div id="counter"></div></div>
+                    <div id="search-bar">
+                        <form name="search">
+                            <input type="text" name="search" placeHolder="Search">
+                            <input type="submit" name="find" value="">
+                        </form>
+                    </div>
                     <h1 class="logo">PALEOFUTURE</h1>
-                    <div id="account">Thomas De Cicco</div>
+                    <div id="account">
+                        <p><span class="user-name">Matt Novak</span><img src="img/matt-novak-mini.jpg" alt="Matt Novak"></p>
+                        <button name="user-menu"></button>
+                    </div>
                 </header>
                 <div id="timeline">
-                    <a class="timemarker"></a>
-                    <a class="timemarker"></a>
-                    <a class="timemarker"></a>
-                    <a class="timemarker"></a>
-                    <a class="timemarker"></a>
-                    <a class="timemarker"></a>
-                    <a class="timemarker"></a>
-                    <a class="timemarker"></a>
-                    <a class="timemarker"></a>
-                    <a class="timemarker"></a>
+                    <div id="filters">
+                        <div id="filters-content">
+                            <p>Filters</p><button name="filters-menu"></button>
+                        </div>
+                    </div>
+                   <div id="decade">
+                        <div id="decade-content">
+                            <p></p><button name="decade-menu"></button>
+                        </div>
+                    </div>
+                    <div id="quick-decade">
+                        <button name="decade-up"></button>
+                        <button name="decade-down"></button>
+                    </div>
+                    <div id="time-rule">
+                        <a class="timemarker"></a>
+                        <a class="timemarker"></a>
+                        <a class="timemarker"></a>
+                        <a class="timemarker"></a>
+                        <a class="timemarker"></a>
+                        <a class="timemarker"></a>
+                        <a class="timemarker"></a>
+                        <a class="timemarker"></a>
+                        <a class="timemarker"></a>
+                        <a class="timemarker"></a>
+                    </div>
                     <div id="cursor"></div>
                 </div>
                 
