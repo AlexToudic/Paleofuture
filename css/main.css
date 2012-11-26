@@ -278,6 +278,7 @@ form#sign-twitter, form#sign-facebook {
     -webkit-timing-function : ease-in-out;
     -webkit-transform-origin : 50% 0;
     -webkit-backface-visibility: hidden;
+    overflow: hidden;
 }
 
 #content.flip {

@@ -1,6 +1,6 @@
 $(function() {
     var currentDecade = 0;
-    var currentYear = 0;
+    var currentBlock = 0;
 
 	/*----------------------------------------------------
 				  1- BACKBONE DECLARATIONS
@@ -75,7 +75,7 @@ $(function() {
         routes: {
         	"": "home",
         	"travel/:decade": "travel",
-        	"travel/:decade/:year": "travel"
+        	"travel/:decade/:block": "travel"
         }
     });
 
@@ -120,11 +120,9 @@ $(function() {
 
 	var generateTimeline = function(decade){
 
-		$('a.timemarker:nth-child(1)').attr({'href': '#/travel/'+decade});
-
-		for(var i = 1; i < 10; ++i)
+		for(var i = 0; i < 10; ++i)
 		{
-			$('a.timemarker:nth-child('+(i+1)+')').attr({'href': '#/travel/'+decade+'/'+(parseInt(decade,10)+i)});
+			$('a.timemarker:nth-child('+(i+1)+')').attr({'href': '#/travel/'+decade+'/'+i});
 		}
 	};
 
@@ -248,13 +246,13 @@ $(function() {
 		    if(d1Amount <= amount-3000 || d1Amount >= -(amount-3000)){
 		    	d1Amount = -d1Amount;
 		    	scroll1 = -scroll1;
-		    	// window.location = "#/travel/"+currentDecade+"/"+(currentYear+1);
+		    	window.location = "#/travel/"+currentDecade+"/"+(currentBlock+1);
 		    }
 		   	
 		   	if(d2Amount <= amount-3000 || d2Amount >= -(amount-3000)){
 		   		d2Amount = -d2Amount;
 		    	scroll2 = -scroll2;
-		    	// window.location = "#/travel/"+currentDecade+"/"+(currentYear+1);
+		    	window.location = "#/travel/"+currentDecade+"/"+(currentBlock+1);
 		    }
 		});
 	};
@@ -281,11 +279,9 @@ $(function() {
     	}
     });
 
-    app_router.on('route:travel', function(decade, year){
-    	if(year === undefined)
-    		year = decade;
+    app_router.on('route:travel', function(decade, block){
 
-    	if(decade !== currentDecade)
+    	if(parseInt(decade, 10) !== currentDecade)
     	{
     		currentDecade = parseInt(decade, 10);
     		$('#decade-content p').html(decade);
@@ -293,10 +289,10 @@ $(function() {
     		navigation(allArticles);
     	}
 
-    	if(year !== currentYear)
+    	if(parseInt(block, 10) !== currentBlock)
     	{
-    		currentYear = parseInt(year, 10);
-    		var position = $($('a.timemarker').get(year-decade)).offset().left-$('#cursor').width()/2;
+    		currentBlock = parseInt(block, 10);
+    		var position = $($('a.timemarker').get(block)).offset().left-$('#cursor').width()/2;
     		$('#cursor').animate({'left': position+'px'}, 200);
     	}
 
