@@ -352,7 +352,7 @@ ul#user-options {
     z-index: 200;
     position:  absolute;
     top: 46px;
-    right: 10px;
+    left: 0;
     background: red;
     margin: 0;
     padding: 0;
@@ -495,7 +495,7 @@ ul#decades {
     height: 455px;
     position: absolute;
     top: 35px;
-    left: 8px;
+    left: 0;
     background: #c03221;
     margin: 0;
     padding: 0;

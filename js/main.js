@@ -270,6 +270,8 @@ $(function() {
 		var index = 2;
 
 		navigate = function(event, delta, deltaX, deltaY) {
+			if(index > blocksList.length)
+				window.location = "#/travel/"+(currentDecade+1);
 
 			if(delta > 0)
 			{
