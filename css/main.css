@@ -109,7 +109,7 @@ body {
     background: -ms-linear-gradient(-45deg, #0e0813 0%,#341f29 92%,#3c2235 98%);
     background: linear-gradient(135deg, #0e0813 0%,#341f29 92%,#3c2235 98%);*/
     background: url(../img/background.png) 0 80px no-repeat;
-    font-family: Helvetica, Arial,  sans-serif;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -241,7 +241,7 @@ form#sign-twitter, form#sign-facebook {
 
 #space {
     width: 100%;
-    height: -webkit-calc(100% - 100px);
+    height: -webkit-calc(100% - 80px);
     overflow-y: scroll;
     overflow: hidden;
 }
@@ -251,6 +251,14 @@ form#sign-twitter, form#sign-facebook {
     height: 100%;
     position: relative;
     display: none;
+}
+
+#layer1 {
+    z-index: 100;
+}
+
+#layer2 {
+    z-index: 50;
 }
 
 #space:after {
@@ -339,6 +347,124 @@ input[name="find"]:hover {
     background: url(../img/glass-hover.png);
 }
 
+ul#user-options {
+    display: none;
+    z-index: 200;
+    position:  absolute;
+    top: 46px;
+    right: 10px;
+    background: red;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+}
+
+ul#user-options li {
+    position: relative;
+}
+
+ul#user-options a {
+    position: relative;
+    display: block;
+    width: 135px;
+    height: 41px;
+    border: 1px solid black;
+    border-top: none;
+    color: #888888;
+    font-weight: lighter;
+    text-shadow: 0 -1px 0 black;
+    box-shadow: -1px -1px 0 #484848 inset;
+    background: #2e2e2e;
+}
+
+ul#user-options a.log-out {
+    color: black;
+    text-shadow: 0 -1px 0 #d63030;
+    box-shadow: -1px -1px 0 #ff4242 inset;
+    background: #b32121;
+}
+
+.favorite-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../img/star.png);
+}
+
+a.favorites:hover .favorite-icon {
+    background: url(../img/star-hover.png);
+}
+
+.extras-icon {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    background: url(../img/extra.png);
+}
+
+a.extras:hover .extras-icon, a.extras.hover .extras-icon {
+    background: url(../img/extra-hover.png);
+}
+
+.extra-icon {
+    display: inline-block;
+    width: 13px;
+    height: 14px;
+    background: url(../img/sub-extra.png);
+}
+
+.account-icon {
+    display: inline-block;
+    width: 17px;
+    height: 22px;
+    background: url(../img/infos.png);
+}
+
+a.account:hover .account-icon {
+    background: url(../img/infos-hover.png);
+}
+
+.log-out-icon {
+    display: inline-block;
+    width: 19px;
+    height: 20px;
+    background: url(../img/log-out.png);
+}
+
+ul#user-options a:hover, ul#user-options a.hover {
+    color: white;
+    background: #3b3b3b;
+}
+
+ul#user-options a.log-out:hover {
+    color: white;
+    background: #b32121;
+}
+
+ul#extras {
+    display: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    list-style: none;
+    top: 0;
+    left: -136px;
+}
+
+ul#extras a {
+    display: block;
+    width: 135px;
+    height: 41px;
+    color: #888888;
+    border-right: none;
+    background: #3b3b3b;
+}
+
+ul#extras a:hover {
+    color: white;
+}
+
 #timeline {
     position: relative;
     width: 100%;
@@ -361,7 +487,43 @@ input[name="find"]:hover {
     width: 77px;
     left: 80px;
 }
- 
+
+ul#decades {
+    display: none;
+    z-index: 200;
+    width: 62px;
+    height: 455px;
+    position: absolute;
+    top: 35px;
+    left: 8px;
+    background: #c03221;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    box-shadow: -2px 0 1px #f63e20 inset;
+}
+
+ul#decades a.decade {
+    display: block;
+    width: 60px;
+    height: 34px;
+    color: white;
+    border: 1px solid #810000;
+    border-top: 0;
+    text-shadow: 0px 1px 1px #810000;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+}
+
+ul#decades a.decade li {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -10px -19px;
+}
+
 #filters-content, #decade-content {
     width: 100%;
     height: 100%;
@@ -376,7 +538,7 @@ input[name="find"]:hover {
     left: 10px;
     font-size: 11pt;
     color: white;
-    text-shadow: 0px 1px 1px #000000;
+    text-shadow: 0px 1px 1px #810000;
 }
 
 #decade-content p {
@@ -557,8 +719,8 @@ button.read-it-later:hover {
     height: 79px;
     background: #f63e20;
     position: absolute;
-    top: 200px;
-    right: 200px;
+    top: 48px;
+    right: 30px;
 }
 
 .tweet p {

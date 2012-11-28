@@ -1,6 +1,8 @@
 $(function() {
     var currentDecade = 0;
-    var currentBlock = 0;
+    var currentBlock = -1;
+    var navigate;
+    var timer;
 
 	/*----------------------------------------------------
 				  1- BACKBONE DECLARATIONS
@@ -9,15 +11,38 @@ $(function() {
 	var id = 0;
 	var Article = Backbone.Model.extend({
 		initialize: function(){
-			this.attributes.year = parseInt(this.attributes.year, 10);
-			this.attributes.decade = parseInt(this.attributes.decade, 10);
+			this.set('articleId', id++);
+			this.set('year', parseInt(this.attributes.year, 10));
+			this.set('decade', parseInt(this.attributes.decade, 10));
+			this.set('view', new ArticleBlockView({'model': this}));
 		}
 	});
 
-	var Articles = Backbone.Collection.extend({
+	var ArticleBlockView = Backbone.View.extend({
+	    initialize: function(){
+	      	this.source = $("#article-picture-template").html();
+	      	this.template = Handlebars.compile(this.source);
+	    },
+	    render: function(el){
+	    	$(el).append(this.template(this.model.toJSON()));
+	    }
+	});
+
+	var blockId = 0;
+	var Block = Backbone.Collection.extend({
 		model: Article,
+		initialize: function () {
+			this.id = blockId++;
+		},
 		comparator: function(item){
 			return item.get('year')||item.get('decade');
+		},
+		render: function(el){
+			$(el).html('');
+			this.each(function(a){
+				a.get('view').render(el);
+				$(el+'>*:last').css({'top': Math.random()*window.innerHeight+'px', 'left': Math.random()*window.innerWidth+'px'});
+			});
 		}
 	});
 
@@ -126,12 +151,27 @@ $(function() {
 		}
 	};
 
+	var navigateTo = function(articlesList, block){
+		if(block > currentBlock)
+		{
+			timer = setInterval(function(){
+				navigate(null, 1, null, null);
+			}, 0.5);
+		}
+		else
+		{
+			timer = setInterval(function(){
+				navigate(null, -1, null, null);
+			}, 0.5);
+		}
+	}
+
 	/*----------------------------------------------------
 				  4- INTERFACE ADAPTATION
 	----------------------------------------------------*/
 
 	var adaptInterface = function() {
-		$('#layer2').css({'margin-top': -window.innerHeight+50+'px'});
+		$('#layer2').css({'margin-top': -window.innerHeight+80+'px'});
 		$('#interactive').css({'margin-top': -window.innerHeight+'px'});
 	}
 
@@ -187,11 +227,22 @@ $(function() {
 		window.location = "#/travel/"+(currentDecade-10);
 	});
 
+	$('#decade-content button').on('click', function(){
+		if($('ul#decades').css('display') === 'none')
+			$('ul#decades').css({'display': 'block'});
+		else
+			$('ul#decades').css({'display': 'none'});
+	});
+
+	$('a.decade').on('click', function(){
+		$('ul#decades').css({'display': 'none'});
+	});
+
 /*	$('#timeline, .timemarker').on('click', function(event){
 		$('#cursor').draggable( "option", "cursorAt", { left: event.offsetX -  $('#cursor').width()/2} );
 	});*/
 
-	var navigation = function(articlesList){
+	var navigation = function(blocksList){
 		var index = 0;
 		var amount = 75;
 
@@ -205,23 +256,58 @@ $(function() {
 		var scroll1 = Math.pow(200*amount, (1/3));
 		var scroll2 = Math.pow(200*(amount+2000), (1/3));
 
-		$('#space').mousewheel(function(event, delta, deltaX, deltaY) {
+		var previousWay = 0;
+		var newWay = 0;
+		var reverse1 = false;
+		var reverse2 = false;
+
+		var frontLayer = $('#layer1');
+		var backLayer = $('#layer2');
+
+		blocksList[0].render('#layer1');
+		blocksList[1].render('#layer2');
+
+		var index = 2;
+
+		navigate = function(event, delta, deltaX, deltaY) {
+
 			if(delta > 0)
 			{
+				newWay = -1;
 				scroll1 += 1.0;
 				scroll2 += 1.0;	
 			}
-			if(delta < 0)
+			else
 			{
+				newWay = 1;
 				scroll1 -= 1.0;
 				scroll2 -= 1.0;
 			}
+
+			// if(previousWay === 0)
+			// 	previousWay = newWay;
+			// else if(previousWay !== newWay)
+			// {
+			// 	previousWay = newWay;
+			// 	reverse1 = true;
+			// 	reverse2 = true;
+			// }
+
 
 			d1Amount = Math.round((scroll1*scroll1*scroll1)/200);
 		    $('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d1Amount+', t 10.0)'});
 
 		    d2Amount = Math.round((scroll2*scroll2*scroll2)/200);
 		    $('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d2Amount+', t 10.0)'});
+
+		    if(d1Amount === 0)
+		    {
+		    	window.location = "#/travel/"+currentDecade+"/"+(index-2);
+		    }
+		    if(d2Amount === 0)
+		    {
+		    	window.location = "#/travel/"+currentDecade+"/"+(index-1);
+		    }
 
 		    if(Math.abs(d1Amount) < Math.abs(d2Amount) && frontLayer !== $('#layer1'))
 		    {
@@ -241,35 +327,64 @@ $(function() {
 		    	backLayer.css({'z-index': 50});
 		    }
 
-		    console.log(d1Amount, d2Amount);
-
 		    if(d1Amount <= amount-3000 || d1Amount >= -(amount-3000)){
 		    	d1Amount = -d1Amount;
 		    	scroll1 = -scroll1;
-		    	window.location = "#/travel/"+currentDecade+"/"+(currentBlock+1);
+		    	
+		    	if(delta < 0)
+		    	{
+					blocksList[index++].render('#layer1');
+				}
+				else
+				{
+					blocksList[index--].render('#layer1');
+				}
 		    }
 		   	
 		   	if(d2Amount <= amount-3000 || d2Amount >= -(amount-3000)){
 		   		d2Amount = -d2Amount;
 		    	scroll2 = -scroll2;
-		    	window.location = "#/travel/"+currentDecade+"/"+(currentBlock+1);
+		    	
+		    	if(delta < 0)
+		    	{
+					blocksList[index++].render('#layer2');
+				}
+				else
+				{
+					blocksList[index--].render('#layer2');
+				}
 		    }
-		});
+		}
+
+		$('#space').mousewheel(navigate);
 	};
+
+	$('button[name="user-menu"]').on('click', function(){
+		if($('ul#user-options').css('display') === 'none')
+			$('ul#user-options').css({'display': 'block'});
+		else
+			$('ul#user-options').css({'display': 'none'});
+	});
+
+	$('ul#user-options a.extras, ul#extras').on('mouseenter', function(){
+		$('ul#user-options a.extras').addClass('hover');
+		$('ul#extras').css({'display': 'block'});
+	});
+
+	$('ul#user-options a.extras, ul#extras').on('mouseleave', function(){
+		$('ul#user-options a.extras').removeClass('hover');
+		$('ul#extras').css({'display': 'none'});
+	});
 
 	/*----------------------------------------------------
 				  		3- APPLICATION
 	----------------------------------------------------*/
-	allArticles = new Articles();
-
-	allArticles.fetch({url: "init.json"}).complete(function() {
-    	allArticles.sort();
-    	console.log(allArticles);
-	});
 
     var app_router = new AppRouter;
 
     app_router.on('route:home', function() {
+		clearInterval(timer);
+
     	if($('#home').css('margin-top') === -window.innerHeight+'px')
     		$('#home').animate({'margin-top': '0px'}, 200);
     	if($('#layer1').css('display') !== 'none')
@@ -280,17 +395,70 @@ $(function() {
     });
 
     app_router.on('route:travel', function(decade, block){
+    	clearInterval(timer);
+
+    	var allBlocks = new Array;
+
+    	var articlesList;
+
+    	if(!block)
+    	{
+    		block = 0;
+    	}
 
     	if(parseInt(decade, 10) !== currentDecade)
     	{
+    		$('#space').unmousewheel();
     		currentDecade = parseInt(decade, 10);
     		$('#decade-content p').html(decade);
+
+	    	if(allArticles === undefined)
+	    	{
+				var allArticles = new Block();
+
+				allArticles.fetch({url: "init.json"}).complete(function() {
+			    	allArticles.sort();
+
+			    	var displayedArticles = allArticles.where({'decade': currentDecade});
+
+			    	for(var i = 0; i < 2; ++i)
+			    	{
+			    		var newBlock = new Block();
+
+			    		for(var j = 5*i; j < 5*i+5; ++j)
+			    			newBlock.add(displayedArticles[j]);
+
+			    		allBlocks.push(newBlock);
+			    	}
+
+			    	navigation(allBlocks);
+				});
+	    	}
+	    	else
+	    	{
+		 		var displayedArticles = allArticles.where({'decade': currentDecade});
+
+		    	for(var i = 0; i < 2; ++i)
+		    	{
+		    		var newBlock = new Block();
+
+		    		for(var j = 5*i; j < 5*i+5; ++j)
+		    			newBlock.add(displayedArticles[j]);
+
+		    		allBlocks.push(newBlock);
+		    	}
+
+		    	navigation(allBlocks);
+	    	}
+
     		generateTimeline(decade);
-    		navigation(allArticles);
     	}
 
     	if(parseInt(block, 10) !== currentBlock)
     	{
+    		// if(currentBlock != -1)
+    		// 	navigateTo(articlesList, block);
+
     		currentBlock = parseInt(block, 10);
     		var position = $($('a.timemarker').get(block)).offset().left-$('#cursor').width()/2;
     		$('#cursor').animate({'left': position+'px'}, 200);

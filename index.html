@@ -79,6 +79,18 @@
                     <div id="account">
                         <p><span class="user-name">Matt Novak</span><img src="img/matt-novak-mini.jpg" alt="Matt Novak"></p>
                         <button name="user-menu"></button>
+                        <ul id="user-options">
+                            <a href="#" class="user-option favorites"><li><i class="favorite-icon"></i> My favorites</li></a>
+                            <li><a href="#" class="user-option extras"><i class="extras-icon"></i> My extras</a>
+                                <ul id="extras">
+                                    <a href="#" class="extra"><li><i class="extra-icon"></i> Solar System</li></a>
+                                    <a href="#" class="extra"><li><i class="extra-icon"></i> Asteroids Rain</li></a>
+                                    <a href="#" class="extra"><li><i class="extra-icon"></i> Wallpaper</li></a>
+                                </ul>
+                            </li>
+                            <a href="#" class="user-option account"><li><i class="account-icon"></i> My account</li></a>
+                            <a href="#" class="user-option log-out"><li><i class="log-out-icon"></i> Log-out</li></a>
+                        </ul>
                     </div>
                 </header>
                 <div id="timeline">
@@ -90,6 +102,47 @@
                    <div id="decade">
                         <div id="decade-content">
                             <p></p><button name="decade-menu"></button>
+                            <ul id="decades">
+                                <a class="decade" href="#/travel/1870">
+                                    <li>1870</li>
+                                </a>
+                                <a class="decade" href="#/travel/1880">
+                                    <li>1880</li>
+                                </a>
+                                <a class="decade" href="#/travel/1890">
+                                    <li>1890</li>
+                                </a>
+                                <a class="decade" href="#/travel/1900">
+                                    <li>1900</li>
+                                </a>
+                                <a class="decade" href="#/travel/1910">
+                                    <li>1910</li>
+                                </a>
+                                <a class="decade" href="#/travel/1920">
+                                    <li>1920</li>
+                                </a>
+                                <a class="decade" href="#/travel/1930">
+                                    <li>1930</li>
+                                </a>
+                                <a class="decade" href="#/travel/1940">
+                                    <li>1940</li>
+                                </a>
+                                <a class="decade" href="#/travel/1950">
+                                    <li>1950</li>
+                                </a>
+                                <a class="decade" href="#/travel/1960">
+                                    <li>1960</li>
+                                </a>
+                                <a class="decade" href="#/travel/1970">
+                                    <li>1970</li>
+                                </a>
+                                <a class="decade" href="#/travel/1980">
+                                    <li>1980</li>
+                                </a>
+                                <a class="decade" href="#/travel/1990">
+                                    <li>1990</li>
+                                </a>
+                            </ul>
                         </div>
                     </div>
                     <div id="quick-decade">
@@ -113,20 +166,8 @@
                 
                 <div id="space">
                     <div id="layer1">
-                        <div class="article">
-                            <div class="article-head">
-                                <h1>The Paleofuture blog is moving !</h1><button class="read-it-later"></button>
-                            </div>
-                            <a href="#">
-                                <div class="read-more"><p>Click to <b>open</b></p></div>
-                                <img src="http://www.paleofuture.com/storage/paleofuture-robots.jpeg?__SQUARESPACE_CACHEVERSION=1317241706613" alt="The Paleofuture blog is moving">
-                            </a>
-                        </div>
                     </div>
                     <div id="layer2">
-                        <div class="tweet">
-                            <p><img src="img/matt-novak.jpg" alt="Matt Novak"><span class="author-s-name">Matt Novak</span> <span class="author-s-mention">@paleofuture</span><br/>me IRL <a href="#">gimmebar-assets.s3.amazonaws.com/5087353235cb63420375....</a><br/><span class="expand">Open</span></p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -211,5 +252,22 @@
         <script src="js/vendor/jquery-ui-1.9.1.custom.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
+
+        <script id="article-picture-template" type="text/x-handlebars-template">
+            <div class="article">
+                <div class="article-head">
+                    <h1>{{title}}</h1><button class="read-it-later"></button>
+                </div>
+                <a href="#/article/{{id}}">
+                    <div class="read-more"><p>Click to <b>open</b></p></div>
+                    <img src={{image}} alt="illustration"></img>
+                </a>
+            </div>
+        </script>
+        <script id="tweet-template" type="text/x-handlebars-template">
+            <div class="tweet">
+                <p><img src="img/matt-novak.jpg" alt="Matt Novak"><span class="author-s-name">Matt Novak</span> <span class="author-s-mention">@paleofuture</span><br/>me IRL <a href="#">gimmebar-assets.s3.amazonaws.com/5087353235cb63420375....</a><br/><span class="expand">Open</span></p>
+            </div>
+        </script>
     </body>
 </html>
