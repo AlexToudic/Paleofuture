@@ -81,15 +81,14 @@
                         <button name="user-menu"></button>
                         <ul id="user-options">
                             <a href="#" class="user-option favorites"><li><i class="favorite-icon"></i> My favorites</li></a>
-                            <li><a href="#" class="user-option extras"><i class="extras-icon"></i> My extras</a>
-                                <ul id="extras">
-                                    <a href="#" class="extra"><li><i class="extra-icon"></i> Solar System</li></a>
-                                    <a href="#" class="extra"><li><i class="extra-icon"></i> Asteroids Rain</li></a>
-                                    <a href="#" class="extra"><li><i class="extra-icon"></i> Wallpaper</li></a>
-                                </ul>
-                            </li>
+                            <a href="#" class="user-option extras"><li><i class="extras-icon"></i> My extras</li></a>
                             <a href="#" class="user-option account"><li><i class="account-icon"></i> My account</li></a>
                             <a href="#" class="user-option log-out"><li><i class="log-out-icon"></i> Log-out</li></a>
+                        </ul>
+                        <ul id="extras">
+                            <a href="#" class="extra"><li><i class="extra-icon"></i> Solar System</li></a>
+                            <a href="#" class="extra"><li><i class="extra-icon"></i> Asteroids Rain</li></a>
+                            <a href="#" class="extra"><li><i class="extra-icon"></i> Wallpaper</li></a>
                         </ul>
                     </div>
                 </header>
@@ -99,6 +98,28 @@
                             <p>Filters</p><button name="filters-menu"></button>
                         </div>
                     </div>
+                    <fieldset>
+                        <ul class="filters">
+                          <li><input id="filter-cities" name="filters" type="checkbox"><label for="filter-cities">Cities</label></li>
+                          <li><input id="filter-commerce" name="filters" type="checkbox"><label for="filter-commerce">Commerce</label></li>
+                          <li><input id="filter-computers" name="filters" type="checkbox"><label for="filter-computers">Computers</label></li>
+                          <li><input id="filter-disney" name="filters" type="checkbox"><label for="filter-disney">Disney</label></li>
+                          <li><input id="filter-energy" name="filters" type="checkbox"><label for="filter-energy">Energy</label></li>
+                          <li><input id="filter-fashion" name="filters" type="checkbox"><label for="filter-fashion">Fashion</label></li>
+                          <li><input id="filter-food" name="filters" type="checkbox"><label for="filter-food">Food</label></li>
+                          <li><input id="filter-health" name="filters" type="checkbox"><label for="filter-health">Health</label></li>
+                          <li><input id="filter-home" name="filters" type="checkbox"><label for="filter-home">Home</label></li>
+                          <li><input id="filter-issues-and-events" name="filters" type="checkbox"><label for="filter-issues-and-events">Issues and Events</label></li>
+                          <li><input id="filter-media" name="filters" type="checkbox"><label for="filter-media">Media</label></li>
+                          <li><input id="filter-people" name="filters" type="checkbox"><label for="filter-people">People</label></li>
+                          <li><input id="filter-robotics" name="filters" type="checkbox"><label for="filter-robotics">Robotics</label></li>
+                          <li><input id="filter-space" name="filters" type="checkbox"><label for="filter-space">Space</label></li>
+                          <li><input id="filter-sport" name="filters" type="checkbox"><label for="filter-sport">Sport</label></li>
+                          <li><input id="filter-transportation" name="filters" type="checkbox"><label for="filter-transportation">Transportation</label></li>
+                          <li><input id="filter-weather" name="filters" type="checkbox"><label for="filter-weather">Weather</label></li>
+                          <li><input id="filter-world-s-fair" name="filters" type="checkbox"><label for="filter-world-s-fair">World's Fair</label></li>
+                        </ul>
+                    </fieldset>
                    <div id="decade">
                         <div id="decade-content">
                             <p></p><button name="decade-menu"></button>
@@ -254,13 +275,24 @@
         <script src="js/main.js"></script>
 
         <script id="article-picture-template" type="text/x-handlebars-template">
-            <div class="article">
+            <div class="pic-article">
                 <div class="article-head">
                     <h1>{{title}}</h1><button class="read-it-later"></button>
                 </div>
                 <a href="#/article/{{id}}">
                     <div class="read-more"><p>Click to <b>open</b></p></div>
                     <img src={{image}} alt="illustration"></img>
+                </a>
+            </div>
+        </script>
+        <script id="article-text-template" type="text/x-handlebars-template">
+            <div class="txt-article">
+                <div class="article-head">
+                    <h1>{{title}}</h1><button class="read-it-later"></button>
+                </div>
+                <a href="#/article/{{id}}">
+                    <div class="read-more"><p>Click to <b>open</b></p></div>
+                    <p>{{text}}</p>
                 </a>
             </div>
         </script>

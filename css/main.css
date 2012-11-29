@@ -360,8 +360,16 @@ ul#user-options {
     list-style: none;
 }
 
-ul#user-options li {
-    position: relative;
+ul#user-options li, ul#extras li {
+    position: absolute;
+    top: 10px;
+    left: 28px;
+    vertical-align: middle;
+}
+
+ul#user-options li i, ul#extras li i {
+    position: absolute;
+    margin-left: -22px; 
 }
 
 ul#user-options a {
@@ -386,6 +394,7 @@ ul#user-options a.log-out {
 }
 
 .favorite-icon {
+    margin-top: 3px;
     display: inline-block;
     width: 16px;
     height: 16px;
@@ -400,10 +409,11 @@ a.favorites:hover .favorite-icon {
     display: inline-block;
     width: 13px;
     height: 13px;
+    margin: 5px -20px !important;
     background: url(../img/extra.png);
 }
 
-a.extras:hover .extras-icon, a.extras.hover .extras-icon {
+a.extras:hover .extras-icon, a.extra:hover .extra-icon, a.extras.hover .extras-icon {
     background: url(../img/extra-hover.png);
 }
 
@@ -411,6 +421,7 @@ a.extras:hover .extras-icon, a.extras.hover .extras-icon {
     display: inline-block;
     width: 13px;
     height: 14px;
+    margin: 5px -21px;
     background: url(../img/sub-extra.png);
 }
 
@@ -429,6 +440,7 @@ a.account:hover .account-icon {
     display: inline-block;
     width: 19px;
     height: 20px;
+    margin-top: 2px;
     background: url(../img/log-out.png);
 }
 
@@ -443,13 +455,18 @@ ul#user-options a.log-out:hover {
 }
 
 ul#extras {
+    z-index: 200;
     display: none;
     margin: 0;
     padding: 0;
     position: absolute;
     list-style: none;
-    top: 0;
+    top: 87px;
     left: -136px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
 }
 
 ul#extras a {
@@ -459,6 +476,16 @@ ul#extras a {
     color: #888888;
     border-right: none;
     background: #3b3b3b;
+    position: relative;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    font-weight: lighter;
+    text-shadow: 0 -1px 0 black;
+    box-shadow: -1px -1px 0 #484848 inset;
+}
+
+ul#extras a:last-child {
+    border-bottom: 1px solid black;
 }
 
 ul#extras a:hover {
@@ -481,6 +508,30 @@ ul#extras a:hover {
     top: 0;
     left: 0;
     box-shadow: 1px 0 0 #f63e20, 2px 0 0 #810000;
+}
+
+ul.filters {
+    display: block;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 45px;
+    left: 10px;
+    color: white;
+    z-index: 200;
+    list-style: none;    
+}
+
+ul.filters fieldset {
+    border: 0;
+}
+
+ul.filters li input {
+    display: none;
+}
+
+ul.filters {
+    font-size: 10pt;
 }
 
 #decade {
@@ -649,7 +700,7 @@ header .logo h1 {
     -webkit-text-fill-color: transparent;
 }
 
-.article {
+.pic-article {
     width: 550px;
     height: 414px;
     position: absolute;
@@ -658,17 +709,18 @@ header .logo h1 {
     overflow: hidden;
 }
 
-.article-head {
+.pic-article .article-head, .txt-article .article-head {
     position: relative;
     height: 59px;
     background: #f63e20;
     border-bottom: 1px solid #b82e18;
 }
 
-.article-head>h1 {
-    padding: 13px 0;
+.pic-article .article-head>h1, .txt-article .article-head>h1 {
+   font-weight: normal;
+    font-size: 12pt;
+    padding: 18px 0;
     text-indent: 15px;
-    font-size: 18pt;
     color: white;
     text-shadow: 0px 2px #ED0000;
 }
@@ -688,8 +740,32 @@ button.read-it-later:hover {
     background: url(../img/clock-hover.png) 50% no-repeat;
 }
 
-.article a:hover>.read-more {
+.pic-article a:hover>.read-more, .txt-article a:hover>.read-more {
     display: block;
+}
+
+.txt-article a {
+    width: 370px;
+    height: 440px;
+    display: block;
+    margin: 0;
+    padding: 15px;
+    color: #313131;
+    background: #ededed;
+}
+
+.txt-article p {
+    margin: 0;
+    text-align: justify;
+}
+
+.txt-article {
+    width: 400px;
+    height: 500px;
+    position: absolute;
+    top: 200px;
+    left: 200px;
+    overflow: hidden;
 }
 
 .read-more {

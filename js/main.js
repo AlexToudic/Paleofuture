@@ -14,11 +14,25 @@ $(function() {
 			this.set('articleId', id++);
 			this.set('year', parseInt(this.attributes.year, 10));
 			this.set('decade', parseInt(this.attributes.decade, 10));
-			this.set('view', new ArticleBlockView({'model': this}));
+			if(this.get('image'))
+				this.set('view', new ArticleBlockPicView({'model': this}));
+			else
+				this.set('view', new ArticleBlockTxtView({'model': this}));
 		}
 	});
 
-	var ArticleBlockView = Backbone.View.extend({
+	var ArticleBlockTxtView = Backbone.View.extend({
+	    initialize: function(){
+	      	this.source = $("#article-text-template").html();
+	      	this.template = Handlebars.compile(this.source);
+	    },
+	    render: function(el){
+	    	$(el).append(this.template(this.model.toJSON()));
+	    }
+	});
+
+
+	var ArticleBlockPicView = Backbone.View.extend({
 	    initialize: function(){
 	      	this.source = $("#article-picture-template").html();
 	      	this.template = Handlebars.compile(this.source);
@@ -201,7 +215,7 @@ $(function() {
 	$('#cursor').draggable({axis: 'x', containment:'#time-rule', handle: '.timemarker',
 		stop: function(event, ui){
 			var nearestMarker = $($('#time-rule .timemarker').get(0));
-			var handleCenter = $('#cursor').width()/2;
+			var handleCenter = $('#cursor').width()/2-1;
 
 			$('#time-rule .timemarker').each(function(index, timemarker){
 				var offset = nearestMarker.offset().left ; 
@@ -238,12 +252,18 @@ $(function() {
 		$('ul#decades').css({'display': 'none'});
 	});
 
+	$('input[name="filters"]').on('click', function(event){
+		if($(event.target).parent().css('text-decoration') === 'none')
+			$(event.target).parent().css({'text-decoration': 'line-through'});
+		else
+			$(event.target).parent().css({'text-decoration': 'none'});
+	});
+
 /*	$('#timeline, .timemarker').on('click', function(event){
 		$('#cursor').draggable( "option", "cursorAt", { left: event.offsetX -  $('#cursor').width()/2} );
 	});*/
 
 	var navigation = function(blocksList){
-		var index = 0;
 		var amount = 75;
 
 		var frontLayer = $('#layer1');
@@ -257,7 +277,7 @@ $(function() {
 		var scroll2 = Math.pow(200*(amount+2000), (1/3));
 
 		var previousWay = 0;
-		var newWay = 0;
+		var way = 0;
 		var reverse1 = false;
 		var reverse2 = false;
 
@@ -269,19 +289,21 @@ $(function() {
 
 		var index = 2;
 
-		navigate = function(event, delta, deltaX, deltaY) {
-			if(index > blocksList.length)
-				window.location = "#/travel/"+(currentDecade+1);
+		var upLayer1 = false;
+		var upLayer2 = false;
 
-			if(delta > 0)
+		navigate = function(event, delta, deltaX, deltaY) {
+			console.log(currentBlock, blocksList.length);
+
+			if(delta > 0 || (delta === 0 && way < 0))
 			{
-				newWay = -1;
+				way = -1;
 				scroll1 += 1.0;
 				scroll2 += 1.0;	
 			}
 			else
 			{
-				newWay = 1;
+				way = 1;
 				scroll1 -= 1.0;
 				scroll2 -= 1.0;
 			}
@@ -302,13 +324,24 @@ $(function() {
 		    d2Amount = Math.round((scroll2*scroll2*scroll2)/200);
 		    $('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d2Amount+', t 10.0)'});
 
-		    if(d1Amount === 0)
+		    if(d1Amount === 0 && !upLayer1)
 		    {
-		    	window.location = "#/travel/"+currentDecade+"/"+(index-2);
+		    	upLayer1 = true;
+		    	window.location = "#/travel/"+currentDecade+"/"+(currentBlock+1);
 		    }
-		    if(d2Amount === 0)
+		    else if(d1Amount !== 0 && upLayer1)
 		    {
-		    	window.location = "#/travel/"+currentDecade+"/"+(index-1);
+		    	upLayer1 = false;
+		    }
+
+		    if(d2Amount === 0 && !upLayer2)
+		    {
+		    	upLayer2 = true;
+		    	window.location = "#/travel/"+currentDecade+"/"+(currentBlock+1);
+		    }
+		    else if(d2Amount !== 0 && upLayer2)
+		    {
+		    	upLayer2 = false;
 		    }
 
 		    if(Math.abs(d1Amount) < Math.abs(d2Amount) && frontLayer !== $('#layer1'))
@@ -330,6 +363,11 @@ $(function() {
 		    }
 
 		    if(d1Amount <= amount-3000 || d1Amount >= -(amount-3000)){
+		    	if(currentBlock === 0)
+					window.location = "#/travel/"+(currentDecade-10)+"/"+"last";
+				else if(currentBlock === blocksList.length)
+					window.location = "#/travel/"+(currentDecade+10);
+
 		    	d1Amount = -d1Amount;
 		    	scroll1 = -scroll1;
 		    	
@@ -344,6 +382,11 @@ $(function() {
 		    }
 		   	
 		   	if(d2Amount <= amount-3000 || d2Amount >= -(amount-3000)){
+		   		if(currentBlock === 0)
+				window.location = "#/travel/"+(currentDecade-10);
+				else if(currentBlock === blocksList.length)
+					window.location = "#/travel/"+(currentDecade+10);
+
 		   		d2Amount = -d2Amount;
 		    	scroll2 = -scroll2;
 		    	
@@ -462,7 +505,7 @@ $(function() {
     		// 	navigateTo(articlesList, block);
 
     		currentBlock = parseInt(block, 10);
-    		var position = $($('a.timemarker').get(block)).offset().left-$('#cursor').width()/2;
+    		var position = $($('a.timemarker').get(block)).offset().left-$('#cursor').width()/2+1;
     		$('#cursor').animate({'left': position+'px'}, 200);
     	}
 
