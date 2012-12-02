@@ -176,13 +176,16 @@ $(function() {
 		{
 			$('#time-rule').append('<a class="timemarker"></a>');
 			$('a.timemarker').last().attr({'href': '#/travel/'+currentDecade+'/'+i});
-			$('a.timemarker').last().on('click', function(event){
+		}
+
+		$('a.timemarker').on('click', function(event){
 				event.preventDefault();
 				indexToReach = parseInt(event.target.hash.split('/', 4)[3], 10);
 				goTo(event);
 				window.location = event.target.href;
 			});
-		}
+
+		$('a.timemarker').css({'margin': '0 0 0 '+(80/allBlocks.length)+'%'});
 
 		placeCursor();
 	};

@@ -649,7 +649,7 @@ ul#decades a.decade li {
     width: -webkit-calc(100% - 193px);
     position: absolute;
     top: 0;
-    right: 0;
+    left: 281px;
 }
 
 .timemarker {
