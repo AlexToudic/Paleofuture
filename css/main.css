@@ -530,6 +530,14 @@ ul.filters li input {
     display: none;
 }
 
+ul.filters li:not(.selected) {
+    display: none;
+}
+
+ul.filters li.selected {
+    text-decoration: line-through;
+}
+
 ul.filters {
     font-size: 10pt;
 }

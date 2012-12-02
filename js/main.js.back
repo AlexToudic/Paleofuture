@@ -1,20 +1,10 @@
 $(function() {
     var currentDecade = 0;
+    var currentBlock = -1;
+    var navigate;
+    var timer;
     var filtersDropped = false;
-	var amount = 75;
-    var scroll1 = Math.pow(200*amount, (1/3));
-	var scroll2 = Math.pow(200*(amount+2000), (1/3));
-	var d1Amount = amount;
-	var d2Amount = amount-2999;
-	var lastLayer;
-	var lastUpLayer;
-	var allArticles;
-	var allBlocks;
-	var way;
-	var indexBlock = 0;
-	var indexDisplay = 0;
-	var indexToReach = -42;
-	var timer;
+    var index;
 
 	/*----------------------------------------------------
 				  1- BACKBONE DECLARATIONS
@@ -125,7 +115,7 @@ $(function() {
     var AppRouter = Backbone.Router.extend({
         routes: {
         	"": "home",
-        	"travel/:decade": "changeDecade",
+        	"travel/:decade": "travel",
         	"travel/:decade/:block": "travel"
         }
     });
@@ -135,7 +125,7 @@ $(function() {
 	----------------------------------------------------*/
 
 	var particulesInteraction = function(){
-		var canvas = document.getElementById('particles');
+		var canvas = document.getElementById('particules');
 		var ctx = canvas.getContext('2d');
 
 		var particules = new Particules();
@@ -169,25 +159,20 @@ $(function() {
 		}, 10);
 	};
 
-	var generateTimeline = function(){
+	var generateTimeline = function(allBlocks){
 		$('#time-rule').html('');
 		
 		for(var i = 0; i < allBlocks.length; ++i)
 		{
 			$('#time-rule').append('<a class="timemarker"></a>');
 			$('a.timemarker').last().attr({'href': '#/travel/'+currentDecade+'/'+i});
-			$('a.timemarker').last().on('click', function(event){
-				event.preventDefault();
-				indexToReach = parseInt(event.target.hash.split('/', 4)[3], 10);
-				goTo(event);
-				window.location = event.target.href;
-			});
 		}
-
-		placeCursor();
+		
+		var position = $($('a.timemarker').get(currentBlock+1)).offset().left-$('#cursor').width()/2+1;
+    	$('#cursor').animate({'left': position+'px'}, 200);
 	};
 
-	/*var navigateTo = function(articlesList, block){
+	var navigateTo = function(articlesList, block){
 		if(block > currentBlock)
 		{
 			timer = setInterval(function(){
@@ -200,11 +185,11 @@ $(function() {
 				navigate(null, -1, null, null);
 			}, 0.5);
 		}
-	}*/
+	}
 
-	var generateBlocks = function(){
+	var generateBlocks = function(allArticles){
+		var allBlocks = new Array;
 		var displayedArticles = allArticles.where({'decade': currentDecade});
-		allBlocks = new Array();
 
     	for(var i = 0; i < displayedArticles.length; ++i)
     	{
@@ -217,191 +202,9 @@ $(function() {
     		allBlocks.push(newBlock);
     	}
 
-		generateTimeline();
-		initializeDisplay();
-	};
+    	navigation(allBlocks);
 
-	var placeCursor = function(){
-		var position = $($('a.timemarker').get(indexBlock)).offset().left-$('#cursor').width()/2+1;
-		$('#cursor').animate({'left': position+'px'}, 200);
-	};
-
-	var initializeDisplay = function(){
-		lastLayer = 0;
-		way = 0;
-
-		if(!indexBlock%2) {
-			frontLayer = '#layer1';
-    		backLayer = '#layer2';
-		}
-		else {
-			frontLayer = '#layer2';
-    		backLayer = '#layer1';
-		}
-
-		$(frontLayer).css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+amount+', t 10.0)'});
-		$(backLayer).css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+(amount-2999)+', t 10.0)'});
-
-		if(indexBlock < allBlocks.length)
-		{
-			indexDisplay = indexBlock;
-
-			allBlocks[indexDisplay].render(frontLayer);
-			++indexDisplay;
-
-			if(indexDisplay < allBlocks.length)
-			{
-				allBlocks[indexDisplay].render(backLayer);
-				++indexDisplay;
-			}
-		}
-	};
-
-	var previousWay = 1;
-	var change = 0;
-	var navigate = function(event, delta, deltaX, deltaY) {
-		if(change != 0){
-			window.location = "#/travel/"+(currentDecade+change);
-			change = 0;
-		}
-
-		var reverse = false;
-
-		//Evite les sauts dans le scroll
-		if(Math.abs(delta) > 10)
-			delta = Math.round(delta/10);
-
-		if(delta > 0)
-			way = -1;
-		else if(delta < 0)
-			way = 1;
-
-		if(way != previousWay)
-		{
-			reverse = true;
-			previousWay = way;
-			indexDisplay = indexBlock;
-		}
-
-		scroll1 += delta;
-		scroll2 += delta;
-
-		d1Amount = Math.round((scroll1*scroll1*scroll1)/200);
-	    $('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d1Amount+', t 10.0)'});
-
-	    d2Amount = Math.round((scroll2*scroll2*scroll2)/200);
-	    $('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d2Amount+', t 10.0)'});
-
-	    //Joue entre les layers pour les passer en avant plan
-	    if(Math.abs(d1Amount) < Math.abs(d2Amount) && frontLayer != '#layer1')
-	    {
-	    	frontLayer = '#layer1';
-	    	backLayer = '#layer2';
-
-	    	$(frontLayer).css({'z-index': 100});
-	    	$(backLayer).css({'z-index': 50});
-	    }
-	  	else if(Math.abs(d1Amount) > Math.abs(d2Amount) && frontLayer != '#layer2')
-	    {
-	    	frontLayer = '#layer2';
-	    	backLayer = '#layer1';
-
-	    	$(frontLayer).css({'z-index': 100});
-	    	$(backLayer).css({'z-index': 50});
-	    }
-
-	    //Quand un des layers est en fond on doit charger l'article suivant s'il existe
-	   	if(lastUpLayer != 1 && (d1Amount <= amount-3000 || d1Amount >= -(amount-3000))) {
-	   		lastUpLayer = 1;
-
-	    	if(way > 0 && indexDisplay < allBlocks.length)
-	    	{
-	    		allBlocks[indexDisplay].render('#layer1');
-	    		++indexDisplay;
-	    	}
-	    	else if(way < 0 && indexDisplay >= 0)
-	    	{
-	    		allBlocks[indexDisplay].render('#layer1');
-	    		--indexDisplay;
-	    	}
-	    	else
-	    	{
-	    		$('#layer1').html('');
-	    	}
-
-	    	d1Amount = -d1Amount;
-		    scroll1 = -scroll1;
-	    }
-
-
-	   	if(lastUpLayer != 2 && (d2Amount <= amount-3000 || d2Amount >= -(amount-3000))) {
-	   		lastUpLayer = 2;
-	   		
-	    	if(way > 0 && indexDisplay < allBlocks.length)
-	    	{
-	    		allBlocks[indexDisplay].render('#layer2');
-	    		++indexDisplay;
-	    	}
-	    	else if(way < 0 && indexDisplay >= 0)
-	    	{
-	    		allBlocks[indexDisplay].render('#layer2');
-	    		--indexDisplay;
-	    	}
-	    	else
-	    	{
-	    		$('#layer2').html('');
-	    	}
-
-	    	d2Amount = -d2Amount;
-		    scroll2 = -scroll2;
-	    }
-
-	    //quand un bloc se forme, on change le lien
-	    if(d1Amount === 0 && (lastLayer != 1 || reverse))
-	    {
-	    	lastLayer = 1;
-	    	indexBlock += way;
-
-	    	if(indexToReach == -42)
-	   			window.location = "#/travel/"+currentDecade+"/"+indexBlock;
-	    }
-	   
-	   	if(d2Amount === 0 && (lastLayer != 2 || reverse))
-	    {
-	    	lastLayer = 2;
-	    	indexBlock += way;
-
-	    	if(indexToReach == -42)
-	   			window.location = "#/travel/"+currentDecade+"/"+indexBlock;
-	    }
-
-	    if(indexBlock >= allBlocks.length)
-	    {
-	    	change = +10;
-	    }
-	    if(indexBlock < 0)
-	    {	
-	    	change = -10;
-	    }
-	};
-
-	var goTo = function(event){
-		timer = window.setInterval(function(){
-			console.log(indexBlock, indexToReach);
-			if(indexBlock < indexToReach)
-			{
-				navigate(null, 4, null, null);
-			}
-			else if(indexBlock > indexToReach)
-			{
-				navigate(null, -4, null, null);
-			}
-			else
-			{
-				indexToReach = -42;
-				clearInterval(timer);
-			}
-		}, 100);
+    	generateTimeline(allBlocks);
 	};
 
 	/*----------------------------------------------------
@@ -411,7 +214,7 @@ $(function() {
 	var adaptInterface = function() {
 		$('#layer2').css({'margin-top': -window.innerHeight+80+'px'});
 		$('#interactive').css({'margin-top': -window.innerHeight+'px'});
-	};
+	}
 
 	/*----------------------------------------------------
 				  		5- BEHAVIOURS
@@ -460,11 +263,9 @@ $(function() {
 
 	$('#quick-decade button[name="decade-up"]').on('click', function(){
 		window.location = "#/travel/"+(currentDecade+10);
-		
 	});
 	$('#quick-decade button[name="decade-down"]').on('click', function(){
 		window.location = "#/travel/"+(currentDecade-10);
-		
 	});
 
 	$('#decade-content button').on('click', function(){
@@ -499,36 +300,42 @@ $(function() {
 		filtersDropped = !filtersDropped;
 	});
 
-	/*var navigation = function(){
-		console.log('initialize test');
+/*	$('#timeline, .timemarker').on('click', function(event){
+		$('#cursor').draggable( "option", "cursorAt", { left: event.offsetX -  $('#cursor').width()/2} );
+	});*/
 
-		$('#space').unmousewheel();
-		$('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+75+', t 10.0)'});
-		$('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+(75-2999)+', t 10.0)'});
+	var navigation = function(blocksList){
+		var amount = 75;
 
-    	frontLayer = '#layer1';
-    	backLayer = '#layer2';
+		var frontLayer = $('#layer1');
+		var backLayer = $('#layer2');
 
-		$(frontLayer).css({'z-index': 100});
-	    $(backLayer).css({'z-index': 50});
+		$('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+amount+', t 10.0)'});
+		$('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+(amount+2999)+', t 10.0)'});
 
-		if(currentBlock < allBlocks.length)
-		{
-			console.log(currentBlock);
-			allBlocks[currentBlock].render(frontLayer);
 
-			if(currentBlock+1 < allBlocks.length)
-			{
-				allBlocks[currentBlock+1].render(backLayer);
-			}
-		}
+		var scroll1 = Math.pow(200*amount, (1/3));
+		var scroll2 = Math.pow(200*(amount+2000), (1/3));
 
-		var first = true;
+		var previousWay = 0;
+		var way = 0;
+		var reverse1 = false;
+		var reverse2 = false;
+
+		var frontLayer = $('#layer1');
+		var backLayer = $('#layer2');
+
+		blocksList[0].render('#layer1');
+		blocksList[1].render('#layer2');
+
+		index += 2;
+
+		var upLayer1 = false;
+		var upLayer2 = false;
+
+		console.log(blocksList.length);
 
 		navigate = function(event, delta, deltaX, deltaY) {
-
-			console.log(currentDecade, currentBlock);
-
 			if(delta > 0 || (delta === 0 && way < 0))
 			{
 				way = -1;
@@ -542,22 +349,40 @@ $(function() {
 				scroll2 -= 1.0;
 			}
 
+			// if(previousWay === 0)
+			// 	previousWay = newWay;
+			// else if(previousWay !== newWay)
+			// {
+			// 	previousWay = newWay;
+			// 	reverse1 = true;
+			// 	reverse2 = true;
+			// }
+
+
 			d1Amount = Math.round((scroll1*scroll1*scroll1)/200);
 		    $('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d1Amount+', t 10.0)'});
 
 		    d2Amount = Math.round((scroll2*scroll2*scroll2)/200);
 		    $('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d2Amount+', t 10.0)'});
 
-		    if(d1Amount === 0 && lastLayer != 1)
+		    if(d1Amount === 0 && !upLayer1)
 		    {
-		    	lastLayer = 1;
-		    	window.location = "#/travel/"+currentDecade+"/"+(currentBlock+way);
-		    	
+		    	upLayer1 = true;
+		    	window.location = "#/travel/"+currentDecade+"/"+(currentBlock+1);
 		    }
-		    else if(d2Amount === 0 && lastLayer != 2)
+		    else if(d1Amount !== 0 && upLayer1)
 		    {
-		    	lastLayer = 2;
-		    	window.location = "#/travel/"+currentDecade+"/"+(currentBlock+way);
+		    	upLayer1 = false;
+		    }
+
+		    if(d2Amount === 0 && !upLayer2)
+		    {
+		    	upLayer2 = true;
+		    	window.location = "#/travel/"+currentDecade+"/"+(currentBlock+1);
+		    }
+		    else if(d2Amount !== 0 && upLayer2)
+		    {
+		    	upLayer2 = false;
 		    }
 
 		    if(Math.abs(d1Amount) < Math.abs(d2Amount) && frontLayer !== $('#layer1'))
@@ -568,6 +393,7 @@ $(function() {
 		    	frontLayer.css({'z-index': 100});
 		    	backLayer.css({'z-index': 50});
 		    }
+
 		  	else if(Math.abs(d1Amount) > Math.abs(d2Amount) && frontLayer !== $('#layer2'))
 		    {
 		    	frontLayer = $('#layer2');
@@ -578,48 +404,46 @@ $(function() {
 		    }
 
 		    if(d1Amount <= amount-3000 || d1Amount >= -(amount-3000)){
-
-				if(currentBlock >= allBlocks.length-1)
-				{
-					window.location = "#/travel/"+(currentDecade+10)+"/0";
-					
-				}
-
-				// if(currentBlock <= 0)
-				// {
-				// 	window.location = "#/travel/"+(currentDecade-10)+"/-1";
-					
-				// }
-
-				if(currentBlock+1 < allBlocks.length)
-				{
-					allBlocks[currentBlock+1].render('#layer1');
-				}
+		   //  	if(currentBlock === 0)
+					// window.location = "#/travel/"+(currentDecade-10)+"/"+"last";
+				if(currentBlock >= blocksList.length-2)
+					window.location = "#/travel/"+(currentDecade+10);
 
 		    	d1Amount = -d1Amount;
 		    	scroll1 = -scroll1;
+		    	
+		    	if(delta < 0)
+		    	{
+					blocksList[index++].render('#layer1');
+				}
+				else
+				{
+					blocksList[index--].render('#layer1');
+				}
 		    }
 		   	
 		   	if(d2Amount <= amount-3000 || d2Amount >= -(amount-3000)){
-
-				if(currentBlock >= allBlocks.length-1)
+		   // 		if(currentBlock === 0)
+					// window.location = "#/travel/"+(currentDecade-10);
+				if(currentBlock >= blocksList.length-2)
 					window.location = "#/travel/"+(currentDecade+10);
-
-				if(currentBlock <= 0)
-					window.location = "#/travel/"+(currentDecade-10)+"/-1";
-
-				if(currentBlock+1 < allBlocks.length)
-				{
-					allBlocks[currentBlock+1].render('#layer2');
-				}
 
 		   		d2Amount = -d2Amount;
 		    	scroll2 = -scroll2;
+		    	
+		    	if(delta < 0)
+		    	{
+					blocksList[index++].render('#layer2');
+				}
+				else
+				{
+					blocksList[index--].render('#layer2');
+				}
 		    }
 		}
 
 		$('#space').mousewheel(navigate);
-	};*/
+	};
 
 	$('button[name="user-menu"]').on('click', function(){
 		if($('ul#user-options').css('display') === 'none')
@@ -638,8 +462,6 @@ $(function() {
 		$('ul#extras').css({'display': 'none'});
 	});
 
-	$('#space').mousewheel(navigate);
-
 	/*----------------------------------------------------
 				  		3- APPLICATION
 	----------------------------------------------------*/
@@ -647,6 +469,8 @@ $(function() {
     var app_router = new AppRouter;
 
     app_router.on('route:home', function() {
+		clearInterval(timer);
+
     	if($('#home').css('margin-top') === -window.innerHeight+'px')
     		$('#home').animate({'margin-top': '0px'}, 200);
     	if($('#layer1').css('display') !== 'none')
@@ -656,51 +480,31 @@ $(function() {
     	}
     });
 
-    app_router.on('route:changeDecade', function(decade){
-		allBlocks = new Array();
-		currentDecade = parseInt(decade, 10);
-		indexBlock = 0;
-		indexDisplay = 0;
-		amount = 75;
-
-		$('#decade-content p').html(decade);
-
-    	if(allArticles === undefined)
-    	{
-			allArticles = new Block();
-
-			allArticles.fetch({url: "init.json"}).complete(function() {
-		    	allArticles.sort();
-
-		    	generateBlocks(allArticles);
-			});
-    	}
-    	else
-    	{
-	    	generateBlocks(allArticles);
-    	}
-
-    	$('#home').animate({'margin-top': -window.innerHeight+'px'}, 200);
-    	
-    	$('#layer1').css({'display': 'block'});
-		$('#layer2').css({'display': 'block'});
-    });
-
     app_router.on('route:travel', function(decade, block){
-    	if(indexToReach == -42)
-    		indexBlock = parseInt(block, 10);
+    	clearInterval(timer);
+    	var moveCursor = true;
 
-    	if(parseInt(decade, 10) != currentDecade)
+    	var articlesList;
+
+    	if(block === undefined)
     	{
-    		allBlocks = new Array();
-			currentDecade = parseInt(decade, 10);
-			amount = 75;
+    		block = 0;
+    	}
 
-			$('#decade-content p').html(decade);
+    	console.log(decade, block);
+
+    	if(parseInt(decade, 10) !== currentDecade)
+    	{
+    		index = 0;
+
+    		moveCursor = false;
+    		$('#space').unmousewheel();
+    		currentDecade = parseInt(decade, 10);
+    		$('#decade-content p').html(decade);
 
 	    	if(allArticles === undefined)
 	    	{
-				allArticles = new Block();
+				var allArticles = new Block();
 
 				allArticles.fetch({url: "init.json"}).complete(function() {
 			    	allArticles.sort();
@@ -710,13 +514,25 @@ $(function() {
 	    	}
 	    	else
 	    	{
+		 		var displayedArticles = allArticles.where({'decade': currentDecade});
+
 		    	generateBlocks(allArticles);
 	    	}
     	}
-    	else
+
+    	if(parseInt(block, 10) !== currentBlock)
     	{
-    		placeCursor();
-		}
+    		// if(currentBlock != -1)
+    		// 	navigateTo(articlesList, block);
+    		index = currentBlock;
+    		
+    		if(moveCursor)
+    		{
+    			currentBlock = parseInt(block, 10);
+    			var position = $($('a.timemarker').get(currentBlock)).offset().left-$('#cursor').width()/2+1;
+    			$('#cursor').animate({'left': position+'px'}, 200);
+    		}
+    	}
 
     	$('#home').animate({'margin-top': -window.innerHeight+'px'}, 200);
     	
