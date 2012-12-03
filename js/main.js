@@ -526,6 +526,8 @@ $(function() {
     var app_router = new AppRouter;
 
     app_router.on('route:home', function() {
+    	$.firefly();
+    	
     	if($('#home').css('margin-top') === -window.innerHeight+'px')
     		$('#home').animate({'margin-top': '0px'}, 200);
     	if($('#layer1').css('display') !== 'none')

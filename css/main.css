@@ -121,7 +121,7 @@ a {
     width: 100%;
     height: 100%;
     margin: 0 0;
-    background-color: #ffb5b5;
+    background: url(../img/navy_blue.png) repeat;
 }
 
 #home .logo {
@@ -896,7 +896,7 @@ button.read-it-later:hover {
     position: relative;
     box-shadow: -1px 0 0 #000000 inset, -2px 0 0 #484848 inset;
     color: white;
-    background: url(../img/article-background.png);
+    background: url(../img/navy_blue.png) repeat;
 }
 
 #menu-bar {
