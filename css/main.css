@@ -121,21 +121,76 @@ a {
     width: 100%;
     height: 100%;
     margin: 0 0;
-    background: url(../img/navy_blue.png) repeat;
+    background: url(../img/home-gradient.png) 50%, url(../img/navy_blue.png) repeat;
 }
 
 #home .logo {
+    width: 512px;
+    height: 515px;
     position: absolute;
     top: 35%;
     left: 50%;
-    margin-top: -22px;
-    margin-left: -117.5px;
+    margin-top: -256px;
+    margin-left: -257.5px;
+    background: url(../img/logo.png) 50% no-repeat;
 }
 
 #about {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 25px;
+    left: 45px;
+    font-weight: bold;
+    font-size: 10pt;
+}
+
+#about:after {
+    content: "";
+    margin: -24px -21px;
+    display: block;
+    width: 80px;
+    height: 30px;
+    border-radius: 3px;
+    background: white;
+}
+
+#shop {
+    position: absolute;
+    top: 25px;
+    left: 140px;
+    font-weight: bold;
+    font-size: 10pt;
+}
+
+#shop:after {
+    content: "";
+    margin: -24px -22px;
+    display: block;
+    width: 80px;
+    height: 30px;
+    border-radius: 3px;
+    background: white;
+}
+
+#follow {
+    color: white;
+    font-size: 10pt;
+    text-align: center;
+}
+
+#paleotv {
+    display: block;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    color: white;
+    font-size: 10pt;
+}
+
+#paleotv img {
+    position: absolute;
+    top: 45px;
+    left: 50%;
+    margin-left: -10px;
 }
 
 #follow {
@@ -164,8 +219,8 @@ ul.social-buttons>li {
 
 a.sb,
 .sb a {
-    width: 25px;
-    height: 25px;
+    width: 28px;
+    height: 28px;
     background-repeat: no-repeat;
     background-position: center center;
     text-indent: -900em;
@@ -176,7 +231,7 @@ a.sb,
     display: inline-block;
     position: relative;
     vertical-align: middle;
-    margin: 0 2px 5px 0;
+    margin: 0 10px 0 0;
 }
 
 #follow .social-buttons li a:hover {
@@ -568,6 +623,7 @@ ul#decades a.decade {
     width: 60px;
     height: 34px;
     color: white;
+    font-size: 11pt;
     border: 1px solid #810000;
     border-top: 0;
     text-shadow: 0px 1px 1px #810000;
@@ -719,23 +775,23 @@ header .logo h1 {
 
 .pic-article .article-head, .txt-article .article-head {
     position: relative;
-    height: 59px;
+    height: 40px;
     background: #f63e20;
     border-bottom: 1px solid #b82e18;
 }
 
 .pic-article .article-head>h1, .txt-article .article-head>h1 {
-   font-weight: normal;
-    font-size: 12pt;
-    padding: 18px 0;
+    font-weight: normal;
+    font-size: 11pt;
+    padding: 10px 0;
     text-indent: 15px;
     color: white;
     text-shadow: 0px 2px #ED0000;
 }
 
 button.read-it-later {
-    width: 68px;
-    height: 59px;
+    width: 48px;
+    height: 40px;
     border: 0;
     background: url(../img/clock.png) 50% no-repeat;
     box-shadow: -1px 0 0 0 #B82E18, -2px 0 0 0 #F86E58;
@@ -963,7 +1019,8 @@ button[name='favorite']:hover {
     width: 46px;
     height: 45px;
     border: 1px solid black;
-    border-right: none; 
+    border-right: none;
+    background-size: 100% !important;
 }
 
 #share a.sb.twitter {
@@ -1038,6 +1095,7 @@ button[name='favorite']:hover {
 }
 
 #interactive-bar {
+    z-index: 200;
     width: 100%;
     height: 45px;
     background: #c03221;
@@ -1075,6 +1133,7 @@ ul#interactive-menu a {
 }
 
 ul#interactive-menu li {
+    z-index: 200;
     position: absolute;
     top: 10px;
     left: 60px;
@@ -1097,6 +1156,37 @@ ul#interactive-menu a.selected:after {
     width: 13px;
     height: 8px;
     background: url(../img/selected-triangle.png);
+}
+
+#game-frame, #image-frame, #similar-article 
+{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#game-frame {
+    display: block;
+}
+
+#image-frame, #similar-article {
+    display: none;
+}
+
+#image-frame {
+    width: 100%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#image-frame img {
+    position: absolute;
+    max-width: 95%;
+    max-height: 95%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 /* ==========================================================================
@@ -1206,8 +1296,17 @@ ul#interactive-menu a.selected:after {
    Modify as content requires.
    ========================================================================== */
 
-@media only screen and (min-width: 35em) {
-    /* Style adjustments for viewports that meet the condition */
+@media only screen and (max-width: 1366px) {
+    #home .logo {
+        background-size: 256px 257.5px;
+    }
+
+    a.sb,
+    .sb a {
+        width: 20px;
+        height: 20px;
+        background-size: 20px !important;
+    }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),

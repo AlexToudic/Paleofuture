@@ -1,5 +1,5 @@
 $(function() {
-    var currentDecade = 0;
+    var currentDecade = 0;//décennie parcourue
     var filtersDropped = false;
 	var amount = 75;
     var scroll1 = Math.pow(200*amount, (1/3));
@@ -25,10 +25,14 @@ $(function() {
 			this.set('cid', this.cid);
 			this.set('year', parseInt(this.attributes.year, 10));
 			this.set('decade', parseInt(this.attributes.decade, 10));
+
+			//on fixe la vue de la navigation en fonction de si l'article a une image
+			//ou seulement du texte
 			if(this.get('image'))
 				this.set('tinyView', new ArticleBlockPicView({'model': this}));
 			else
 				this.set('tinyView', new ArticleBlockTxtView({'model': this}));
+
 			this.set('view', new ArticleView({'model': this}));
 		}
 	});
@@ -64,12 +68,8 @@ $(function() {
 	    }
 	});
 
-	var blockId = 0;
 	var Block = Backbone.Collection.extend({
 		model: Article,
-		initialize: function () {
-			this.id = blockId++;
-		},
 		comparator: function(item){
 			return item.get('year')||item.get('decade');
 		},
@@ -81,6 +81,10 @@ $(function() {
 			});
 		}
 	});
+
+	/*----------------------------------------------------
+				  		   PARTICULES
+	----------------------------------------------------*/
 
 	var ParticuleModel = Backbone.Model.extend({
 		collapse: function(particule){
@@ -112,6 +116,10 @@ $(function() {
 				this.context.arc(particule.get('x'), particule.get('y'), particule.get('radius'), 0 , 2 * Math.PI, false);
 				this.context.fill();
 			}, this);
+			/*this.context.fillStyle = "#0000FF";
+			this.context.beginPath();
+			this.context.arc(this.force.get('x'), this.force.get('y'), this.force.get('range'), 0 , 2 * Math.PI, false);
+			this.context.fill();*/
 		}
 	});
 
@@ -132,12 +140,16 @@ $(function() {
 		}
 	});
 
+	/*----------------------------------------------------
+				  		ROUTAGE
+	----------------------------------------------------*/
+
     var AppRouter = Backbone.Router.extend({
         routes: {
         	"": "home",
-        	"travel/:decade": "changeDecade",
-        	"travel/:decade/:block": "travel",
-        	"article/:articleId": "article"
+        	"travel/:decade": "changeDecade",//Mode voyage avec décennie uniquement
+        	"travel/:decade/:block": "travel",//Mode voyage avec décennie et bloc articles
+        	"article/:articleId": "article"//article seul
         }
     });
 
@@ -145,8 +157,12 @@ $(function() {
 				  		3- FUNCTIONS
 	----------------------------------------------------*/
 
+	/*----------------------------------------------------
+				  	PARTICULES
+	----------------------------------------------------*/
+
 	var particulesInteraction = function(){
-		var canvas = document.getElementById('particles');
+		var canvas = document.getElementById('particules');
 		var ctx = canvas.getContext('2d');
 
 		var particules = new Particules();
@@ -162,7 +178,7 @@ $(function() {
 			particules.add(particule);
 		}
 
-		var force = new Force({'x': 500, 'y': 500, range:100});
+		var force = new Force({'x': -500, 'y': -500, range:100});
 		var view = new ParticulesView({'canvas': canvas, 'context': ctx, 'particules': particules, 'force': force});
 
 		var scaleX = $('canvas').css('width').split('px', 1)[0]/canvas.width;
@@ -171,7 +187,7 @@ $(function() {
 		view.render();
 
 		$('canvas').mousemove(function(e){
-			force.set({'x': e.clientX*1/scaleX, 'y': e.clientY*1/scaleY});
+			force.set({'x': e.offsetX*1/scaleX, 'y': e.offsetY*1/scaleY});
 		});
 
 		setInterval(function() {
@@ -180,6 +196,7 @@ $(function() {
 		}, 10);
 	};
 
+	//Génère la timeline visuelle
 	var generateTimeline = function(){
 		$('#time-rule').html('');
 		
@@ -196,26 +213,12 @@ $(function() {
 				window.location = event.target.href;
 			});
 
-		$('a.timemarker').css({'margin': '0 0 0 '+(91/(allBlocks.length+1))+'%'});
+		$('a.timemarker').css({'margin': '0 0 0 '+(91/(allBlocks.length+1))+'%'});//équilibre les espaces entre les markers
 
-		placeCursor();
+		placeCursor();//On place le draggable maintenant qu'il a un endroit où se fixer
 	};
 
-	/*var navigateTo = function(articlesList, block){
-		if(block > currentBlock)
-		{
-			timer = setInterval(function(){
-				navigate(null, 1, null, null);
-			}, 0.5);
-		}
-		else
-		{
-			timer = setInterval(function(){
-				navigate(null, -1, null, null);
-			}, 0.5);
-		}
-	}*/
-
+	//Génère les groupes d'articles à afficher
 	var generateBlocks = function(){
 		var displayedArticles = allArticles.where({'decade': currentDecade});
 		allBlocks = new Array();
@@ -225,8 +228,10 @@ $(function() {
     		var newBlock = new Block();
 
     		// for(var j = 5*i; j < 5*i+5; ++j)
+    		{
     			newBlock.add(displayedArticles[i]);
-    		newBlock.last().set({'posX': Math.random()*window.innerWidth, 'posY': Math.random()*window.innerHeight});
+    			newBlock.last().set({'posX': Math.random()*window.innerWidth, 'posY': Math.random()*window.innerHeight});
+    		}
 
     		allBlocks.push(newBlock);
     	}
@@ -244,6 +249,7 @@ $(function() {
 		$('#cursor').animate({'left': position+'px'}, 200);
 	};
 
+	//place les premières images
 	var initializeDisplay = function(){
 		lastLayer = 0;
 		way = 0;
@@ -421,7 +427,7 @@ $(function() {
 				indexToReach = -42;
 				clearInterval(timer);
 			}
-		}, 100);
+		}, 5);
 	};
 
 	/*----------------------------------------------------
@@ -455,6 +461,9 @@ $(function() {
 			});
 
 			$('#cursor').animate({'left': nearestMarker.offset().left - handleCenter}, 200);
+			console.log(nearestMarker.attr('href'));
+			indexToReach = parseInt(nearestMarker.attr('href').split('/', 4)[3], 10);
+			goTo(null);
 			$(location).attr('href', nearestMarker.attr('href'));
 		}
 	});
@@ -473,6 +482,14 @@ $(function() {
 			$('ul#decades').css({'display': 'block'});
 		else
 			$('ul#decades').css({'display': 'none'});
+		
+		if(filtersDropped)
+		{
+			$('ul.filters li:not(.selected)').css({'display': 'none'});
+			$('ul.filters li.selected').css({'text-decoration': 'none'});
+
+			filtersDropped = false;
+		}
 	});
 
 	$('a.decade').on('click', function(){
@@ -498,23 +515,53 @@ $(function() {
 			$('ul.filters li.selected').css({'text-decoration': 'none'});
 		}
 		filtersDropped = !filtersDropped;
+
+		if($('ul#decades').css('display') === 'block')
+			$('ul#decades').css({'display': 'none'});
 	});
 
-	$('button[name="user-menu"]').on('click', function(){
+	$('body').on('click', 'button[name="user-menu"]', function(){
 		if($('ul#user-options').css('display') === 'none')
 			$('ul#user-options').css({'display': 'block'});
 		else
 			$('ul#user-options').css({'display': 'none'});
 	});
 
-	$('ul#user-options a.extras, ul#extras').on('mouseenter', function(){
+	$('body').on('mouseenter', 'ul#user-options a.extras, ul#extras', function(){
 		$('ul#user-options a.extras').addClass('hover');
 		$('ul#extras').css({'display': 'block'});
 	});
 
-	$('ul#user-options a.extras, ul#extras').on('mouseleave', function(){
+	$('body').on('mouseleave', 'ul#user-options a.extras, ul#extras', function(){
 		$('ul#user-options a.extras').removeClass('hover');
 		$('ul#extras').css({'display': 'none'});
+	});
+
+	$('body').on('click', 'ul#interactive-menu a', function(event){
+		event.preventDefault();
+
+		$('ul#interactive-menu a').removeClass('selected');
+
+		$(this).addClass('selected');
+
+		switch($(this).attr('id'))
+		{
+			case 'game':
+				$('#game-frame').css({'display': 'block'});
+				$('#image-frame').css({'display': 'none'});
+				$('#similar-frame').css({'display': 'none'});
+				break;
+			case 'image':
+				$('#game-frame').css({'display': 'none'});
+				$('#image-frame').css({'display': 'block'});
+				$('#similar-frame').css({'display': 'none'});
+				break;
+			case 'similar':
+				$('#game-frame').css({'display': 'none'});
+				$('#image-frame').css({'display': 'none'});
+				$('#similar-frame').css({'display': 'block'});
+				break;
+		}
 	});
 
 	$('#space').mousewheel(navigate);
@@ -625,11 +672,13 @@ $(function() {
 			allArticles.fetch({url: "init.json"}).complete(function() {
 				allArticles.sort();
 		    	allArticles.getByCid(articleId).get('view').render();
+		    	particulesInteraction();
 			});
     	}
     	else
     	{
 	    	allArticles.getByCid(articleId).get('view').render();
+	    	particulesInteraction();
     	}
 
     	$('#home').animate({'margin-top': -window.innerHeight+'px'}, 200);

@@ -32,16 +32,23 @@
         <div id="wrapper">
             <div id="home">
                 <a href="#/about" id="about">About</a>
-                <h1 class="logo">PALEOFUTURE</h1>
+                <a href="#/shop" id="shop">Shop</a>
+                <div class="logo">
+                </div>
                 <div id="follow">
-                    <p>Follow Paleofuture :</p>
+                    <p>Follow <b>Paleofuture</b></p>
                     <ul class="social-buttons">
-                        <li><a href="http://www.paleofuture.com/blog/rss.xml" target="_blank" class="sb rss">RSS</a></li>
-                        <li><a href="http://www.twitter.com/paleofuture" target="_blank" class="sb twitter">Twitter</a></li>
                         <li><a href="http://www.facebook.com/pages/Paleo-Future/294282918458" target="_blank" class="sb facebook">Facebook</a></li>
-                        <li><a href="http://prettypictures.paleofuture.com/" target="_blank" class="sb tumblr">Tumblr</a></li>
+                        <li><a href="http://www.twitter.com/paleofuture" target="_blank" class="sb twitter">Twitter</a></li>
+                        <li><a href="http://pinterest.com/source/paleofuture.com/" target="_blank" class="sb pinterest">Pinterest</a></li>
+                        <li><a href="http://www.paleofuture.com/blog/rss.xml" target="_blank" class="sb rss">RSS</a></li>
+                        <!-- <li><a href="http://prettypictures.paleofuture.com/" target="_blank" class="sb tumblr">Tumblr</a></li> -->
                     </ul>
                 </div>
+                <a href="http://www.youtube.com/user/paleofuture" target="_blank" id="paleotv">
+                    <p>Discover <b>Paleofuture TV</b></p>
+                    <img src="img/play-button.png"></img>
+                </a>
                 <form action="#" id="sign-facebook">
                     <legend>Sign-in with Facebook</legend>
                     <input type="mail" name="mail" placeholder="Mail">
@@ -65,7 +72,6 @@
                     <input type="reset" name="cancel" value="Cancel">
                     <input type="submit" name="create" value="Create">
                 </form>
-                <a href="#/travel/1870" id="travel">|<br/>V</a>
             </div>
             <div id="content">
                <header>
@@ -254,9 +260,9 @@
                 <div id="interactive">
                     <div id="interactive-bar">
                         <ul id="interactive-menu">
-                            <a href="#" class="selected"><li>Interactive</li></a>
-                            <a href="#"><li>Images</li></a>
-                            <a href="#"><li>Similar articles</li></a>
+                            <a href="#" id="game" class="selected"><li>Interactive</li></a>
+                            <a href="#" id="image"><li>Image</li></a>
+                            <a href="#" id="similar"><li>Similar articles</li></a>
                         </ul>
                         <div id="account">
                             <p><span class="user-name">Matt Novak</span><img src="img/matt-novak-mini.jpg" alt="Matt Novak"></p>
@@ -274,7 +280,16 @@
                             </ul>
                         </div>
                     </div>
-                    <!--<Viewbox Stretch="Uniform"><canvas id='particules' width='1920px' height='1080px'></canvas><Viewbox>-->
+                    <div id="game-frame">
+                        <Viewbox Stretch="Uniform"><canvas id='particules' width='960px' height='1080px'></canvas><Viewbox>
+                    </div>
+                    <div id="image-frame">
+                        {{#if image}}
+                            <img src={{image}} alt="illustration"></img>
+                        {{/if}}
+                    </div>
+                    <div id="similar-frame">
+                    </div>
                 </div>
             </div>
         </script>
