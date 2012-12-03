@@ -49,28 +49,16 @@
                     <p>Discover <b>Paleofuture TV</b></p>
                     <img src="img/play-button.png"></img>
                 </a>
-                <form action="#" id="sign-facebook">
-                    <legend>Sign-in with Facebook</legend>
-                    <input type="mail" name="mail" placeholder="Mail">
-                    <input type="password" name="password" placeholder="Password">
-                    <input type="reset" name="cancel" value="Cancel">
-                    <input type="submit" name="create" value="Create">
-                </form>
-                <form action="#" id="sign-twitter">
-                    <legend>Sign-in with Twitter</legend>
-                    <input type="mail" name="mail" placeholder="Mail">
-                    <input type="password" name="password" placeholder="Password">
-                    <input type="reset" name="cancel" value="Cancel">
-                    <input type="submit" name="create" value="Create">
-                </form>
                 <form action="#" id="sign-up">
-                    <legend>Create account</legend>
-                    <input type="text" name="name" placeholder="Name">
-                    <input type="password" name="password" placeholder="Password">
-                    <input type="password" name="verify" placeholder="Verify">
-                    <input type="mail" name="mail" placeholder="Mail">
-                    <input type="reset" name="cancel" value="Cancel">
-                    <input type="submit" name="create" value="Create">
+                    <select>
+                      <option value="paleofuture" select>connect with <b>Paleofuture</b></option>
+                      <option value="twitter">connect with <b>Twitter</b></option>
+                      <option value="facebook">connect with <b>Facebook</b></option>
+                    </select>
+                    <input type="text" name="name-or-mail" placeholder="Username or Email"/>
+                    <input type="password" name="password" placeholder="Password"/>
+                    <input type="submit" name="login" value="Login"/>
+                    <input type="checkbox" name="remember" id="remember"><label for="remember">Remember me on this computer</label>
                 </form>
             </div>
             <div id="content">

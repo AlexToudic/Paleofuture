@@ -181,7 +181,7 @@ a {
     display: block;
     position: absolute;
     top: 70px;
-    right: 20px;
+    right: 40px;
     color: white;
     font-size: 10pt;
 }
@@ -271,18 +271,55 @@ a.sb.google {
     background: url(../img/google-button.png) no-repeat;
 }
 
-form#sign-up, form#sign-twitter, form#sign-facebook {
+form#sign-up {
+    z-index: 200;
     position: absolute;
-    width: 200px;
-    height: 200px;
-    top: 50%;
+    width: 400px;
+    height: 195px;
+    top: 70%;
     left: 50%;
-    margin-left: -100px;
+    margin-left: -200px;
+    background: #e8e8e8;
 }
 
-form#sign-twitter, form#sign-facebook {
-    display: none;
+form#sign-up select {
+    width: 400px;
+    height: 48px;
 }
+
+form#sign-up input[type="text"], form#sign-up input[type="password"] {
+    width: 380px;
+    height: 34px;
+    margin: 5px 7px;
+    text-indent: 5px;
+}
+
+form#sign-up input[type="text"]::-webkit-input-placeholder, form#sign-up input[type="password"]::-webkit-input-placeholder {
+    color: #d5d5d5;
+}
+
+form#sign-up input[type="submit"] {
+    width: 125px;
+    height: 35px;
+    margin: 0 7px;
+    background: #16aa40;
+    border: 1px solid #118331;
+    box-shadow: -1px -1px 0 #20df56 inset;
+    color: white;
+    text-shadow: 0 1px #118331;
+}
+
+form#sign-up input[type="checkbox"] {
+    width: 8px;
+    height: 8px;
+}
+
+form#sign-up label {
+    margin: 0 15px;
+    font-size: 8pt;
+    color: #9d9d9d;
+}
+
 
 #travel {
     width: 20px;
@@ -328,6 +365,15 @@ form#sign-twitter, form#sign-facebook {
     position: relative;
     float: left;
 }
+
+#article-details #interactive {
+    display: none;
+}
+
+#article-details.flip #interactive {
+    display: block;
+}
+
 
 #content {
     position: relative;

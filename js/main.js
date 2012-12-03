@@ -286,9 +286,13 @@ $(function() {
 	var previousWay = 1;
 	var change = 0;
 	var navigate = function(event, delta, deltaX, deltaY) {
-		if(change != 0){
+		if(change != 0 && currentDecade+change >= 1870 && currentDecade+change <= 1990){
 			window.location = "#/travel/"+(currentDecade+change);
 			change = 0;
+		}
+		else if(change != 0)
+		{
+			window.location = "#";
 		}
 
 		var reverse = false;
@@ -469,12 +473,12 @@ $(function() {
 	});
 
 	$('#quick-decade button[name="decade-up"]').on('click', function(){
-		window.location = "#/travel/"+(currentDecade+10);
-		
+		if(currentDecade+10 <= 1990)
+			window.location = "#/travel/"+(currentDecade+10);
 	});
 	$('#quick-decade button[name="decade-down"]').on('click', function(){
-		window.location = "#/travel/"+(currentDecade-10);
-		
+		if(currentDecade-10 >= 1870)
+			window.location = "#/travel/"+(currentDecade-10);	
 	});
 
 	$('#decade-content button').on('click', function(){
@@ -564,6 +568,12 @@ $(function() {
 		}
 	});
 
+	$('form#sign-up').on('submit', function(event){
+		event.preventDefault();
+
+		window.location = "#/travel/1870";
+	});
+
 	$('#space').mousewheel(navigate);
 
 	/*----------------------------------------------------
@@ -573,7 +583,7 @@ $(function() {
     var app_router = new AppRouter;
 
     app_router.on('route:home', function() {
-    	$.firefly();
+    	//$.firefly();
     	
     	if($('#home').css('margin-top') === -window.innerHeight+'px')
     		$('#home').animate({'margin-top': '0px'}, 200);
