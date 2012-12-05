@@ -570,15 +570,26 @@ $(function() {
 		$('ul#interactive-menu a#'+$(this).attr('id')).addClass('selected');
 	});
 
-	$('form#sign-up').on('submit', function(event){
+	$('#connect form').on('submit', function(event){
 		event.preventDefault();
 
 		window.location = "#/travel/1870";
 	});
 
+	var logoOpen = false;
 	$('#logo-top, #logo-bottom').on('click', function(event){
-		$('#connect').animate({'height': '171px'});
-		$('#logo-bottom').animate({'top': '533px'});
+		if(!logoOpen)
+		{
+			$('#connect').animate({'height': '171px'}, 200);
+			$('#logo-bottom').animate({'top': '533px'}, 200);
+		}
+		else
+		{
+			$('#connect').animate({'height': '0px'}, 200);
+			$('#logo-bottom').animate({'top': '362px'}, 200);
+		}
+
+		logoOpen = !logoOpen;
 	});
 
 	$('#space').mousewheel(navigate);
