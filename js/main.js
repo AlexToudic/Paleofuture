@@ -417,8 +417,8 @@ $(function() {
 	    	if(indexToReach == -42)
 	   			window.location = "#/travel/"+currentDecade+"/"+indexBlock;
 
-	   		d1Amount = -d1Amount;
-		    scroll1 = -scroll1;
+	   		/*d1Amount = -d1Amount;
+		    scroll1 = -scroll1;*/
 	    }
 	   
 	   	if(d2Amount === 0 && (lastLayer != 2 || reverse))
@@ -429,8 +429,8 @@ $(function() {
 	    	if(indexToReach == -42)
 	   			window.location = "#/travel/"+currentDecade+"/"+indexBlock;
 
-	   		d2Amount = -d2Amount;
-		    scroll2 = -scroll2;
+	   		/*d2Amount = -d2Amount;
+		    scroll2 = -scroll2;*/
 	    }
 
 	    if(indexBlock >= allBlocks.length-1)
