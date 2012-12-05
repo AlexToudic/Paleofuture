@@ -31,9 +31,22 @@
         
         <div id="wrapper">
             <div id="home">
-                <a href="#/about" id="about">About</a>
-                <a href="#/shop" id="shop">Shop</a>
-                <div class="logo">
+                <div id="parts-links">
+                    <a href="#/about" id="about"><span>About</span></a>
+                    <a href="#/shop" id="shop"><span>Shop</span></a>
+                    <a href="#/tv" id="tv"><span>TV</span></a>
+                </div>
+                <div id="logo-top">
+                </div>
+                <div id="connect">
+                    <form action="#">
+                        <input type="text" name="name-or-mail" placeholder="Username or Email"/>
+                        <input type="password" name="password" placeholder="Password"/>
+                        <input type="submit" name="login" value="Login"/>
+                    </form>
+                    <a href="#/sing-up">or sign up</a>
+                </div>
+                <div id="logo-bottom">
                 </div>
                 <div id="follow">
                     <p>Follow <b>Paleofuture</b></p>
@@ -42,24 +55,8 @@
                         <li><a href="http://www.twitter.com/paleofuture" target="_blank" class="sb twitter">Twitter</a></li>
                         <li><a href="http://pinterest.com/source/paleofuture.com/" target="_blank" class="sb pinterest">Pinterest</a></li>
                         <li><a href="http://www.paleofuture.com/blog/rss.xml" target="_blank" class="sb rss">RSS</a></li>
-                        <!-- <li><a href="http://prettypictures.paleofuture.com/" target="_blank" class="sb tumblr">Tumblr</a></li> -->
                     </ul>
                 </div>
-                <a href="http://www.youtube.com/user/paleofuture" target="_blank" id="paleotv">
-                    <p>Discover <b>Paleofuture TV</b></p>
-                    <img src="img/play-button.png"></img>
-                </a>
-                <form action="#" id="sign-up">
-                    <select>
-                      <option value="paleofuture" select>connect with <b>Paleofuture</b></option>
-                      <option value="twitter">connect with <b>Twitter</b></option>
-                      <option value="facebook">connect with <b>Facebook</b></option>
-                    </select>
-                    <input type="text" name="name-or-mail" placeholder="Username or Email"/>
-                    <input type="password" name="password" placeholder="Password"/>
-                    <input type="submit" name="login" value="Login"/>
-                    <input type="checkbox" name="remember" id="remember"><label for="remember">Remember me on this computer</label>
-                </form>
             </div>
             <div id="content">
                <header>
@@ -71,7 +68,7 @@
                     </div>
                     <h1 class="logo">PALEOFUTURE</h1>
                     <div id="account">
-                        <p><span class="user-name">Matt Novak</span><img src="img/matt-novak-mini.jpg" alt="Matt Novak"></p>
+                        <p><span class="user-name">John Doe</span><img src="img/john-doe.png" alt="John Doe"></p>
                         <button name="user-menu"></button>
                         <ul id="user-options">
                             <a href="#" class="user-option favorites"><li><i class="favorite-icon"></i> My favorites</li></a>
@@ -86,93 +83,97 @@
                         </ul>
                     </div>
                 </header>
-                <div id="timeline">
-                    <div id="filters">
-                        <div id="filters-content">
-                            <p>Filters</p><button name="filters-menu"></button>
+                <div id="travel-screen">
+                    <div id="timeline">
+                        <div id="filters">
+                            <div id="filters-content">
+                                <p>Filters</p><button name="filters-menu"></button>
+                            </div>
                         </div>
-                    </div>
-                    <fieldset>
-                        <ul class="filters">
-                          <li><input id="filter-cities" name="filters" type="checkbox"><label for="filter-cities">Cities</label></li>
-                          <li><input id="filter-commerce" name="filters" type="checkbox"><label for="filter-commerce">Commerce</label></li>
-                          <li><input id="filter-computers" name="filters" type="checkbox"><label for="filter-computers">Computers</label></li>
-                          <li><input id="filter-disney" name="filters" type="checkbox"><label for="filter-disney">Disney</label></li>
-                          <li><input id="filter-energy" name="filters" type="checkbox"><label for="filter-energy">Energy</label></li>
-                          <li><input id="filter-fashion" name="filters" type="checkbox"><label for="filter-fashion">Fashion</label></li>
-                          <li><input id="filter-food" name="filters" type="checkbox"><label for="filter-food">Food</label></li>
-                          <li><input id="filter-health" name="filters" type="checkbox"><label for="filter-health">Health</label></li>
-                          <li><input id="filter-home" name="filters" type="checkbox"><label for="filter-home">Home</label></li>
-                          <li><input id="filter-issues-and-events" name="filters" type="checkbox"><label for="filter-issues-and-events">Issues and Events</label></li>
-                          <li><input id="filter-media" name="filters" type="checkbox"><label for="filter-media">Media</label></li>
-                          <li><input id="filter-people" name="filters" type="checkbox"><label for="filter-people">People</label></li>
-                          <li><input id="filter-robotics" name="filters" type="checkbox"><label for="filter-robotics">Robotics</label></li>
-                          <li><input id="filter-space" name="filters" type="checkbox"><label for="filter-space">Space</label></li>
-                          <li><input id="filter-sport" name="filters" type="checkbox"><label for="filter-sport">Sport</label></li>
-                          <li><input id="filter-transportation" name="filters" type="checkbox"><label for="filter-transportation">Transportation</label></li>
-                          <li><input id="filter-weather" name="filters" type="checkbox"><label for="filter-weather">Weather</label></li>
-                          <li><input id="filter-world-s-fair" name="filters" type="checkbox"><label for="filter-world-s-fair">World's Fair</label></li>
-                        </ul>
-                    </fieldset>
-                   <div id="decade">
-                        <div id="decade-content">
-                            <p></p><button name="decade-menu"></button>
-                            <ul id="decades">
-                                <a class="decade" href="#/travel/1870">
-                                    <li>1870</li>
-                                </a>
-                                <a class="decade" href="#/travel/1880">
-                                    <li>1880</li>
-                                </a>
-                                <a class="decade" href="#/travel/1890">
-                                    <li>1890</li>
-                                </a>
-                                <a class="decade" href="#/travel/1900">
-                                    <li>1900</li>
-                                </a>
-                                <a class="decade" href="#/travel/1910">
-                                    <li>1910</li>
-                                </a>
-                                <a class="decade" href="#/travel/1920">
-                                    <li>1920</li>
-                                </a>
-                                <a class="decade" href="#/travel/1930">
-                                    <li>1930</li>
-                                </a>
-                                <a class="decade" href="#/travel/1940">
-                                    <li>1940</li>
-                                </a>
-                                <a class="decade" href="#/travel/1950">
-                                    <li>1950</li>
-                                </a>
-                                <a class="decade" href="#/travel/1960">
-                                    <li>1960</li>
-                                </a>
-                                <a class="decade" href="#/travel/1970">
-                                    <li>1970</li>
-                                </a>
-                                <a class="decade" href="#/travel/1980">
-                                    <li>1980</li>
-                                </a>
-                                <a class="decade" href="#/travel/1990">
-                                    <li>1990</li>
-                                </a>
-                            </ul>
+                        <form name="filters">
+                            <fieldset>
+                                <ul class="filters">
+                                  <li><input id="filter-cities" name="filters" type="checkbox"><label for="filter-cities">Cities</label></li>
+                                  <li><input id="filter-commerce" name="filters" type="checkbox"><label for="filter-commerce">Commerce</label></li>
+                                  <li><input id="filter-computers" name="filters" type="checkbox"><label for="filter-computers">Computers</label></li>
+                                  <li><input id="filter-disney" name="filters" type="checkbox"><label for="filter-disney">Disney</label></li>
+                                  <li><input id="filter-energy" name="filters" type="checkbox"><label for="filter-energy">Energy</label></li>
+                                  <li><input id="filter-fashion" name="filters" type="checkbox"><label for="filter-fashion">Fashion</label></li>
+                                  <li><input id="filter-food" name="filters" type="checkbox"><label for="filter-food">Food</label></li>
+                                  <li><input id="filter-health" name="filters" type="checkbox"><label for="filter-health">Health</label></li>
+                                  <li><input id="filter-home" name="filters" type="checkbox"><label for="filter-home">Home</label></li>
+                                  <li><input id="filter-issues-and-events" name="filters" type="checkbox"><label for="filter-issues-and-events">Issues and Events</label></li>
+                                  <li><input id="filter-media" name="filters" type="checkbox"><label for="filter-media">Media</label></li>
+                                  <li><input id="filter-people" name="filters" type="checkbox"><label for="filter-people">People</label></li>
+                                  <li><input id="filter-robotics" name="filters" type="checkbox"><label for="filter-robotics">Robotics</label></li>
+                                  <li><input id="filter-space" name="filters" type="checkbox"><label for="filter-space">Space</label></li>
+                                  <li><input id="filter-sport" name="filters" type="checkbox"><label for="filter-sport">Sport</label></li>
+                                  <li><input id="filter-transportation" name="filters" type="checkbox"><label for="filter-transportation">Transportation</label></li>
+                                  <li><input id="filter-weather" name="filters" type="checkbox"><label for="filter-weather">Weather</label></li>
+                                  <li><input id="filter-world-s-fair" name="filters" type="checkbox"><label for="filter-world-s-fair">World's Fair</label></li>
+                                </ul>
+                            </fieldset>
+                        </form>
+                       <div id="decade">
+                            <div id="decade-content">
+                                <p></p><button name="decade-menu"></button>
+                                <ul id="decades">
+                                    <a class="decade" href="#/travel/1870">
+                                        <li>1870</li>
+                                    </a>
+                                    <a class="decade" href="#/travel/1880">
+                                        <li>1880</li>
+                                    </a>
+                                    <a class="decade" href="#/travel/1890">
+                                        <li>1890</li>
+                                    </a>
+                                    <a class="decade" href="#/travel/1900">
+                                        <li>1900</li>
+                                    </a>
+                                    <a class="decade" href="#/travel/1910">
+                                        <li>1910</li>
+                                    </a>
+                                    <a class="decade" href="#/travel/1920">
+                                        <li>1920</li>
+                                    </a>
+                                    <a class="decade" href="#/travel/1930">
+                                        <li>1930</li>
+                                    </a>
+                                    <a class="decade" href="#/travel/1940">
+                                        <li>1940</li>
+                                    </a>
+                                    <a class="decade" href="#/travel/1950">
+                                        <li>1950</li>
+                                    </a>
+                                    <a class="decade" href="#/travel/1960">
+                                        <li>1960</li>
+                                    </a>
+                                    <a class="decade" href="#/travel/1970">
+                                        <li>1970</li>
+                                    </a>
+                                    <a class="decade" href="#/travel/1980">
+                                        <li>1980</li>
+                                    </a>
+                                    <a class="decade" href="#/travel/1990">
+                                        <li>1990</li>
+                                    </a>
+                                </ul>
+                            </div>
                         </div>
+                        <div id="quick-decade">
+                            <button name="decade-up"></button>
+                            <button name="decade-down"></button>
+                        </div>
+                        <div id="time-rule">
+                        </div>
+                        <div id="cursor"></div>
                     </div>
-                    <div id="quick-decade">
-                        <button name="decade-up"></button>
-                        <button name="decade-down"></button>
-                    </div>
-                    <div id="time-rule">
-                    </div>
-                    <div id="cursor"></div>
-                </div>
-                
-                <div id="space">
-                    <div id="layer1">
-                    </div>
-                    <div id="layer2">
+                    
+                    <div id="space">
+                        <div id="layer1">
+                        </div>
+                        <div id="layer2">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -252,21 +253,6 @@
                             <a href="#" id="image"><li>Image</li></a>
                             <a href="#" id="similar"><li>Similar articles</li></a>
                         </ul>
-                        <div id="account">
-                            <p><span class="user-name">Matt Novak</span><img src="img/matt-novak-mini.jpg" alt="Matt Novak"></p>
-                            <button name="user-menu"></button>
-                            <ul id="user-options">
-                                <a href="#" class="user-option favorites"><li><i class="favorite-icon"></i> My favorites</li></a>
-                                <a href="#" class="user-option extras"><li><i class="extras-icon"></i> My extras</li></a>
-                                <a href="#" class="user-option account"><li><i class="account-icon"></i> My account</li></a>
-                                <a href="#" class="user-option log-out"><li><i class="log-out-icon"></i> Log-out</li></a>
-                            </ul>
-                            <ul id="extras">
-                                <a href="#" class="extra"><li><i class="extra-icon"></i> Solar System</li></a>
-                                <a href="#" class="extra"><li><i class="extra-icon"></i> Asteroids Rain</li></a>
-                                <a href="#" class="extra"><li><i class="extra-icon"></i> Wallpaper</li></a>
-                            </ul>
-                        </div>
                     </div>
                     <div id="game-frame">
                         <Viewbox Stretch="Uniform"><canvas id='particules' width='960px' height='1080px'></canvas><Viewbox>
@@ -277,6 +263,15 @@
                         {{/if}}
                     </div>
                     <div id="similar-frame">
+                        <div class="pic-article">
+                            <div class="article-head">
+                                <h1>Robots vs. Musicians (1931)</h1><button class="read-it-later"></button>
+                            </div>
+                            <a href="#/article/c561">
+                                <div class="read-more"><p>Click to <b>open</b></p></div>
+                                <img src="http://2.bp.blogspot.com/_sGYULzoQCgA/RyVjxyZT_iI/AAAAAAAABJA/7twI9CSPeOs/s1600/1931-March-9---paleofuture.jpg" alt="illustration">
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

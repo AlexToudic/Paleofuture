@@ -93,6 +93,11 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+@font-face {
+    font-family: Airship;
+    src: url('../img/Airship 27-Regular.ttf');
+}
+
 html, body, #wrapper {
     width: 100%;
     height: 100%;
@@ -124,83 +129,139 @@ a {
     background: url(../img/home-gradient.png) 50%, url(../img/navy_blue.png) repeat;
 }
 
-#home .logo {
-    width: 512px;
-    height: 515px;
+#parts-links {
+    width: 355px;
+    height: 100px;
     position: absolute;
-    top: 35%;
+    top: 0;
     left: 50%;
-    margin-top: -256px;
-    margin-left: -257.5px;
-    background: url(../img/logo.png) 50% no-repeat;
+    margin-left: -177.5px;
 }
 
-#about {
+#parts-links a {
     position: absolute;
-    top: 25px;
+    top: 0;
+    font-family: Airship;
+    font-size: 18pt;
+    color: #fff6b1;
+    text-shadow: 0 1px 0 #a44426;
+    height: 85px;
+    width: 114px;
+    background: url(../img/link-stripe.png) left bottom;
+    -webkit-transition: height 0.1s ease-in;
+}
+
+#parts-links a#shop {
+    left: 115px;
+}
+
+#parts-links a#tv {
+    left: 230px;
+}
+
+
+#parts-links a:hover {
+    height: 100px;
+}
+
+#parts-links a span {
+    position: absolute;
+    top: 10px;
+}
+
+#parts-links a#about span {
+    left: 30px;
+}
+
+#parts-links a#shop span {
+    left: 35px;
+}
+
+#parts-links a#tv span {
     left: 45px;
-    font-weight: bold;
-    font-size: 10pt;
 }
 
-#about:after {
-    content: "";
-    margin: -24px -21px;
-    display: block;
-    width: 80px;
-    height: 30px;
-    border-radius: 3px;
-    background: white;
-}
-
-#shop {
+#logo-top {
+    z-index: 2;
+    width: 520px;
+    height: 333px;
+    background: url(../img/logo-top.png);
     position: absolute;
-    top: 25px;
-    left: 140px;
-    font-weight: bold;
-    font-size: 10pt;
+    left: 50%;
+    top: 170px;
+    margin-left: -258px;
 }
 
-#shop:after {
-    content: "";
-    margin: -24px -22px;
-    display: block;
-    width: 80px;
-    height: 30px;
-    border-radius: 3px;
-    background: white;
+#logo-bottom {
+    z-index: 1;
+    width: 423px;
+    height: 312px;
+    background: url(../img/logo-bottom.png);
+    position: absolute;
+    left: 50%;
+    top: 362px;
+    margin-left: -210px;
+}
+
+#connect {
+    width: 341px;
+    height: 0px;
+    background: url(../img/login-background.png);
+    position: absolute;
+    top: 421px;
+    left: 50%;
+    margin-left: -170.5px;
+    z-index: 3;
+    overflow: hidden;
+}
+
+#connect input[type="text"], #connect input[type="password"] {
+    width: 219px;
+    height: 35px;
+    border: 1px solid #a44426;
+    text-indent: 10px;
+}
+
+#connect input[type="text"] {
+    margin: 13px 58px;
+}
+
+#connect input[type="password"] {
+    margin: -7px 58px;
+}
+
+#connect input[type="text"]::-webkit-input-placeholder, #connect input[type="password"]::-webkit-input-placeholder {
+    color: #c5c5c5;
+}
+
+#connect input[type="submit"] {
+    border: 0;
+    padding: 0;
+    margin: 14px 105px;
+    width: 125px;
+    height: 35px;
+    background: #232323;
+    color: white;
+    text-shadow: 0 1px black;
+    box-shadow: -1px -1px #2e2e2e inset;
+}
+
+#connect input[type="submit"]:hover {
+    background: #2e2e2e;
 }
 
 #follow {
-    color: white;
-    font-size: 10pt;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    margin-left: -91px;
+    color: #fff6b1;
+    font-size: 11pt;
     text-align: center;
 }
 
-#paleotv {
-    display: block;
-    position: absolute;
-    top: 70px;
-    right: 40px;
-    color: white;
-    font-size: 10pt;
-}
-
-#paleotv img {
-    position: absolute;
-    top: 45px;
-    left: 50%;
-    margin-left: -10px;
-}
-
-#follow {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-
 #follow p {
-    margin: 0 0;
+    text-indent: -20px;
 }
 
 /* ==========================================================================
@@ -209,7 +270,7 @@ a {
 
 ul.social-buttons {
     padding: 0;
-    margin: 5px 15px;
+    margin: 5px 10px;
     list-style: none;
 }
 
@@ -231,7 +292,7 @@ a.sb,
     display: inline-block;
     position: relative;
     vertical-align: middle;
-    margin: 0 10px 0 0;
+    margin: 0 17px 0 0;
 }
 
 #follow .social-buttons li a:hover {
@@ -251,12 +312,37 @@ a.sb.rss {
     background: url(../img/rss-button.png) no-repeat;
 }
 
+a.sb.rss:hover {
+    background: url(../img/rss-button-hover.png) no-repeat;
+}
+
+a.sb.rss:active {
+    background: url(../img/rss-button-click.png) no-repeat;
+}
+
 a.sb.twitter {
     background: url(../img/twitter-button.png) no-repeat;
 }
 
+a.sb.twitter:hover {
+    background: url(../img/twitter-button-hover.png) no-repeat;
+}
+
+a.sb.twitter:active {
+    background: url(../img/twitter-button-click.png) no-repeat;
+}
+
+
 a.sb.facebook {
     background: url(../img/facebook-button.png) no-repeat;
+}
+
+a.sb.facebook:hover {
+    background: url(../img/facebook-button-hover.png) no-repeat;
+}
+
+a.sb.facebook:active {
+    background: url(../img/facebook-button-click.png) no-repeat;
 }
 
 a.sb.tumblr {
@@ -267,11 +353,19 @@ a.sb.pinterest {
     background: url(../img/pinterest-button.png) no-repeat;
 }
 
+a.sb.pinterest:hover {
+    background: url(../img/pinterest-button-hover.png) no-repeat;
+}
+
+a.sb.pinterest:active {
+    background: url(../img/pinterest-button-click.png) no-repeat;
+}
+
 a.sb.google {
     background: url(../img/google-button.png) no-repeat;
 }
 
-form#sign-up {
+/*form#sign-up {
     z-index: 200;
     position: absolute;
     width: 400px;
@@ -318,8 +412,7 @@ form#sign-up label {
     margin: 0 15px;
     font-size: 8pt;
     color: #9d9d9d;
-}
-
+}*/
 
 #travel {
     width: 20px;
@@ -366,17 +459,23 @@ form#sign-up label {
     float: left;
 }
 
-#article-details #interactive {
+/* #article-details #interactive {
     display: none;
 }
 
 #article-details.flip #interactive {
     display: block;
-}
-
+} */
 
 #content {
     position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0 0;
+    overflow: hidden;
+}
+
+#travel-screen {
     width: 100%;
     height: 100%;
     margin: 0 0;
@@ -386,11 +485,10 @@ form#sign-up label {
     -webkit-timing-function : ease-in-out;
     -webkit-transform-origin : 50% 0;
     -webkit-backface-visibility: hidden;
-    overflow: hidden;
-    background: url(../img/background.png) 0 80px no-repeat;
+    background: url(../img/background.png) 0 0 no-repeat;
 }
 
-#content.flip {
+#travel-screen.flip {
     -webkit-transform : rotateY(180deg);
 }
 
@@ -974,7 +1072,7 @@ button.read-it-later:hover {
 
 #article-details {
     width: 100%;
-    height: 100%;   
+    height: -webkit-calc(100% - 45px);   
     -webkit-transform : rotateY(180deg);
     -webkit-transform-style : preserve-3d;
     -webkit-transition-property : webkit-transform;
@@ -1204,7 +1302,7 @@ ul#interactive-menu a.selected:after {
     background: url(../img/selected-triangle.png);
 }
 
-#game-frame, #image-frame, #similar-article 
+#game-frame, #image-frame, #similar-frame 
 {
     width: 100%;
     height: 100%;
@@ -1215,7 +1313,7 @@ ul#interactive-menu a.selected:after {
     display: block;
 }
 
-#image-frame, #similar-article {
+#image-frame, #similar-frame {
     display: none;
 }
 
@@ -1223,16 +1321,27 @@ ul#interactive-menu a.selected:after {
     width: 100%;
     vertical-align: middle;
     text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
 #image-frame img {
     position: absolute;
-    max-width: 95%;
-    max-height: 95%;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    top: 50%;
+    left: 50%;
+    margin: -75%;
+}
+
+#similar-frame .pic-article {
+    width: 550px;
+    height: 414px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+    margin: -207px -275px;
 }
 
 /* ==========================================================================
@@ -1343,15 +1452,19 @@ ul#interactive-menu a.selected:after {
    ========================================================================== */
 
 @media only screen and (max-width: 1366px) {
-    #home .logo {
-        background-size: 256px 257.5px;
-    }
-
     a.sb,
     .sb a {
         width: 20px;
         height: 20px;
         background-size: 20px !important;
+    }
+
+    #follow {
+        right: 42px;
+    }
+
+    form#sign-up {
+        top: 60%;
     }
 }
 

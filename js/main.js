@@ -440,7 +440,7 @@ $(function() {
 
 	var adaptInterface = function() {
 		$('#layer2').css({'margin-top': -window.innerHeight+80+'px'});
-		$('#article-details').css({'margin-top': -window.innerHeight+'px'});
+		$('#article-details').css({'margin-top': -(window.innerHeight-45)+'px'});
 	};
 
 	/*----------------------------------------------------
@@ -493,6 +493,8 @@ $(function() {
 			$('ul.filters li.selected').css({'text-decoration': 'none'});
 
 			filtersDropped = false;
+			
+			console.log('test');
 		}
 	});
 
@@ -546,8 +548,6 @@ $(function() {
 
 		$('ul#interactive-menu a').removeClass('selected');
 
-		$(this).addClass('selected');
-
 		switch($(this).attr('id'))
 		{
 			case 'game':
@@ -566,12 +566,19 @@ $(function() {
 				$('#similar-frame').css({'display': 'block'});
 				break;
 		}
+
+		$('ul#interactive-menu a#'+$(this).attr('id')).addClass('selected');
 	});
 
 	$('form#sign-up').on('submit', function(event){
 		event.preventDefault();
 
 		window.location = "#/travel/1870";
+	});
+
+	$('#logo-top, #logo-bottom').on('click', function(event){
+		$('#connect').animate({'height': '171px'});
+		$('#logo-bottom').animate({'top': '533px'});
 	});
 
 	$('#space').mousewheel(navigate);
@@ -584,6 +591,7 @@ $(function() {
 
     app_router.on('route:home', function() {
     	//$.firefly();
+    	$('#article-details').html('');
     	
     	if($('#home').css('margin-top') === -window.innerHeight+'px')
     		$('#home').animate({'margin-top': '0px'}, 200);
@@ -593,7 +601,7 @@ $(function() {
 			$('#layer2').css({'display': 'none'});
     	}
 
-    	$('#content').removeClass('flip');
+    	$('#travel-screen').removeClass('flip');
     	$('#article-details').removeClass('flip');
     });
 
@@ -604,6 +612,7 @@ $(function() {
 		indexDisplay = 0;
 		amount = 75;
 
+		$('#article-details').html('');
 		$('#decade-content p').html(decade);
 
     	if(allArticles === undefined)
@@ -625,7 +634,7 @@ $(function() {
 
     	$('#home').animate({'margin-top': -window.innerHeight+'px'}, 200);
 
-    	$('#content').removeClass('flip');
+    	$('#travel-screen').removeClass('flip');
     	$('#article-details').removeClass('flip');
     	
     	$('#layer1').css({'display': 'block'});
@@ -635,6 +644,8 @@ $(function() {
     app_router.on('route:travel', function(decade, block){
     	if(indexToReach == -42)
     		indexBlock = parseInt(block, 10);
+
+    	$('#article-details').html('');
 
     	if(parseInt(decade, 10) != currentDecade)
     	{
@@ -666,7 +677,7 @@ $(function() {
 
     	$('#home').animate({'margin-top': -window.innerHeight+'px'}, 200);
 
-    	$('#content').removeClass('flip');
+    	$('#travel-screen').removeClass('flip');
     	$('#article-details').removeClass('flip');
     	
     	$('#layer1').css({'display': 'block'});
@@ -674,6 +685,8 @@ $(function() {
     });
 
     app_router.on('route:article', function(articleId){
+
+    	$('#article-details').html('');
 
     	if(allArticles === undefined)
     	{
@@ -694,7 +707,7 @@ $(function() {
     	$('#home').animate({'margin-top': -window.innerHeight+'px'}, 200);
 
     	$('#article-details').addClass('flip');
-		$('#content').addClass('flip');
+		$('#travel-screen').addClass('flip');
 		$('#layer1').css({'display': 'none'});
 		$('#layer2').css({'display': 'none'});
     });
