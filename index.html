@@ -60,13 +60,25 @@
             </div>
             <div id="content">
                <header>
-                    <div id="search-bar">
-                        <form name="search">
-                            <input type="text" name="search" placeHolder="Search">
-                            <input type="submit" name="find" value="">
-                        </form>
+                    <nav id="menu">
+                        <ul>
+                            <a href="#" class="home"><li>Home</li></a>
+                            <a href="#"><li>About</li></a>
+                            <a href="#"><li>Shop</li></a>
+                            <a href="#"><li>TV</li></a>
+                        </ul>
+                    </nav>
+                    <div id="logo-nav">
+                        <div id="logo-follow">
+                            <ul class="social-buttons">
+                                <li><a href="http://www.facebook.com/pages/Paleo-Future/294282918458" target="_blank" class="sb facebook">Facebook</a></li>
+                                <li><a href="http://www.twitter.com/paleofuture" target="_blank" class="sb twitter">Twitter</a></li>
+                                <li><a href="http://pinterest.com/source/paleofuture.com/" target="_blank" class="sb pinterest">Pinterest</a></li>
+                                <li><a href="http://www.paleofuture.com/blog/rss.xml" target="_blank" class="sb rss">RSS</a></li>
+                            </ul>
+                        </div>
+                        <h1 class="logo">Paleofuture</h1>
                     </div>
-                    <h1 class="logo">PALEOFUTURE</h1>
                     <div id="account">
                         <p><span class="user-name">John Doe</span><img src="img/john-doe.png" alt="John Doe"></p>
                         <button name="user-menu"></button>
@@ -82,6 +94,12 @@
                             <a href="#" class="extra"><li><i class="extra-icon"></i> Wallpaper</li></a>
                         </ul>
                     </div>
+                    <div id="search-bar">
+                        <form name="search">
+                            <input type="text" name="search" placeHolder="Search">
+                            <input type="submit" name="find" value="">
+                        </form>
+                    </div>
                 </header>
                 <div id="travel-screen">
                     <div id="timeline">
@@ -93,24 +111,24 @@
                         <form name="filters">
                             <fieldset>
                                 <ul class="filters">
-                                  <li><input id="filter-cities" name="filters" type="checkbox"><label for="filter-cities">Cities</label></li>
-                                  <li><input id="filter-commerce" name="filters" type="checkbox"><label for="filter-commerce">Commerce</label></li>
-                                  <li><input id="filter-computers" name="filters" type="checkbox"><label for="filter-computers">Computers</label></li>
-                                  <li><input id="filter-disney" name="filters" type="checkbox"><label for="filter-disney">Disney</label></li>
-                                  <li><input id="filter-energy" name="filters" type="checkbox"><label for="filter-energy">Energy</label></li>
-                                  <li><input id="filter-fashion" name="filters" type="checkbox"><label for="filter-fashion">Fashion</label></li>
-                                  <li><input id="filter-food" name="filters" type="checkbox"><label for="filter-food">Food</label></li>
-                                  <li><input id="filter-health" name="filters" type="checkbox"><label for="filter-health">Health</label></li>
-                                  <li><input id="filter-home" name="filters" type="checkbox"><label for="filter-home">Home</label></li>
-                                  <li><input id="filter-issues-and-events" name="filters" type="checkbox"><label for="filter-issues-and-events">Issues and Events</label></li>
-                                  <li><input id="filter-media" name="filters" type="checkbox"><label for="filter-media">Media</label></li>
-                                  <li><input id="filter-people" name="filters" type="checkbox"><label for="filter-people">People</label></li>
-                                  <li><input id="filter-robotics" name="filters" type="checkbox"><label for="filter-robotics">Robotics</label></li>
-                                  <li><input id="filter-space" name="filters" type="checkbox"><label for="filter-space">Space</label></li>
-                                  <li><input id="filter-sport" name="filters" type="checkbox"><label for="filter-sport">Sport</label></li>
-                                  <li><input id="filter-transportation" name="filters" type="checkbox"><label for="filter-transportation">Transportation</label></li>
-                                  <li><input id="filter-weather" name="filters" type="checkbox"><label for="filter-weather">Weather</label></li>
-                                  <li><input id="filter-world-s-fair" name="filters" type="checkbox"><label for="filter-world-s-fair">World's Fair</label></li>
+                                  <li  class="selected"><input id="filter-cities" name="filters" type="checkbox" checked><label for="filter-cities">Cities</label></li>
+                                  <li  class="selected"><input id="filter-commerce" name="filters" type="checkbox" checked><label for="filter-commerce">Commerce</label></li>
+                                  <li  class="selected"><input id="filter-computers" name="filters" type="checkbox" checked><label for="filter-computers">Computers</label></li>
+                                  <li  class="selected"><input id="filter-disney" name="filters" type="checkbox" checked><label for="filter-disney">Disney</label></li>
+                                  <li  class="selected"><input id="filter-energy" name="filters" type="checkbox" checked><label for="filter-energy">Energy</label></li>
+                                  <li  class="selected"><input id="filter-fashion" name="filters" type="checkbox" checked><label for="filter-fashion">Fashion</label></li>
+                                  <li  class="selected"><input id="filter-food" name="filters" type="checkbox" checked><label for="filter-food">Food</label></li>
+                                  <li  class="selected"><input id="filter-health" name="filters" type="checkbox" checked><label for="filter-health">Health</label></li>
+                                  <li  class="selected"><input id="filter-home" name="filters" type="checkbox" checked><label for="filter-home">Home</label></li>
+                                  <li  class="selected"><input id="filter-issues-and-events" name="filters" type="checkbox" checked><label for="filter-issues-and-events">Issues and Events</label></li>
+                                  <li  class="selected"><input id="filter-media" name="filters" type="checkbox" checked><label for="filter-media">Media</label></li>
+                                  <li  class="selected"><input id="filter-people" name="filters" type="checkbox" checked><label for="filter-people">People</label></li>
+                                  <li  class="selected"><input id="filter-robotics" name="filters" type="checkbox" checked><label for="filter-robotics">Robotics</label></li>
+                                  <li  class="selected"><input id="filter-space" name="filters" type="checkbox" checked><label for="filter-space">Space</label></li>
+                                  <li  class="selected"><input id="filter-sport" name="filters" type="checkbox" checked><label for="filter-sport">Sport</label></li>
+                                  <li  class="selected"><input id="filter-transportation" name="filters" type="checkbox" checked><label for="filter-transportation">Transportation</label></li>
+                                  <li  class="selected"><input id="filter-weather" name="filters" type="checkbox" checked><label for="filter-weather">Weather</label></li>
+                                  <li  class="selected"><input id="filter-world-s-fair" name="filters" type="checkbox" checked><label for="filter-world-s-fair">World's Fair</label></li>
                                 </ul>
                             </fieldset>
                         </form>
@@ -160,12 +178,10 @@
                                 </ul>
                             </div>
                         </div>
-                        <div id="quick-decade">
-                            <button name="decade-up"></button>
-                            <button name="decade-down"></button>
-                        </div>
+                        <button name="decade-down"></button>
                         <div id="time-rule">
                         </div>
+                        <button name="decade-up"></button>
                         <div id="cursor"></div>
                     </div>
                     

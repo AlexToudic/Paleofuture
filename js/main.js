@@ -77,7 +77,7 @@ $(function() {
 			$(el).html('');
 			this.each(function(a){
 				a.get('tinyView').render(el);
-				$(el+'>*:last').css({'top': a.get('posY')+'px', 'left': a.get('posX')+'px'});
+				$(el+'>*:last').css({'margin': a.get('top')+'px 20px 0 '+a.get('left')+'px'});
 			});
 		}
 	});
@@ -222,15 +222,33 @@ $(function() {
 	var generateBlocks = function(){
 		var displayedArticles = allArticles.where({'decade': currentDecade});
 		allBlocks = new Array();
+		var heightCapacity = Math.floor((window.innerHeight - 80)/(500+20));
 
-    	for(var i = 0; i < displayedArticles.length; ++i)
+		var even = false;
+
+    	for(var i = 0; i < displayedArticles.length; i += heightCapacity*2)
     	{
     		var newBlock = new Block();
+    		var j = 0;
 
-    		// for(var j = 5*i; j < 5*i+5; ++j)
+    		while(i+j < displayedArticles.length && j < heightCapacity*2)
     		{
-    			newBlock.add(displayedArticles[i]);
-    			newBlock.last().set({'posX': Math.random()*window.innerWidth, 'posY': Math.random()*window.innerHeight});
+    			newBlock.add(displayedArticles[i+j]);
+
+    			if(j < 2)
+    				newBlock.last().set('top', (window.innerHeight-(45+(250*heightCapacity*2)))/2);
+    			else
+    				newBlock.last().set('top', 20);
+
+    			if(even)
+    				newBlock.last().set('left', 0);
+    			else if(i+j+1 < displayedArticles.length)
+    				newBlock.last().set('left', (window.innerWidth-1100)/2);
+    			else
+    				newBlock.last().set('left', (window.innerWidth-580)/2);
+
+    			++j;
+    			even = !even;
     		}
 
     		allBlocks.push(newBlock);
@@ -286,6 +304,8 @@ $(function() {
 	var previousWay = 1;
 	var change = 0;
 	var navigate = function(event, delta, deltaX, deltaY) {
+		console.log(allBlocks.length);
+
 		if(change != 0 && currentDecade+change >= 1870 && currentDecade+change <= 1990){
 			window.location = "#/travel/"+(currentDecade+change);
 			change = 0;
@@ -294,6 +314,8 @@ $(function() {
 		{
 			window.location = "#";
 		}
+
+		change = 0;
 
 		var reverse = false;
 
@@ -394,6 +416,9 @@ $(function() {
 
 	    	if(indexToReach == -42)
 	   			window.location = "#/travel/"+currentDecade+"/"+indexBlock;
+
+	   		d1Amount = -d1Amount;
+		    scroll1 = -scroll1;
 	    }
 	   
 	   	if(d2Amount === 0 && (lastLayer != 2 || reverse))
@@ -403,9 +428,12 @@ $(function() {
 
 	    	if(indexToReach == -42)
 	   			window.location = "#/travel/"+currentDecade+"/"+indexBlock;
+
+	   		d2Amount = -d2Amount;
+		    scroll2 = -scroll2;
 	    }
 
-	    if(indexBlock >= allBlocks.length)
+	    if(indexBlock >= allBlocks.length-1)
 	    {
 	    	change = +10;
 	    }
@@ -439,7 +467,7 @@ $(function() {
 	----------------------------------------------------*/
 
 	var adaptInterface = function() {
-		$('#layer2').css({'margin-top': -window.innerHeight+80+'px'});
+		//$('#layer2').css({'margin-top': -window.innerHeight+80+'px'});
 		$('#article-details').css({'margin-top': -(window.innerHeight-45)+'px'});
 	};
 
@@ -472,11 +500,11 @@ $(function() {
 		}
 	});
 
-	$('#quick-decade button[name="decade-up"]').on('click', function(){
+	$('button[name="decade-up"]').on('click', function(){
 		if(currentDecade+10 <= 1990)
 			window.location = "#/travel/"+(currentDecade+10);
 	});
-	$('#quick-decade button[name="decade-down"]').on('click', function(){
+	$('button[name="decade-down"]').on('click', function(){
 		if(currentDecade-10 >= 1870)
 			window.location = "#/travel/"+(currentDecade-10);	
 	});
@@ -486,16 +514,6 @@ $(function() {
 			$('ul#decades').css({'display': 'block'});
 		else
 			$('ul#decades').css({'display': 'none'});
-		
-		if(filtersDropped)
-		{
-			$('ul.filters li:not(.selected)').css({'display': 'none'});
-			$('ul.filters li.selected').css({'text-decoration': 'none'});
-
-			filtersDropped = false;
-			
-			console.log('test');
-		}
 	});
 
 	$('a.decade').on('click', function(){
@@ -510,20 +528,11 @@ $(function() {
 	});
 
 	$('button[name="filters-menu"]').on('click', function(){
-		if(!filtersDropped)
-		{
-			$('ul.filters li:not(.selected)').css({'display': 'block'});
-			$('ul.filters li.selected').css({'text-decoration': 'line-through'});
-		}
-		else
-		{
-			$('ul.filters li:not(.selected)').css({'display': 'none'});
-			$('ul.filters li.selected').css({'text-decoration': 'none'});
-		}
-		filtersDropped = !filtersDropped;
 
-		if($('ul#decades').css('display') === 'block')
-			$('ul#decades').css({'display': 'none'});
+		if($('ul.filters').css('display') === 'none')
+			$('ul.filters').css({'display': 'block'});
+		else
+			$('ul.filters').css({'display': 'none'});
 	});
 
 	$('body').on('click', 'button[name="user-menu"]', function(){

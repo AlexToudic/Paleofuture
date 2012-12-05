@@ -445,7 +445,7 @@ form#sign-up label {
 #layer1, #layer2 {
     width: 100%;
     height: 100%;
-    position: relative;
+    position: absolute;
     display: none;
 }
 
@@ -487,6 +487,35 @@ form#sign-up label {
     overflow: hidden;
 }
 
+nav#menu ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 45px;
+    margin: 0;
+    padding: 0;
+}
+
+nav#menu ul a.home li {
+    text-indent: -9999em;
+    width: 24px;
+    height: 25px;
+    margin: 4px 0;
+    background: url(../img/home-icon.png);
+}
+
+nav#menu ul a {
+    display: block;
+    height: 45px;
+    float: left;
+    font-family: Airship;
+    color: #fff6b1;
+    text-shadow: 1px 1px 0 black;
+    font-size: 18pt;
+    padding: 6px 15px 0 20px;
+    box-shadow: 1px 0px 0px 0px #2e2e2e, 2px 0 0 0 #000000;
+}
+
 #travel-screen {
     width: 100%;
     height: 100%;
@@ -510,11 +539,11 @@ form#sign-up label {
 }
 
 #search-bar {
+    position: relative;
     width: 254px;
     height: 44px;
-    top: 0;
-    left: 0;
-    box-shadow: 1px 0px 0px 0px #2e2e2e, 2px 0 0 0 #000000; 
+    float: right;
+    box-shadow: 1px 0px 0px 0px #2e2e2e, 2px 0 0 0 #000000, -1px 0px 0px 0px #000000, -2px 0 0 0 #2e2e2e;
 }
 
 #search-bar>form>input[type="text"] {
@@ -525,11 +554,7 @@ form#sign-up label {
     border: 0;
     border-radius: 3px;
     box-shadow: 0 1px 1px 0px #313131, 0 0px 14px -4px #000000 inset;
-    background-image: linear-gradient(bottom, #262626 0%, #0f0f0f 100%);
-    background-image: -o-linear-gradient(bottom, #262626 0%, #0f0f0f 100%);
-    background-image: -moz-linear-gradient(bottom, #262626 0%, #0f0f0f 100%);
-    background-image: -webkit-linear-gradient(bottom, #262626 0%, #0f0f0f 100%);
-    background-image: -ms-linear-gradient(bottom, #262626 0%, #0f0f0f 100%);
+    background: #232323;
     outline: none;
     color: white;
     font-size: 11pt;
@@ -539,7 +564,7 @@ form#sign-up label {
 }
 
 input::-webkit-input-placeholder {
-    color: #3b3b3b;
+    color: #373737;
 }
 
 input[name="find"] {
@@ -556,6 +581,78 @@ input[name="find"] {
 
 input[name="find"]:hover {
     background: url(../img/glass-hover.png);
+}
+
+#logo-nav {
+    z-index: 300;
+    width: 207px;
+    height: 109px;
+    position: absolute;
+    top: -44px;
+    left: 50%;
+    margin-left: -103.5px;
+    background: url(../img/logo-stripe.png);
+    -webkit-transition: top 0.1s ease-in;
+}
+
+#logo-nav:hover {
+    top: 0;
+}
+
+#logo-follow ul {
+    width: 100%;
+    margin: 8px 34px;
+}
+
+#logo-follow a.sb {
+    margin: 0 7px 0 0;
+}
+
+#logo-follow a.sb.rss {
+    background: url(../img/rss-button-nav.png) no-repeat;
+}
+
+#logo-follow a.sb.rss:hover {
+    background: url(../img/rss-button-nav-hover.png) no-repeat;
+}
+
+#logo-follow a.sb.rss:active {
+    background: url(../img/rss-button-nav-click.png) no-repeat;
+}
+
+
+#logo-follow a.sb.twitter {
+    background: url(../img/twitter-button-nav.png) no-repeat;
+}
+
+#logo-follow a.sb.twitter:hover {
+    background: url(../img/twitter-button-nav-hover.png) no-repeat;
+}
+
+#logo-follow a.sb.twitter:active {
+    background: url(../img/twitter-button-nav-click.png) no-repeat;
+}
+#logo-follow a.sb.facebook {
+    background: url(../img/facebook-button-nav.png) no-repeat;
+}
+
+#logo-follow a.sb.facebook:hover {
+    background: url(../img/facebook-button-nav-hover.png) no-repeat;
+}
+
+#logo-follow a.sb.facebook:active {
+    background: url(../img/facebook-button-nav-click.png) no-repeat;
+}
+#logo-follow a.sb.pinterest {
+    background: url(../img/pinterest-button-nav.png) no-repeat;
+}
+
+#logo-follow a.sb.pinterest:hover {
+    background: url(../img/pinterest-button-nav-hover.png) no-repeat;
+}
+
+#logo-follow a.sb.pinterest:active {
+    background: url(../img/pinterest-button-nav-click.png) no-repeat;
 }
 
 ul#user-options {
@@ -707,9 +804,7 @@ ul#extras a:hover {
     position: relative;
     width: 100%;
     height: 34px;
-    background: #c03221;
-    border-top: 1px solid black;
-    border-bottom: 1px solid #810000;
+    font-family: Airship;
 }
 
 #filters, #decade {
@@ -718,11 +813,10 @@ ul#extras a:hover {
     position: absolute;
     top: 0;
     left: 0;
-    box-shadow: 1px 0 0 #f63e20, 2px 0 0 #810000;
 }
 
 ul.filters {
-    display: block;
+    display: none;
     position: absolute;
     margin: 0;
     padding: 0;
@@ -741,16 +835,26 @@ ul.filters li input {
     display: none;
 }
 
-ul.filters li:not(.selected) {
-    display: none;
+ul.filters li:not(.selected):after {
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    content: "";
+    margin: 2px 5px;
+    background: url(../img/filters-not-selected.png);
 }
 
-ul.filters li.selected {
-    text-decoration: line-through;
+ul.filters li.selected:after {
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    content: "";
+    margin: 2px 5px;
+    background: url(../img/filters-selected.png);
 }
 
 ul.filters {
-    font-size: 10pt;
+    font-size: 12pt;
 }
 
 #decade {
@@ -766,12 +870,10 @@ ul#decades {
     position: absolute;
     top: 35px;
     left: 0;
-    background: #c03221;
     margin: 0;
     padding: 0;
     border: 0;
     list-style: none;
-    box-shadow: -2px 0 1px #f63e20 inset;
 }
 
 ul#decades a.decade {
@@ -780,9 +882,6 @@ ul#decades a.decade {
     height: 34px;
     color: white;
     font-size: 11pt;
-    border: 1px solid #810000;
-    border-top: 0;
-    text-shadow: 0px 1px 1px #810000;
     text-align: center;
     vertical-align: middle;
     position: relative;
@@ -828,31 +927,23 @@ ul#decades a.decade li {
     border: 0;
 }
 
-#quick-decade {
-    width: 32px;
-    height: 34px;
-    position: absolute;
-    top: 0;
-    left: 159px;
-    box-shadow: 1px 0 0 #f63e20, 2px 0 0 #810000;
-}
-
-#quick-decade button {
-    width: 32px;
-    height: 16px;
+button[name="decade-up"], button[name="decade-down"] {
+    width: 16px;
+    height: 32px;
     margin: 0;
     padding: 0;
     border: 0;
+    top: 0;
     position: absolute;
 }
 
-#quick-decade button[name="decade-up"] {
+button[name="decade-up"] {
+    right: 0;
     background: url(../img/decade-up.png);
-    box-shadow: 0px 1px 0px #f63e20, 0px 2px 0px #810000;
 }
 
-#quick-decade button[name="decade-down"] {
-    top: 18px;
+button[name="decade-down"] {
+    left: 159px;
     background: url(../img/decade-down.png);
 }
 
@@ -861,7 +952,7 @@ ul#decades a.decade li {
     width: -webkit-calc(100% - 194px);
     position: absolute;
     top: 0;
-    right: 0;
+    right: 16px;
 }
 
 .timemarker {
@@ -904,9 +995,11 @@ header .logo {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -22px -117.5px;
-    color: #171717;
-    text-shadow: 0 1px 2px #363636;
+    margin: -8px -66px;
+    color: #fff6b1;
+    text-shadow: 0 1px 2px #a44426;
+    font-family: Airship;
+    font-size: 19pt;
 }
 
 header .logo h1 {
@@ -921,12 +1014,16 @@ header .logo h1 {
 }
 
 .pic-article {
+    position: relative;
+    float: left;
     width: 550px;
     height: 414px;
-    position: absolute;
-    top: 200px;
-    left: 200px;
     overflow: hidden;
+}
+
+.pic-article img {
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .pic-article .article-head, .txt-article .article-head {
@@ -980,11 +1077,10 @@ button.read-it-later:hover {
 }
 
 .txt-article {
+    position: relative;
+    float: left;
     width: 400px;
     height: 500px;
-    position: absolute;
-    top: 200px;
-    left: 200px;
     overflow: hidden;
 }
 
@@ -1054,9 +1150,8 @@ button.read-it-later:hover {
 }
 
 #account {
-    top: 0;
-    right: 0;
-    box-shadow: 0px -1px 0px 1px #000000, 0 -2px 0 2px #2e2e2e;
+    position: relative;
+    float: right;
 }
 
 #account p {
@@ -1068,7 +1163,7 @@ button.read-it-later:hover {
 }
 
 #account .user-name {
-    margin: 0 10px;
+    margin: 0 20px;
     text-shadow: 0 1px 1px #000000;
 }
 
