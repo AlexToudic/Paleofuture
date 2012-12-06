@@ -7,11 +7,6 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title></title>
-        <!-- DEVELOPPEMENT -->
-            <meta http-equiv="pragma" content="no-cache"> 
-            <meta http-equiv="cache-control" content="no-cache"> 
-            <meta http-equiv="expires" content="0">
-        <!-- FIN DEVELOPPEMENT -->
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
@@ -211,10 +206,10 @@
         <script id="article-picture-template" type="text/x-handlebars-template">
             <div class="pic-article">
                 <div class="article-head">
-                    <h1>{{title}}</h1><button class="read-it-later"></button>
+                    <h1>{{title}}</h1>
                 </div>
                 <a href="#/article/{{cid}}">
-                    <div class="read-more"><p>Click to <b>open</b></p></div>
+                    <div class="read-more"><p>Click to open</p></div>
                     <img src={{image}} alt="illustration"></img>
                 </a>
             </div>
@@ -222,10 +217,10 @@
         <script id="article-text-template" type="text/x-handlebars-template">
             <div class="txt-article">
                 <div class="article-head">
-                    <h1>{{title}}</h1><button class="read-it-later"></button>
+                    <h1>{{title}}</h1>
                 </div>
                 <a href="#/article/{{cid}}">
-                    <div class="read-more"><p>Click to <b>open</b></p></div>
+                    <div class="read-more"><p>Click to open</p></div>
                     <p>{{text}}</p>
                 </a>
             </div>
@@ -237,57 +232,48 @@
         </script>
         <script id="article-template" type="text/x-handlebars-template">
             <div id="text">
-                    <div id="menu-bar">
-                        <button name="favorite"><i class="article-favorite-icon"></i>  add to my favorites</button>
-                        <div id="share">
-                            <p>Share</p>
-                            <ul class="social-buttons">
-                                <li><a href="#" target="_blank" class="sb twitter">Twitter</a></li>
-                                <li><a href="#" target="_blank" class="sb facebook">Facebook</a></li>
-                                <li><a href="#" target="_blank" class="sb google">Google+</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div id="article-title">
-                        <h1>{{title}}</h1>
-                        <div id="date">
-                            <p>SUNDAY<br/>
-                            MAY 2, 2010<br/>
-                            AT 7:00PM<br/>
-                            <b>{{decade}}s</b></p>
-                        </div>
-                        <hr/>
-                    </div>
-                    <div id="text-content">
-                        <p>{{text}}</p>
-                    </div>
+                <div id="article-title">
+                    <h1>{{title}}</h1>
                 </div>
-                <div id="interactive">
-                    <div id="interactive-bar">
-                        <ul id="interactive-menu">
-                            <a href="#" id="game" class="selected"><li>Interactive</li></a>
-                            <a href="#" id="image"><li>Image</li></a>
-                            <a href="#" id="similar"><li>Similar articles</li></a>
+                <div id="text-content">
+                    <p>{{text}}</p>
+                </div>
+                <div id="menu-bar">
+                    <button name="favorite"><i class="article-favorite-icon"></i>  add to my favorites</button>
+                    <div id="share">
+                        <ul class="social-buttons">
+                            <li><a href="#" target="_blank" class="sb facebook">Facebook</a></li>
+                            <li><a href="#" target="_blank" class="sb twitter">Twitter</a></li>
+                            <li><a href="#" target="_blank" class="sb google">Google+</a></li>
                         </ul>
                     </div>
-                    <div id="game-frame">
-                        <Viewbox Stretch="Uniform"><canvas id='particules' width='960px' height='1080px'></canvas><Viewbox>
-                    </div>
-                    <div id="image-frame">
-                        {{#if image}}
-                            <img src={{image}} alt="illustration"></img>
-                        {{/if}}
-                    </div>
-                    <div id="similar-frame">
-                        <div class="pic-article">
-                            <div class="article-head">
-                                <h1>Robots vs. Musicians (1931)</h1><button class="read-it-later"></button>
-                            </div>
-                            <a href="#/article/c561">
-                                <div class="read-more"><p>Click to <b>open</b></p></div>
-                                <img src="http://2.bp.blogspot.com/_sGYULzoQCgA/RyVjxyZT_iI/AAAAAAAABJA/7twI9CSPeOs/s1600/1931-March-9---paleofuture.jpg" alt="illustration">
-                            </a>
+                </div>
+            </div>
+            <div id="interactive">
+                <div id="interactive-bar">
+                    <ul id="interactive-menu">
+                        <a href="#" id="game" class="selected"><li>Interactive</li></a>
+                        <a href="#" id="image"><li>Image</li></a>
+                        <a href="#" id="similar"><li>Similar articles</li></a>
+                    </ul>
+                </div>
+                <div id="game-frame">
+                    <Viewbox Stretch="Uniform"><canvas id='particules' width='960px' height='1080px'></canvas><Viewbox>
+                </div>
+                <div id="image-frame">
+                    {{#if image}}
+                        <img src={{image}} alt="illustration"></img>
+                    {{/if}}
+                </div>
+                <div id="similar-frame">
+                    <div class="pic-article">
+                        <div class="article-head">
+                            <h1>Robots vs. Musicians (1931)</h1>
                         </div>
+                        <a href="#/article/c561">
+                            <div class="read-more"><p>Click to open</p></div>
+                            <img src="http://2.bp.blogspot.com/_sGYULzoQCgA/RyVjxyZT_iI/AAAAAAAABJA/7twI9CSPeOs/s1600/1931-March-9---paleofuture.jpg" alt="illustration">
+                        </a>
                     </div>
                 </div>
             </div>

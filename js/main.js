@@ -15,6 +15,7 @@ $(function() {
 	var indexDisplay = 0;
 	var indexToReach = -42;
 	var timer;
+	var change = 0;
 
 	/*----------------------------------------------------
 				  1- BACKBONE DECLARATIONS
@@ -296,26 +297,28 @@ $(function() {
 				allBlocks[indexDisplay].render(backLayer);
 				++indexDisplay;
 			}
+			else
+			{
+				$('#layer2').html('');
+			}
 		}
 
 		lastLayer = 1;
 	};
 
 	var previousWay = 1;
-	var change = 0;
 	var navigate = function(event, delta, deltaX, deltaY) {
-		console.log(allBlocks.length);
+		console.log(change);
 
 		if(change != 0 && currentDecade+change >= 1870 && currentDecade+change <= 1990){
-			window.location = "#/travel/"+(currentDecade+change);
+			var tempChange = change;
 			change = 0;
+			window.location = "#/travel/"+(currentDecade+tempChange);
 		}
 		else if(change != 0)
 		{
 			window.location = "#";
 		}
-
-		change = 0;
 
 		var reverse = false;
 
@@ -640,7 +643,7 @@ $(function() {
     var app_router = new AppRouter;
 
     app_router.on('route:home', function() {
-    	$.firefly();
+    	//$.firefly();
     	$('#article-details').html('');
     	
     	if($('#home').css('margin-top') === -window.innerHeight+'px')
@@ -692,6 +695,8 @@ $(function() {
     });
 
     app_router.on('route:travel', function(decade, block){
+    	change = 0;
+
     	if(indexToReach == -42)
     		indexBlock = parseInt(block, 10);
 
