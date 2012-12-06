@@ -481,6 +481,34 @@ nav#menu ul a:active {
     text-shadow: 1px 1px 0 black inset;
 }
 
+@-webkit-keyframes fade {
+    0% {
+        opacity: 0;
+    }
+    
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+#home-tip {
+    opacity: 0;
+    position: absolute;
+    color: white;
+    font-size: 9pt;
+    top: 190px;
+    left: 50%;
+    margin-left: -70px;
+    text-shadow: 0 0 5px;
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-delay: 5s;
+    -webkit-animation-iteration-count: infinite;
+}
 
 #travel-screen {
     width: 100%;
