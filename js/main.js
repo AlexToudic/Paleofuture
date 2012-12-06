@@ -532,6 +532,7 @@ $(function() {
 	});
 
 	$('a.decade').on('click', function(){
+		$('button[name="decade-menu"]').removeClass('down');
 		$('ul#decades').css({'display': 'none'});
 	});
 
@@ -612,6 +613,16 @@ $(function() {
 		$('ul#interactive-menu a#'+$(this).attr('id')).addClass('selected');
 	});
 
+	$('body').on('click', 'ul#interactive-menu a#back-in-time', function(event){
+		if(currentDecade != 0)
+			if(indexBlock != 0)
+				window.location = "#/travel/"+currentDecade+"/"+indexBlock;
+			else
+				window.location = "#/travel/"+currentDecade;
+		else
+			window.location = "#/travel/1870";
+	});
+
 	$('#connect form').on('submit', function(event){
 		event.preventDefault();
 
@@ -643,7 +654,7 @@ $(function() {
     var app_router = new AppRouter;
 
     app_router.on('route:home', function() {
-    	//$.firefly();
+    	$.firefly();
     	$('#article-details').html('');
     	
     	if($('#home').css('margin-top') === -window.innerHeight+'px')

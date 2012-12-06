@@ -498,12 +498,12 @@ nav#menu ul a:active {
 #home-tip {
     opacity: 0;
     position: absolute;
-    color: white;
+    color: #fff6b1;
     font-size: 9pt;
     top: 190px;
     left: 50%;
     margin-left: -70px;
-    text-shadow: 0 0 5px;
+    text-shadow: 0 0 5px #fff6b1;
     -webkit-animation-name: fade;
     -webkit-animation-duration: 2s;
     -webkit-animation-delay: 5s;
@@ -1426,12 +1426,12 @@ ul#interactive-menu li {
     left: 60px;
 }
 
-ul#interactive-menu a:first-child li {
-    left: 50px;
+ul#interactive-menu a#similar li {
+    left: 30px;
 }
 
 ul#interactive-menu a:last-child li {
-    left: 35px;
+    left: 60px;
 }
 
 #game-frame, #image-frame, #similar-frame 
