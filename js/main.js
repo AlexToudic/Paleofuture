@@ -511,9 +511,21 @@ $(function() {
 
 	$('#decade-content button').on('click', function(){
 		if($('ul#decades').css('display') === 'none')
+		{
+			$('#decade-content button').addClass('down');
 			$('ul#decades').css({'display': 'block'});
+		}
 		else
+		{
+			$('#decade-content button').removeClass('down');
 			$('ul#decades').css({'display': 'none'});
+		}
+
+		if($('ul.filters').css('display') === 'block')
+		{
+			$('button[name="filters-menu"]').removeClass('down');
+			$('ul.filters').css({'display': 'none'});
+		}
 	});
 
 	$('a.decade').on('click', function(){
@@ -530,16 +542,34 @@ $(function() {
 	$('button[name="filters-menu"]').on('click', function(){
 
 		if($('ul.filters').css('display') === 'none')
+		{
+			$('button[name="filters-menu"]').addClass('down');
 			$('ul.filters').css({'display': 'block'});
+		}
 		else
+		{
+			$('button[name="filters-menu"]').removeClass('down');
 			$('ul.filters').css({'display': 'none'});
+		}
+
+		if($('ul#decades').css('display') === 'block')
+		{
+			$('#decade-content button').removeClass('down');
+			$('ul#decades').css({'display': 'none'});
+		}
 	});
 
 	$('body').on('click', 'button[name="user-menu"]', function(){
 		if($('ul#user-options').css('display') === 'none')
+		{
+			$('button[name="user-menu"]').addClass('down');
 			$('ul#user-options').css({'display': 'block'});
+		}
 		else
+		{
+			$('button[name="user-menu"]').removeClass('down');
 			$('ul#user-options').css({'display': 'none'});
+		}
 	});
 
 	$('body').on('mouseenter', 'ul#user-options a.extras, ul#extras', function(){
@@ -610,7 +640,7 @@ $(function() {
     var app_router = new AppRouter;
 
     app_router.on('route:home', function() {
-    	//$.firefly();
+    	$.firefly();
     	$('#article-details').html('');
     	
     	if($('#home').css('margin-top') === -window.innerHeight+'px')

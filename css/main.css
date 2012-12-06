@@ -182,7 +182,7 @@ a {
 }
 
 #logo-top {
-    z-index: 2;
+    z-index: 52;
     width: 520px;
     height: 333px;
     background: url(../img/logo-top.png);
@@ -193,7 +193,7 @@ a {
 }
 
 #logo-bottom {
-    z-index: 1;
+    z-index: 51;
     width: 423px;
     height: 312px;
     background: url(../img/logo-bottom.png);
@@ -211,7 +211,7 @@ a {
     top: 421px;
     left: 50%;
     margin-left: -170.5px;
-    z-index: 3;
+    z-index: 53;
     overflow: hidden;
 }
 
@@ -857,6 +857,10 @@ ul.filters {
     font-size: 12pt;
 }
 
+ul.filters label:hover, ul#decades a:hover {
+    text-shadow: 0 0 5px yellow;
+}
+
 #decade {
     width: 77px;
     left: 80px;
@@ -926,6 +930,11 @@ ul#decades a.decade li {
     padding: 0;
     border: 0;
 }
+
+#filters-content button.down, #decade-content button.down {
+    background: url(../img/classic-dropdown-reversed.png);
+}
+
 
 button[name="decade-up"], button[name="decade-down"] {
     width: 16px;
@@ -1175,6 +1184,10 @@ button.read-it-later:hover {
     padding: 0;
     border: 0;
     background: url(../img/user-menu.png);
+}
+
+#account button.down {
+    background: url(../img/user-menu-reversed.png);
 }
 
 #article-details {
