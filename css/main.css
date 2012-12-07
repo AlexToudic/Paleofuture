@@ -1399,6 +1399,7 @@ button[name='favorite']:hover {
     border-left: none;
     border-right: none;
     margin: 0;
+    font-weight: lighter;
 }
 
 #text-content>p {
@@ -1516,12 +1517,10 @@ p#game-quotation .author {
 }
 
 #image-frame img {
-    position: absolute;
-    min-width: 100%;
-    min-height: 100%;
-    top: 50%;
-    left: 50%;
-    margin: -75%;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
+    text-align: center;
 }
 
 #similar-frame .pic-article {
