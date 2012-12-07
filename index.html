@@ -14,6 +14,7 @@
 
         <link rel="stylesheet" href="css/vendor/normalize.css">
         <link rel="stylesheet" href="css/vendor/jquery-ui-1.9.1.custom.min.css">
+        <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400italic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
@@ -182,6 +183,9 @@
                     </div>
                     
                     <div id="space">
+                        <div id="tip-popup">
+                            <p>Use your mousewheel to navigate or use the timeline above</p>
+                        </div>
                         <div id="layer1">
                         </div>
                         <div id="layer2">
@@ -237,7 +241,13 @@
                     <h1>{{title}}</h1>
                 </div>
                 <div id="text-content">
-                    <p>{{text}}</p>
+                    <p>The May 5, <b>1958</b> edition of Arthur Radebaugh's Sunday comic, Closer Than We Think, showed off the high-tech school of tomorrow. With hordes of baby boomers flooding into public schools in the 1950s, it makes sense that this strip would focus on different solutions for overcrowding with that technological optimism we identify as being uniquely post-war American.<br/>
+                        <br/><span class="quotation">
+                            <em>"Tomorrow's schools will be more crowded; teachers will be correspondingly fewer. Plans for a push-button school have already been proposed by Dr. Simon Ramo, science faculty member at California Institute of Technology. Teaching would be by means of sound movies and mechanical tabulating machines. Pupils would record attendance and answer questions by pushing buttons. Special machiens would be "geared" for each individual student so he could advance as rapidly as his abilities warranted. Progress records, also kept by machine, would be periodically reviewed by skilled teachers, and personal help would be available when necessary."</em>
+                        </span><br/>
+                        The student desk of the future includes a small camera, presumably so that the teacher being projected on a large screen in the front of the class can keep tabs on the little rascals. One thing that fascinates me about computer consoles of the retrofuture is that the QWERTY keyboard is not yet an assumed input device. Each computing device seems tailored to meet the needs of the intended user, as with this learning machine of the futuristic year 1999 and this auto-tutor from the 1964 New York World's Fair. That being said, the Google of 1964 was quaintly analog with its typewriter attachment.<br/><br/>
+                        One of my favorite details from this panel is the kid in the white shirt who's waving to someone in a gryocopter just outside the window. Better pay attention, lil' Johnny! TEACHER IS WATCHING!
+                    </p>
                 </div>
                 <div id="menu-bar">
                     <button name="favorite"><i class="article-favorite-icon"></i>  add to my favorites</button>
@@ -261,6 +271,7 @@
                 </div>
                 <div id="game-frame">
                     <Viewbox Stretch="Uniform"><canvas id='particules' width='960px' height='1080px'></canvas><Viewbox>
+                    <p id="game-quotation"><em>"Imagination is more important than knowledge..."</em><br/><span class="author">Albert Einstein</span></p>
                 </div>
                 <div id="image-frame">
                     {{#if image}}

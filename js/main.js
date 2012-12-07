@@ -16,6 +16,7 @@ $(function() {
 	var indexToReach = -42;
 	var timer;
 	var change = 0;
+	var smartUser = false;
 
 	/*----------------------------------------------------
 				  1- BACKBONE DECLARATIONS
@@ -111,7 +112,7 @@ $(function() {
 		},
 		render: function(){
 			this.context.clearRect(0,0,this.canvas.width, this.canvas.height);
-			this.context.fillStyle = "#000000";
+			this.context.fillStyle = "#a44426";
 			this.particules.each(function(particule){
 				this.context.beginPath();
 				this.context.arc(particule.get('x'), particule.get('y'), particule.get('radius'), 0 , 2 * Math.PI, false);
@@ -308,7 +309,7 @@ $(function() {
 
 	var previousWay = 1;
 	var navigate = function(event, delta, deltaX, deltaY) {
-		console.log(change);
+		smartUser = true;
 
 		if(change != 0 && currentDecade+change >= 1870 && currentDecade+change <= 1990){
 			var tempChange = change;
@@ -646,6 +647,10 @@ $(function() {
 	});
 
 	$('#space').mousewheel(navigate);
+	$('#layer1').mousewheel(function(){
+		$('#tip-popup').css({'display': 'none'});
+		$('#layer1').unmousewheel();
+	});
 
 	/*----------------------------------------------------
 				  		3- APPLICATION

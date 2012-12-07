@@ -282,8 +282,7 @@ a {
 
 #text-content {
     width: -webkit-calc(100% - 2px);
-    height: -webkit-calc(100% - 121px);
-    overflow-y: scroll;
+    height: -webkit-calc(100% - 136px);
 }
 
 /* ==========================================================================
@@ -1350,6 +1349,28 @@ button[name='favorite']:hover {
     padding: 25px 0;
 }
 
+#tip-popup {
+    opacity: 0;
+    position: absolute;
+    color: white;
+    background: rgba(0,0,0,0.5);
+    border-radius: 3px;
+    padding: 10px;
+    width: 250px;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    border: 1px solid black;
+    box-shadow: 0 0 10px black;
+    z-index: 200;
+    margin: -100px -130px;
+    font-size: 16pt;
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 5s;
+    -webkit-animation-delay: 5s;
+    -webkit-animation-iteration-count: infinite;
+}
+
 #date {
     position: absolute;
     top: 3px;
@@ -1381,8 +1402,25 @@ button[name='favorite']:hover {
 }
 
 #text-content>p {
-    padding: 20px;
+    padding: 35px;
     text-align: justify;
+}
+
+.quotation:before, .quotation:after {
+    content: "";
+    width: 525px;
+    height: 1px;
+    background: white;
+    display: block;
+    margin: 25px auto;
+}
+
+.quotation {
+    width: 740px;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    font-family: 'Droid Serif', serif;
 }
 
 #interactive {
@@ -1443,10 +1481,26 @@ ul#interactive-menu a:last-child li {
 
 #game-frame {
     display: block;
-    width: -webkit-calc(100% + 80px);
-    height: 100%;
+    width: 100%;
+    height: -webkit-calc(100% - 80px);
     position: relative;
-    margin: -80px 0;
+    margin: 0;
+}
+
+p#game-quotation {
+    z-index: -1;
+    margin: -100px -250px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    color: white;
+    font-size: 20pt;
+    font-family: 'Droid Serif', serif;
+    width: 500px;
+}
+
+p#game-quotation .author {
+    font-size: 10pt;
 }
 
 #image-frame, #similar-frame {
