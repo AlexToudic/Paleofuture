@@ -1475,7 +1475,7 @@ ul#interactive-menu a:last-child li {
 }
 
 #game-frame {
-    display: block;
+    opacity: 1;
     width: 100%;
     height: -webkit-calc(100% - 80px);
     position: relative;
@@ -1499,7 +1499,7 @@ p#game-quotation .author {
 }
 
 #image-frame, #similar-frame {
-    display: none;
+    opacity: 0;
 }
 
 #image-frame {
@@ -1515,6 +1515,10 @@ p#game-quotation .author {
     max-height: 100%;
     margin: 0 auto;
     text-align: center;
+}
+
+#game-frame, #image-frame, #similar-frame {
+    position: absolute;
 }
 
 #similar-frame .pic-article {

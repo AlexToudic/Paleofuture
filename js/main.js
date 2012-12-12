@@ -358,6 +358,8 @@ $(function() {
 		$('#article-details').css({'margin-top': -(window.innerHeight-45)+'px'});
 	};
 
+	$('.layer').masonry({isFitWidth: true});
+
 	/*----------------------------------------------------
 				  		5- BEHAVIOURS
 	----------------------------------------------------*/
@@ -478,19 +480,19 @@ $(function() {
 		switch($(this).attr('id'))
 		{
 			case 'game':
-				$('#game-frame').css({'display': 'block'});
-				$('#image-frame').css({'display': 'none'});
-				$('#similar-frame').css({'display': 'none'});
+				$('#game-frame').css({'opacity': '1'});
+				$('#image-frame').css({'opacity': '0'});
+				$('#similar-frame').css({'opacity': '0'});
 				break;
 			case 'image':
-				$('#game-frame').css({'display': 'none'});
-				$('#image-frame').css({'display': 'block'});
-				$('#similar-frame').css({'display': 'none'});
+				$('#game-frame').css({'opacity': '0'});
+				$('#image-frame').css({'opacity': '1'});
+				$('#similar-frame').css({'opacity': '0'});
 				break;
 			case 'similar':
-				$('#game-frame').css({'display': 'none'});
-				$('#image-frame').css({'display': 'none'});
-				$('#similar-frame').css({'display': 'block'});
+				$('#game-frame').css({'opacity': '0'});
+				$('#image-frame').css({'opacity': '0'});
+				$('#similar-frame').css({'opacity': '1'});
 				break;
 		}
 
