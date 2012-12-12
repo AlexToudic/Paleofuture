@@ -401,19 +401,11 @@ a.sb.google {
     overflow: hidden;
 }
 
-#layer1, #layer2 {
+.layer {
     width: 100%;
     height: 100%;
+    display: block;
     position: absolute;
-    display: none;
-}
-
-#layer1 {
-    z-index: 100;
-}
-
-#layer2 {
-    z-index: 50;
 }
 
 #space:after {
@@ -1031,6 +1023,7 @@ header .logo h1 {
     width: 568px;
     height: 414px;
     overflow: hidden;
+    padding: 35px;
 }
 
 .pic-article img {
@@ -1120,6 +1113,7 @@ header .logo h1 {
     width: 340px;
     height: 374px;
     overflow: hidden;
+    padding: 20px;
 }
 
 .read-more {

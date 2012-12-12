@@ -1,22 +1,17 @@
 $(function() {
     var currentDecade = 0;//décennie parcourue
     var filtersDropped = false;
-	var amount = 75;
-    var scroll1 = Math.pow(200*amount, (1/3));
-	var scroll2 = Math.pow(200*(amount+2000), (1/3));
-	var d1Amount = amount;
-	var d2Amount = amount-2999;
-	var lastLayer;
-	var lastUpLayer;
+    var scroll = 0;
 	var allArticles;
 	var allBlocks;
 	var way;
-	var indexBlock = 0;
-	var indexDisplay = 0;
+	var indexLink = 0;
+	var indexFirst = 0;
 	var indexToReach = -42;
 	var timer;
 	var change = 0;
 	var smartUser = false;
+	var linkUpdate = false;
 
 	/*----------------------------------------------------
 				  1- BACKBONE DECLARATIONS
@@ -75,11 +70,10 @@ $(function() {
 		comparator: function(item){
 			return item.get('year')||item.get('decade');
 		},
-		render: function(el){
-			$(el).html('');
+		render: function(){
+			$('#space').append('<div class="layer"></div>');
 			this.each(function(a){
-				a.get('tinyView').render(el);
-				$(el+'>*:last').css({'margin': a.get('top')+'px 20px 0 '+a.get('left')+'px'});
+				a.get('tinyView').render($('.layer:last-child'));
 			});
 		}
 	});
@@ -136,8 +130,7 @@ $(function() {
 					var dy = (particule.get('y')>force.get('y'))?5:(-5);
 
 					particule.set({'x': particule.get('x')+dx, 'y': particule.get('y')+dy});
-				}
-					
+				}	
 			});
 		}
 	});
@@ -212,6 +205,7 @@ $(function() {
 				event.preventDefault();
 				indexToReach = parseInt(event.target.hash.split('/', 4)[3], 10);
 				goTo(event);
+				linkUpdate = true;
 				window.location = event.target.href;
 			});
 
@@ -258,12 +252,20 @@ $(function() {
 
 		generateTimeline();
 		initializeDisplay();
+
+		if(indexFirst === -1)
+		{
+	    	indexFirst = indexLink = allBlocks.length-1;
+	    	linkUpdate = true;
+
+	    	window.location = '#/travel/'+currentDecade+'/'+indexLink;
+	    }
 	};
 
 	var placeCursor = function(){
 		var indexCursor;
 
-		indexCursor = (indexToReach == -42)?indexBlock:indexToReach;
+		indexCursor = (indexToReach == -42)?indexLink:indexToReach;
 
 		var position = $($('a.timemarker').get(indexCursor)).offset().left-$('#cursor').width()/2+1;
 		$('#cursor').animate({'left': position+'px'}, 200);
@@ -274,187 +276,69 @@ $(function() {
 		lastLayer = 0;
 		way = 0;
 
-		if(!indexBlock%2) {
-			frontLayer = '#layer1';
-    		backLayer = '#layer2';
-		}
-		else {
-			frontLayer = '#layer2';
-    		backLayer = '#layer1';
-		}
+		$('#space').html('');
+		_.each(allBlocks, function(b) {
+			b.render();
+		});
 
-		$(frontLayer).css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+amount+', t 10.0)'});
-		$(backLayer).css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+(amount-2999)+', t 10.0)'});
-
-		if(indexBlock < allBlocks.length)
-		{
-			indexDisplay = indexBlock;
-
-			allBlocks[indexDisplay].render(frontLayer);
-			++indexDisplay;
-
-			if(indexDisplay < allBlocks.length)
-			{
-				allBlocks[indexDisplay].render(backLayer);
-				++indexDisplay;
-			}
-			else
-			{
-				$('#layer2').html('');
-			}
-		}
-
-		lastLayer = 1;
+		_.each($('.layer'), function(item, index){
+			$(item).css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+((indexLink-index)*2999)+', t 10.0)'});
+		});
+		
+		$($('.layer').get(indexLink)).css({'display': 'block', 'z-index': 50});
+		$($('.layer').get(indexLink+1)).css({'display': 'block', 'z-index': 40});
 	};
 
 	var previousWay = 1;
 	var navigate = function(event, delta, deltaX, deltaY) {
-		smartUser = true;
-
-		if(change != 0 && currentDecade+change >= 1870 && currentDecade+change <= 1990){
-			var tempChange = change;
-			change = 0;
-			window.location = "#/travel/"+(currentDecade+tempChange);
-		}
-		else if(change != 0)
-		{
-			window.location = "#";
-		}
-
-		var reverse = false;
-
-		//Evite les sauts dans le scroll
 		if(Math.abs(delta) > 10)
 			delta = Math.round(delta/10);
 
-		if(delta > 0)
-			way = -1;
-		else if(delta < 0)
-			way = 1;
+		scroll -= delta;
 
-		if(way != previousWay)
-		{
-			reverse = true;
-			previousWay = way;
-			indexDisplay = indexBlock;
-		}
+		_.each($('.layer'), function(item, index){
+			var amount = Math.round(((scroll+((indexFirst-index)*100))*(scroll+((indexFirst-index)*100))*(scroll+((indexFirst-index)*100)))/200);
+			$(item).css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+amount+', t 10.0)', 'z-index': 40});
+			
+			if(Math.abs(amount) >= 4500)
+			{
 
-		scroll1 += delta;
-		scroll2 += delta;
+				$(item).css({'display': 'none'});
 
-		d1Amount = Math.round((scroll1*scroll1*scroll1)/200);
-	    $('#layer1').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d1Amount+', t 10.0)'});
+				if(amount > 0 && delta < 0 && index === allBlocks.length-1 && currentDecade < 1990)
+				{
+					window.location = '#/travel/'+(currentDecade+10);
+				}
 
-	    d2Amount = Math.round((scroll2*scroll2*scroll2)/200);
-	    $('#layer2').css({'-webkit-filter': 'custom(url(css/shaders/slices.vs) mix(url(css/shaders/slices.fs) normal source-atop), 100 1 border-box detached, amount '+d2Amount+', t 10.0)'});
+				if(amount < 0 && delta > 0 && index === 0 && currentDecade > 1870)
+				{
+					window.location = '#/travel/'+(currentDecade-10)+'/'+(-1);
+				}
+			}
+			else
+			{
+				$(item).css({'display': 'block'} );
+			}
 
-	    //Joue entre les layers pour les passer en avant plan
-	    if(Math.abs(d1Amount) < Math.abs(d2Amount) && frontLayer != '#layer1')
-	    {
-	    	frontLayer = '#layer1';
-	    	backLayer = '#layer2';
-
-	    	$(frontLayer).css({'z-index': 100});
-	    	$(backLayer).css({'z-index': 50});
-	    }
-	  	else if(Math.abs(d1Amount) > Math.abs(d2Amount) && frontLayer != '#layer2')
-	    {
-	    	frontLayer = '#layer2';
-	    	backLayer = '#layer1';
-
-	    	$(frontLayer).css({'z-index': 100});
-	    	$(backLayer).css({'z-index': 50});
-	    }
-
-	    //Quand un des layers est en fond on doit charger l'article suivant s'il existe
-	   	if(lastUpLayer != 1 && (d1Amount <= amount-3000 || d1Amount >= -(amount-3000))) {
-	   		lastUpLayer = 1;
-
-	    	if(way > 0 && indexDisplay < allBlocks.length)
-	    	{
-	    		allBlocks[indexDisplay].render('#layer1');
-	    		++indexDisplay;
-	    	}
-	    	else if(way < 0 && indexDisplay >= 0)
-	    	{
-	    		allBlocks[indexDisplay].render('#layer1');
-	    		--indexDisplay;
-	    	}
-	    	else
-	    	{
-	    		$('#layer1').html('');
-	    	}
-
-	    	d1Amount = -d1Amount;
-		    scroll1 = -scroll1;
-	    }
-
-
-	   	if(lastUpLayer != 2 && (d2Amount <= amount-3000 || d2Amount >= -(amount-3000))) {
-	   		lastUpLayer = 2;
-	   		
-	    	if(way > 0 && indexDisplay < allBlocks.length)
-	    	{
-	    		allBlocks[indexDisplay].render('#layer2');
-	    		++indexDisplay;
-	    	}
-	    	else if(way < 0 && indexDisplay >= 0)
-	    	{
-	    		allBlocks[indexDisplay].render('#layer2');
-	    		--indexDisplay;
-	    	}
-	    	else
-	    	{
-	    		$('#layer2').html('');
-	    	}
-
-	    	d2Amount = -d2Amount;
-		    scroll2 = -scroll2;
-	    }
-
-	    //quand un bloc se forme, on change le lien
-	    if(d1Amount === 0 && (lastLayer != 1 || reverse))
-	    {
-	    	lastLayer = 1;
-	    	indexBlock += way;
-
-	    	if(indexToReach == -42)
-	   			window.location = "#/travel/"+currentDecade+"/"+indexBlock;
-
-	   		/*d1Amount = -d1Amount;
-		    scroll1 = -scroll1;*/
-	    }
-	   
-	   	if(d2Amount === 0 && (lastLayer != 2 || reverse))
-	    {
-	    	lastLayer = 2;
-	    	indexBlock += way;
-
-	    	if(indexToReach == -42)
-	   			window.location = "#/travel/"+currentDecade+"/"+indexBlock;
-
-	   		/*d2Amount = -d2Amount;
-		    scroll2 = -scroll2;*/
-	    }
-
-	    if(indexBlock >= allBlocks.length-1)
-	    {
-	    	change = +10;
-	    }
-	    if(indexBlock < 0)
-	    {	
-	    	change = -10;
-	    }
+			if(index != indexLink && amount === 0) {
+				$(item).css({'z-index': 50});
+				linkUpdate = true;
+				indexLink = index;
+				$('#space').unmousewheel();
+				$('#space').mousewheel(navigate);
+				window.location = '#/travel/'+currentDecade+'/'+index;
+			}
+		});
 	};
 
 	var goTo = function(event){
 
 		timer = window.setInterval(function(){
-			if(indexBlock > indexToReach+1)
+			if(indexLink > indexToReach+1)
 			{
 				navigate(null, 4, null, null);
 			}
-			else if(indexBlock < indexToReach)
+			else if(indexLink < indexToReach)
 			{
 				navigate(null, -4, null, null);
 			}
@@ -463,7 +347,7 @@ $(function() {
 				indexToReach = -42;
 				clearInterval(timer);
 			}
-		}, 5);
+		}, 0.2);
 	};
 
 	/*----------------------------------------------------
@@ -471,7 +355,6 @@ $(function() {
 	----------------------------------------------------*/
 
 	var adaptInterface = function() {
-		//$('#layer2').css({'margin-top': -window.innerHeight+80+'px'});
 		$('#article-details').css({'margin-top': -(window.innerHeight-45)+'px'});
 	};
 
@@ -497,19 +380,19 @@ $(function() {
 			});
 
 			$('#cursor').animate({'left': nearestMarker.offset().left - handleCenter}, 200);
-			console.log(nearestMarker.attr('href'));
 			indexToReach = parseInt(nearestMarker.attr('href').split('/', 4)[3], 10);
 			goTo(null);
+			linkUpdate = true;
 			$(location).attr('href', nearestMarker.attr('href'));
 		}
 	});
 
 	$('button[name="decade-up"]').on('click', function(){
-		if(currentDecade+10 <= 1990)
+		if(currentDecade < 1990)
 			window.location = "#/travel/"+(currentDecade+10);
 	});
 	$('button[name="decade-down"]').on('click', function(){
-		if(currentDecade-10 >= 1870)
+		if(currentDecade > 1870)
 			window.location = "#/travel/"+(currentDecade-10);	
 	});
 
@@ -616,8 +499,8 @@ $(function() {
 
 	$('body').on('click', 'ul#interactive-menu a#back-in-time', function(event){
 		if(currentDecade != 0)
-			if(indexBlock != 0)
-				window.location = "#/travel/"+currentDecade+"/"+indexBlock;
+			if(indexLink != 0)
+				window.location = "#/travel/"+currentDecade+"/"+indexLink;
 			else
 				window.location = "#/travel/"+currentDecade;
 		else
@@ -646,10 +529,10 @@ $(function() {
 		logoOpen = !logoOpen;
 	});
 
-	$('#space').mousewheel(navigate);
-	$('#layer1').mousewheel(function(){
+	$('#space').mousewheel(function(){
 		$('#tip-popup').css({'display': 'none'});
-		$('#layer1').unmousewheel();
+		$('#space').unmousewheel();
+		$('#space').mousewheel(navigate);
 	});
 
 	/*----------------------------------------------------
@@ -659,27 +542,27 @@ $(function() {
     var app_router = new AppRouter;
 
     app_router.on('route:home', function() {
+    	scroll = 0;
+
+    	$('#space').unmousewheel();
+		$('#space').mousewheel(navigate);
+
     	$.firefly();
     	$('#article-details').html('');
     	
     	if($('#home').css('margin-top') === -window.innerHeight+'px')
     		$('#home').animate({'margin-top': '0px'}, 200);
-    	if($('#layer1').css('display') !== 'none')
-    	{
-	    	$('#layer1').css({'display': 'none'});
-			$('#layer2').css({'display': 'none'});
-    	}
 
     	$('#travel-screen').removeClass('flip');
     	$('#article-details').removeClass('flip');
     });
 
     app_router.on('route:changeDecade', function(decade){
+    	scroll = 0;
+
 		allBlocks = new Array();
 		currentDecade = parseInt(decade, 10);
-		indexBlock = 0;
-		indexDisplay = 0;
-		amount = 75;
+		indexLink = 0;
 
 		$('#article-details').html('');
 		$('#decade-content p').html(decade);
@@ -691,68 +574,78 @@ $(function() {
 			allArticles.fetch({url: "init.json"}).complete(function() {
 		    	allArticles.sort();
 
-		    	console.log(allArticles);
-
 		    	generateBlocks(allArticles);
+		    	$('#space').unmousewheel();
+				$('#space').mousewheel(navigate);
 			});
     	}
     	else
     	{
 	    	generateBlocks(allArticles);
+	    	$('#space').unmousewheel();
+			$('#space').mousewheel(navigate);
     	}
 
     	$('#home').animate({'margin-top': -window.innerHeight+'px'}, 200);
 
     	$('#travel-screen').removeClass('flip');
     	$('#article-details').removeClass('flip');
-    	
-    	$('#layer1').css({'display': 'block'});
-		$('#layer2').css({'display': 'block'});
     });
 
     app_router.on('route:travel', function(decade, block){
-    	change = 0;
 
-    	if(indexToReach == -42)
-    		indexBlock = parseInt(block, 10);
+    	if(!linkUpdate) {
+			change = 0;
+			scroll = 0;
 
-    	$('#article-details').html('');
+			$('#space').unmousewheel();
+			$('#space').mousewheel(navigate);
 
-    	if(parseInt(decade, 10) != currentDecade)
-    	{
-    		allBlocks = new Array();
-			currentDecade = parseInt(decade, 10);
-			amount = 75;
+			if(indexToReach == -42)
+	    		indexFirst = indexLink = parseInt(block, 10);
 
-			$('#decade-content p').html(decade);
+	    	$('#article-details').html('');
 
-	    	if(allArticles === undefined)
+	    	if(parseInt(decade, 10) != currentDecade)
 	    	{
-				allArticles = new Block();
+	    		allBlocks = new Array();
+				currentDecade = parseInt(decade, 10);
+				amount = 75;
 
-				allArticles.fetch({url: "init.json"}).complete(function() {
-			    	allArticles.sort();
+				$('#decade-content p').html(decade);
 
+		    	if(allArticles === undefined)
+		    	{
+					allArticles = new Block();
+
+					allArticles.fetch({url: "init.json"}).complete(function() {
+				    	allArticles.sort();
+
+				    	generateBlocks(allArticles);
+					});
+		    	}
+		    	else
+		    	{
 			    	generateBlocks(allArticles);
-				});
+		    	}
 	    	}
 	    	else
 	    	{
-		    	generateBlocks(allArticles);
-	    	}
-    	}
-    	else
-    	{
-    		placeCursor();
+	    		if(indexFirst === -1)
+	    			indexFirst = indexLink = allBlocks.length-1;
+
+	    		placeCursor();
+			}
+
+	    	$('#home').animate({'margin-top': -window.innerHeight+'px'}, 200);
+
+	    	$('#travel-screen').removeClass('flip');
+	    	$('#article-details').removeClass('flip');
 		}
-
-    	$('#home').animate({'margin-top': -window.innerHeight+'px'}, 200);
-
-    	$('#travel-screen').removeClass('flip');
-    	$('#article-details').removeClass('flip');
-    	
-    	$('#layer1').css({'display': 'block'});
-		$('#layer2').css({'display': 'block'});
+		else {
+			placeCursor();
+			linkUpdate = false;
+		}
     });
 
     app_router.on('route:article', function(articleId){
@@ -779,8 +672,7 @@ $(function() {
 
     	$('#article-details').addClass('flip');
 		$('#travel-screen').addClass('flip');
-		$('#layer1').css({'display': 'none'});
-		$('#layer2').css({'display': 'none'});
+		$('#tip-popup').css({'display': 'none'});
     });
 
 	adaptInterface();
